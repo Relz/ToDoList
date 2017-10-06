@@ -1,0 +1,198 @@
+{
+	"rulesDirectory": [
+		"node_modules/vrsource-tslint-rules/rules/",
+		"node_modules/tslint-consistent-codestyle/rules/",
+		"node_modules/tslint-eslint-rules/dist/rules/"
+	],
+	"rules": {
+		// Overrides
+		"linebreak-style": [
+			"LF"
+		],
+		"quotemark": [
+			true,
+			"single",
+			"avoid-escape"
+		],
+		"trailing-comma": [
+			true,
+			{
+				"multiline": "never",
+				"singleline": "never"
+			}
+		],
+		"variable-name": [
+			true,
+			"allow-leading-underscore",
+			"allow-pascal-case"
+		],
+		"array-type": [
+			true,
+			"array"
+		],
+		"comment-format": [
+			true,
+			"check-space"
+		],
+		"member-ordering": [
+			true,
+			{
+				"order": [
+					"public-constructor",
+					"public-instance-method",
+					"public-static-method",
+					"protected-constructor",
+					"protected-instance-method",
+					"protected-static-method",
+					"private-constructor",
+					"private-instance-method",
+					"private-static-method"
+				],
+				"alphabetize": true
+			}
+		],
+		// Custom rules
+		"class-member-naming": true,
+		"ascii-only": false,
+		"import-path": true,
+		// tslint-consistent-codestyle https://github.com/ajafff/tslint-consistent-codestyle
+		"no-collapsible-if": true,
+		"no-var-before-return": true,
+		"no-static-this": true,
+		"no-else-after-return": true,
+		"no-unnecessary-else": true,
+		// tslint-eslint-rules https://github.com/buzinas/tslint-eslint-rules
+		"valid-typeof": true,
+		"no-multi-spaces": true,
+		"no-unexpected-multiline": true,
+		"no-constant-condition": true,
+		"no-extra-semi": true,
+		"no-duplicate-case": true,
+		"no-control-regex": true,
+		"no-empty-character-class": true,
+		"no-ex-assign": true,
+		"no-invalid-regexp": true,
+		"no-regex-spaces": true,
+		// vrsource-tslint-rules https://github.com/vrsource/vrsource-tslint-rules
+		"ext-variable-name": [
+			true,
+			[
+				"class",
+				"pascal"
+			],
+			[
+				"interface",
+				"pascal",
+				{
+					"regex": "^I.*$"
+				}
+			],
+			[
+				"parameter",
+				"camel"
+			],
+			[
+				"property",
+				"private",
+				"static",
+				"camel",
+				"allow-leading-underscore"
+			],
+			[
+				"property",
+				"protected",
+				"static",
+				"camel",
+				"allow-leading-underscore"
+			],
+			[
+				"property",
+				"private",
+				"camel",
+				"allow-leading-underscore"
+			],
+			[
+				"property",
+				"protected",
+				"camel",
+				"allow-leading-underscore"
+			],
+			[
+				"property",
+				"static",
+				"camel"
+			],
+			[
+				"variable",
+				"local",
+				"camel"
+			],
+			[
+				"variable",
+				"const",
+				"camel"
+			],
+			[
+				"variable",
+				"camel"
+			],
+			[
+				"method",
+				"private",
+				"camel"
+			],
+			[
+				"method",
+				"protected",
+				"camel"
+			],
+			[
+				"function",
+				"camel"
+			],
+			[
+				"default",
+				"camel"
+			]
+		],
+		"literal-spacing": [
+			true,
+			{
+				"array": [
+					"never"
+				],
+				"object": [
+					"always"
+				],
+				"import": [
+					"always"
+				]
+			}
+		],
+		"max-params": [
+			true,
+			5
+		],
+		"no-duplicate-imports": true,
+		"prefer-literal": [
+			true,
+			"object",
+			"function",
+			"array"
+		],
+		// Disabled tslint rules
+		"max-classes-per-file": [
+			false
+		],
+		"ban": false,
+		"callable-types": false,
+		"file-header": [
+			false
+		],
+		"prefer-for-of": false,
+		"prefer-function-over-method": false,
+		"import-blacklist": false,
+		"no-empty-interface": false,
+		"object-literal-shorthand": false
+	}
+}
