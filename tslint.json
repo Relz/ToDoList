@@ -180,6 +180,19 @@
 			"function",
 			"array"
 		],
+		"arrow-parens": [true, "ban-single-arg-parens"],
+		"only-arrow-functions": true,
+		"whitespace": [
+			true,
+			"check-branch",
+			"check-decl",
+			"check-operator",
+			"check-separator",
+			"check-type",
+			"check-typecast"
+		],
+		"import-destructuring-spacing": true,
+		"import-spacing": true,
 		// Disabled tslint rules
 		"max-classes-per-file": [
 			false
