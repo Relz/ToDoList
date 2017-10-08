@@ -8,7 +8,7 @@ export class DataBase {
 
 	public static getUsers(): any[] {
 		let result: any[] = [];
-		DataBase.db.each('SELECT * FROM user', function (err: Error, row: any) {
+		DataBase.db.each('SELECT * FROM user', (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
@@ -24,7 +24,7 @@ export class DataBase {
 			'id INTEGER PRIMARY KEY,' +
 			'login VARCHAR,' +
 			'password VARCHAR,' +
-			'name VARCHAR);', function (err: Error) {
+			'name VARCHAR);', (err: Error) => {
 				if (err) {
 					throw err;
 				}
