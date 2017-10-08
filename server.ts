@@ -1,13 +1,19 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import { CONFIG } from './config';
+import { DataBase } from './DataBase';
 
 const app: express.Express = express();
 
 app.use(cors());
+DataBase.init();
 
 app.get('/', () => {
 	console.log('Hello from GET');
+});
+
+app.get('/users', () => {
+	console.log(DataBase.getUsers());
 });
 
 app.post('/', () => {
