@@ -1,7 +1,7 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import { CONFIG } from './config';
-import {DataBase} from './DataBase';
+import { DataBase } from './DataBase';
 
 const app: express.Express = express();
 

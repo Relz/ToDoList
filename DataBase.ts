@@ -1,4 +1,4 @@
-import {CONFIG} from './config';
+import { CONFIG } from './config';
 
 // 'Verbose' is for DEBUG only
 const sqlite3 = require('sqlite3').verbose();
