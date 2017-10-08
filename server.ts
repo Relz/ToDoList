@@ -1,7 +1,6 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import { CONFIG } from './config';
-import { token } from './token';
 
 const app: express.Express = express();
 
