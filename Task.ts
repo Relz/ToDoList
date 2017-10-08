@@ -7,59 +7,59 @@ export class Task {
 	private _isDone: boolean;
 	private _userId: number;
 
-	get id(): number {
+	public get id(): number {
 		return this._id;
 	}
 
-	set id(value: number) {
+	public set id(value: number) {
 		this._id = value;
 	}
 
-	get title(): string {
+	public get title(): string {
 		return this._title;
 	}
 
-	set title(value: string) {
+	public set title(value: string) {
 		this._title = value;
 	}
 
-	get description(): string {
+	public get description(): string {
 		return this._description;
 	}
 
-	set description(value: string) {
+	public set description(value: string) {
 		this._description = value;
 	}
 
-	get creationDate(): Date {
+	public get creationDate(): Date {
 		return this._creationDate;
 	}
 
-	set creationDate(value: Date) {
+	public set creationDate(value: Date) {
 		this._creationDate = value;
 	}
 
-	get deadline(): Date {
+	public get deadline(): Date {
 		return this._deadline;
 	}
 
-	set deadline(value: Date) {
+	public set deadline(value: Date) {
 		this._deadline = value;
 	}
 
-	get isDone(): boolean {
+	public get isDone(): boolean {
 		return this._isDone;
 	}
 
-	set isDone(value: boolean) {
+	public set isDone(value: boolean) {
 		this._isDone = value;
 	}
 
-	get userId(): number {
+	public get userId(): number {
 		return this._userId;
 	}
 
-	set userId(value: number) {
+	public set userId(value: number) {
 		this._userId = value;
 	}
 }
