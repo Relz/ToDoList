@@ -3,6 +3,10 @@ node_modules/
 
 # Build results
 build/
+*.log
+
+# Build cache
+.tscache/
 
 # PhpStorm project specific settings
 .idea/
@@ -10,3 +14,4 @@ build/
 # Compilation results
 *.js
 *.js.map
+
