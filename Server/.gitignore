@@ -11,8 +11,3 @@ build/
 
 # PhpStorm project specific settings
 .idea/
-
-# Compilation results
-*.js
-*.js.map
-
