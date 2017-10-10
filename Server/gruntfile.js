@@ -2,7 +2,7 @@ module.exports = function(grunt)
 {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
-                                  
+
         ts: {
             default: {
                 src: ['src/ts/*.ts'],
@@ -30,7 +30,7 @@ module.exports = function(grunt)
         },
 
         shell: {
-            cspell: { 
+            cspell: {
                 command: 'cspell src/**/*.ts',
                 options: {
                     stderr: true
@@ -45,7 +45,7 @@ module.exports = function(grunt)
         }
     });
 
-    grunt.loadNpmTasks('grunt-ts'),          
+    grunt.loadNpmTasks('grunt-ts'),
     grunt.loadNpmTasks('grunt-tslint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-shell');

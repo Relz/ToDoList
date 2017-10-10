@@ -7,7 +7,7 @@
 	"rules": {
 		// Overrides
 		"linebreak-style": [
-                        true,
+			true,
 			"LF"
 		],
 		"quotemark": [
