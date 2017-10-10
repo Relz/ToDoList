@@ -1,13 +1,13 @@
 # node_modules
-node_modules/
+**/node_modules/
 
 # Build results
-build/
+**/build/
 *.log
-.baseDir.ts
+**/.baseDir.ts
 
 # Build cache
-.tscache/
+**/.tscache/
 
 # PhpStorm project specific settings
-.idea/
+**/.idea/
