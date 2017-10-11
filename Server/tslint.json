@@ -53,9 +53,7 @@
 			}
 		],
 		// Custom rules
-		"class-member-naming": true,
 		"ascii-only": false,
-		"import-path": true,
 		// tslint-consistent-codestyle https://github.com/ajafff/tslint-consistent-codestyle
 		"no-collapsible-if": true,
 		"no-var-before-return": true,
@@ -192,7 +190,6 @@
 			"check-type",
 			"check-typecast"
 		],
-		"import-destructuring-spacing": true,
 		"import-spacing": true,
 		// Disabled tslint rules
 		"max-classes-per-file": [
