@@ -20,6 +20,16 @@ module.exports = function(grunt) {
 			validate: ['src/**/*.ts']
 		},
 
+		spell: {
+			all: {
+				src: ['src/ts/*'],
+				options: {
+					lang: 'en',
+					stderr: true
+				}
+			}
+		},
+
 		clean: {
 			build: {
 				build  : ['build'],
@@ -29,12 +39,6 @@ module.exports = function(grunt) {
 		},
 
 		shell: {
-			cspell    : {
-				command: 'cspell src/**/*.ts',
-				options: {
-					stderr: true
-				}
-			},
 			run_server: {
 				command: 'node build/server.js',
 				options: {
@@ -47,7 +51,8 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-ts');
 	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-shell');
+    grunt.loadNpmTasks('grunt-spell');
 
 	grunt.registerTask('build', [
 		'clean:build',
@@ -56,6 +61,6 @@ module.exports = function(grunt) {
 	]);
 	grunt.registerTask('validate', [
 		'tslint',
-		'shell:cspell'
+		'spell'
 	]);
 };
