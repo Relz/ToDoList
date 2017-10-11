@@ -2,14 +2,14 @@
   "name": "ToDoListServer",
   "version": "1.0.0",
   "description": "Project for study",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/Relz/ToDoList.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Relz/ToDoList.git"
   },
   "main": "server.js",
   "scripts": {
-    "start": "node node_modules\\grunt\\bin\\grunt -gruntfile=gruntfile.js build",
-    "validate": "node node_modules\\grunt\\bin\\grunt -gruntfile=gruntfile.js validate"
+    "start": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js build",
+    "validate": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js validate"
   },
   "author": "Relz and Co. <relz0071@gmail.com>",
   "license": "ISC",
@@ -17,8 +17,7 @@
     "body-parser": "^1.16.1",
     "cors": "^2.8.1",
     "express": "^4.14.1",
-    "sqlite3": "^3.1.13",
-    "ts-sqlite3": "^0.1.0"
+    "sqlite3": "^3.1.13"
   },
   "devDependencies": {
     "@types/body-parser": "0.0.34",
