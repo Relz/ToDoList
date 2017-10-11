@@ -57,6 +57,7 @@
 			"log",
 			"error"
 		],
+		"eofline": true,
 		// Custom rules
 		"ascii-only": false,
 		// tslint-consistent-codestyle https://github.com/ajafff/tslint-consistent-codestyle
