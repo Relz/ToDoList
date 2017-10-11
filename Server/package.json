@@ -29,7 +29,6 @@
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-shell": "^2.1.0",
-    "grunt-spell": "^1.0.0",
     "grunt-ts": "^5.5.1",
     "grunt-tslint": "^5.0.1",
     "tslint": "^5.1.0",

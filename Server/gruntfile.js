@@ -1,11 +1,14 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
+	var path = require("path");
+	var cspellPath = path.resolve('node_modules/.bin/cspell');
+
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
 
 		ts: {
 			default: {
-				src    : ['src/ts/*.ts'],
-				outDir : 'build/',
+				src: ['src/ts/*.ts'],
+				outDir: 'build/',
 				options: {
 					configFile: 'tsconfig.json'
 				}
@@ -13,28 +16,17 @@ module.exports = function(grunt) {
 		},
 
 		tslint: {
-			options :
-				{
-					configFile: 'tslint.json'
-				},
+			options: {
+				configFile: 'tslint.json'
+			},
 			validate: ['src/**/*.ts']
-		},
-
-		spell: {
-			all: {
-				src: ['src/ts/*'],
-				options: {
-					lang: 'en',
-					stderr: true
-				}
-			}
 		},
 
 		clean: {
 			build: {
-				build  : ['build'],
+				build: ['build'],
 				tscache: ['.tscache'],
-				logs   : ['*.log']
+				logs: ['*.log']
 			}
 		},
 
@@ -44,15 +36,15 @@ module.exports = function(grunt) {
 				options: {
 					stderr: true
 				}
-			}
+			},
+			cspell: cspellPath + ' ' + '-c' + ' ' + 'cspell.config.json' + ' ' + 'src/**'
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-ts');
 	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-spell');
+	grunt.loadNpmTasks('grunt-shell');
 
 	grunt.registerTask('build', [
 		'clean:build',
@@ -61,6 +53,6 @@ module.exports = function(grunt) {
 	]);
 	grunt.registerTask('validate', [
 		'tslint',
-		'spell'
+		'shell:cspell'
 	]);
 };
