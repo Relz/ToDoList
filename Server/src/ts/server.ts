@@ -1,6 +1,6 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import { CONFIG } from './config';
+import { Config } from './Config';
 import { DataBase } from './DataBase';
 
 const app: express.Express = express();
@@ -28,6 +28,6 @@ app.delete('/', () => {
 	console.log('Hello from DELETE');
 });
 
-app.listen(CONFIG.PORT, () => {
-	console.log(`Express server listening on port ${CONFIG.PORT}`);
+app.listen(Config.port, () => {
+	console.log(`Express server listening on port ${Config.port}`);
 });
