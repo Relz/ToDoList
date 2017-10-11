@@ -1,40 +1,40 @@
 {
-  "name": "ToDoListServer",
-  "version": "1.0.0",
-  "description": "Project for study",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Relz/ToDoList.git"
-  },
-  "main": "server.js",
-  "scripts": {
-    "start": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js build",
-    "validate": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js validate"
-  },
-  "author": "Relz and Co. <relz0071@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.16.1",
-    "cors": "^2.8.1",
-    "express": "^4.14.1",
-    "sqlite3": "^3.1.13"
-  },
-  "devDependencies": {
-    "@types/body-parser": "0.0.34",
-    "@types/cors": "^2.8.0",
-    "@types/express": "^4.0.35",
-    "@types/node": "^7.0.5",
-    "@types/sqlite3": "^3.1.1",
-    "cspell": "^1.10.4",
-    "grunt": "^1.0.1",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-shell": "^2.1.0",
-    "grunt-ts": "^5.5.1",
-    "grunt-tslint": "^5.0.1",
-    "tslint": "^5.1.0",
-    "tslint-consistent-codestyle": "^1.7.0",
-    "tslint-eslint-rules": "^4.1.1",
-    "typescript": "^2.2.2",
-    "vrsource-tslint-rules": "^5.1.1"
-  }
+	"name": "ToDoListServer",
+	"version": "1.0.0",
+	"description": "Project for study",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Relz/ToDoList.git"
+	},
+	"main": "server.js",
+	"scripts": {
+		"start": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js build",
+		"validate": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js validate"
+	},
+	"author": "Relz and Co. <relz0071@gmail.com>",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.16.1",
+		"cors": "^2.8.1",
+		"express": "^4.14.1",
+		"sqlite3": "^3.1.13"
+	},
+	"devDependencies": {
+		"@types/body-parser": "0.0.34",
+		"@types/cors": "^2.8.0",
+		"@types/express": "^4.0.35",
+		"@types/node": "^7.0.5",
+		"@types/sqlite3": "^3.1.1",
+		"cspell": "^1.10.4",
+		"grunt": "^1.0.1",
+		"grunt-contrib-clean": "^1.0.0",
+		"grunt-shell": "^2.1.0",
+		"grunt-ts": "^5.5.1",
+		"grunt-tslint": "^5.0.1",
+		"tslint": "^5.1.0",
+		"tslint-consistent-codestyle": "^1.7.0",
+		"tslint-eslint-rules": "^4.1.1",
+		"typescript": "^2.2.2",
+		"vrsource-tslint-rules": "^5.1.1"
+	}
 }

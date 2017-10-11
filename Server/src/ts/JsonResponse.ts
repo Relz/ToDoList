@@ -6,7 +6,7 @@ export class JsonResponse {
 		return this._responseCode;
 	}
 
-	public set responseCode(value: number){
+	public set responseCode(value: number) {
 		this._responseCode = value;
 	}
 
@@ -14,7 +14,7 @@ export class JsonResponse {
 		return this._response;
 	}
 
-	public set response(value: Object){
+	public set response(value: Object) {
 		this._response = value;
 	}
 }
