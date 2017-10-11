@@ -52,6 +52,11 @@
 				"alphabetize": true
 			}
 		],
+		"no-console": [
+			true,
+			"log",
+			"error"
+		],
 		// Custom rules
 		"ascii-only": false,
 		// tslint-consistent-codestyle https://github.com/ajafff/tslint-consistent-codestyle
