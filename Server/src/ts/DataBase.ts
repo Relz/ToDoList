@@ -1,10 +1,8 @@
-import { CONFIG } from './config';
-
-// 'Verbose' is for DEBUG only
-const sqlite3 = require('sqlite3').verbose();
+import { Config } from './Config';
+import * as sqlite3 from 'sqlite3';
 
 export class DataBase {
-	private static db = new sqlite3.Database(CONFIG.DB_NAME);
+	private static db = new sqlite3.Database(Config.dbName);
 
 	public static getUsers(): any[] {
 		let result: any[] = [];

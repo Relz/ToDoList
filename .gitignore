@@ -1,12 +1,16 @@
 # node_modules
-node_modules/
+**/node_modules/
 
 # Build results
-build/
+**/build/
+*.log
+**/.baseDir.ts
+
+# Build cache
+**/.tscache/
 
 # PhpStorm project specific settings
-.idea/
+**/.idea/
 
-# Compilation results
-*.js
-*.js.map
+#Node package manager package-lock file
+Server/package-lock.json
