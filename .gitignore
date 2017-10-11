@@ -11,3 +11,6 @@
 
 # PhpStorm project specific settings
 **/.idea/
+
+#Node package manager package-lock file
+Server/package-lock.json
