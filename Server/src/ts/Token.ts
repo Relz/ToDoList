@@ -1,5 +1,5 @@
 import * as jwt from 'jsonwebtoken';
-import { Config } from './config';
+import { Config } from './Config';
 
 export class Token {
 	static create(tokenData: any): string {
