@@ -3,6 +3,8 @@
 	"language": "en",
 	"words": [
 		// Database words
-		"VARCHAR"
+		"VARCHAR",
+		// Modules constants
+		"READWRITE"
 	]
 }
