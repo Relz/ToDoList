@@ -4,6 +4,8 @@
 	"words": [
 		// Database words
 		"VARCHAR",
+		// Secret
+		"ilovescotchyscotch",
 		// Modules constants
 		"READWRITE"
 	]
