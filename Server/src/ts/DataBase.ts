@@ -4,18 +4,21 @@ import * as sqlite3 from 'sqlite3';
 export class DataBase {
 	private static db: sqlite3.Database;
 
-	public static getUserId(login: string, password: string, callBack: (err: Error, rowId: number) => void): void {
+	public static getUserId(login: string, password: string, callBack: (rowId: number) => void): void {
 		if (!DataBase.db) {
 			throw new Error('Attempting to use DB before initialization');
 		}
 
 		DataBase.db.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
+			if (err) {
+				throw err;
+			}
 			if (!row) {
-				callBack(err, DataBase.Result.USER_NOT_EXISTS);
+				callBack(DataBase.Result.USER_NOT_EXISTS);
 			} else if (password !== row.password) {
-				callBack(err, DataBase.Result.WRONG_PASSWORD);
+				callBack(DataBase.Result.WRONG_PASSWORD);
 			} else {
-				callBack(err, row.id);
+				callBack(row.id);
 			}
 		});
 	}

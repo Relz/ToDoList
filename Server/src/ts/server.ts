@@ -29,7 +29,7 @@ app.get('/users', () => {
 app.post('/', () => {
 });
 
-app.post('/users/authenticate', (req, res) => {
+app.post('/users/authenticate', (req: any, res: any) => {
 	let responseJson: JsonResponse = new JsonResponse;
 
 	try {
@@ -41,10 +41,7 @@ app.post('/users/authenticate', (req, res) => {
 		const login: string = req.body.login;
 		const password: string = req.body.password;
 
-		DataBase.getUserId(login, password, (err, id) => {
-			if (err) {
-				throw err;
-			}
+		DataBase.getUserId(login, password, (id: number) => {
 			let httpStatus: number;
 			if (id === DataBase.Result.USER_NOT_EXISTS) {
 				responseJson.responseCode = 2;
@@ -61,8 +58,8 @@ app.post('/users/authenticate', (req, res) => {
 			res.status(httpStatus).send(responseJson);
 		});
 	} catch (error) {
-		responseJson.responseCode = ResponseStatus.INTERNAL_SERVER_ERROR;
-		res.status(responseJson.responseCode).send(responseJson);
+		responseJson.responseCode = 4;
+		res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(responseJson);
 	}
 });
 
