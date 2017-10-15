@@ -1,12 +1,19 @@
 import * as cors from 'cors';
 import * as express from 'express';
-import * as bodyParser from 'body-parser'
+import * as bodyParser from 'body-parser';
 import { DataBase } from './DataBase';
 import { Config } from './Config';
 import { JsonResponse } from './JsonResponse';
 import { Token } from './Token';
 
 const app: express.Express = express();
+
+enum ResponseStatus {
+	OK = 200,
+	BAD_REQUEST = 400,
+	FORBIDDEN = 403,
+	INTERNAL_SERVER_ERROR = 500
+}
 
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -27,38 +34,35 @@ app.post('/users/authenticate', (req, res) => {
 
 	try {
 		if (!req.body || !req.body.login || !req.body.password) {
-			responseJson.responseCode = 400;
-			responseJson.response = { message: 'Request should contain a login and a password' };
-			return res.status(responseJson.responseCode).send(responseJson);
+			responseJson.responseCode = 1;
+			return res.status(ResponseStatus.BAD_REQUEST).send(responseJson);
 		}
 
-		const login = req.body.login;
-		const password = req.body.password;
-		// Here will be checks for correctness of login and password
+		const login: string = req.body.login;
+		const password: string = req.body.password;
 
 		DataBase.getUserId(login, password, (err, id) => {
 			if (err) {
 				throw err;
 			}
-			if (id === DataBase.userNotExists) {
-				responseJson.responseCode = 403;
-				responseJson.response = { message: 'The user does not exist' };
-			} else if (id === DataBase.wrongPassword) {
-				responseJson.responseCode = 403;
-				responseJson.response = { message: 'The password is wrong' };
+			let httpStatus: number;
+			if (id === DataBase.Result.USER_NOT_EXISTS) {
+				responseJson.responseCode = 2;
+				httpStatus = ResponseStatus.FORBIDDEN;
+			} else if (id === DataBase.Result.WRONG_PASSWORD) {
+				responseJson.responseCode = 3;
+				httpStatus = ResponseStatus.FORBIDDEN;
 			} else {
-				const payload = { user_id: id };
-				const token = Token.create(payload);
-				responseJson.responseCode = 200;
+				const token: string = Token.create({ userId: id });
+				responseJson.responseCode = 0;
 				responseJson.response = { token: token };
+				httpStatus = ResponseStatus.OK;
 			}
-			res.status(responseJson.responseCode).send(responseJson);
+			res.status(httpStatus).send(responseJson);
 		});
 	} catch (error) {
-		responseJson.responseCode = 500;
-		responseJson.response = { message: 'Something went wrong' };
+		responseJson.responseCode = ResponseStatus.INTERNAL_SERVER_ERROR;
 		res.status(responseJson.responseCode).send(responseJson);
-		// Here will be logging
 	}
 });
 

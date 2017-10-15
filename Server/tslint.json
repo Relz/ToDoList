@@ -197,6 +197,18 @@
 			"check-typecast"
 		],
 		"import-spacing": true,
+		"typedef": [
+			true,
+			"call-signature",
+			"parameter",
+			"member-variable-declaration",
+			"arrow-parameter",
+			"property-declaration",
+			"variable-declaration",
+			"member-variable-declaration",
+			"object-destructuring",
+			"array-destructuring"
+		],
 		// Disabled tslint rules
 		"max-classes-per-file": [
 			false
