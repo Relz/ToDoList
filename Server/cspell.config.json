@@ -3,6 +3,10 @@
 	"language": "en",
 	"words": [
 		// Database words
-		"VARCHAR"
+		"VARCHAR",
+		// Secret
+		"ilovescotchyscotch",
+		// Modules constants
+		"READWRITE"
 	]
 }

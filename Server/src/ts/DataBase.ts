@@ -2,9 +2,32 @@ import { Config } from './Config';
 import * as sqlite3 from 'sqlite3';
 
 export class DataBase {
-	private static db = new sqlite3.Database(Config.dbName);
+	private static db: sqlite3.Database;
+
+	public static getUserId(login: string, password: string, callBack: (rowId: number) => void): void {
+		if (!DataBase.db) {
+			throw new Error('Attempting to use DB before initialization');
+		}
+
+		DataBase.db.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
+			if (err) {
+				throw err;
+			}
+			if (!row) {
+				callBack(DataBase.Result.USER_NOT_EXISTS);
+			} else if (password !== row.password) {
+				callBack(DataBase.Result.WRONG_PASSWORD);
+			} else {
+				callBack(row.id);
+			}
+		});
+	}
 
 	public static getUsers(): any[] {
+		if (!DataBase.db) {
+			throw new Error('Attempting to use DB before initialization');
+		}
+
 		let result: any[] = [];
 		DataBase.db.each('SELECT * FROM user', (err: Error, row: any) => {
 			if (err) {
@@ -16,11 +39,40 @@ export class DataBase {
 		return result;
 	}
 
-	// Must be called before first using
 	public static init(): void {
+		if (DataBase.db) {
+			throw new Error('Attempting to initialize DB twice');
+		}
+
+		DataBase.db = new sqlite3.Database(Config.dbName, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err: Error) => {
+			if (err) {
+				throw err;
+			}
+			DataBase.createTaskTable();
+			DataBase.createUserTable();
+		});
+	}
+
+	private static createTaskTable(): void {
+		DataBase.db.run('CREATE TABLE IF NOT EXISTS task (' +
+			'id INTEGER PRIMARY KEY,' +
+			'title VARCHAR,' +
+			'description VARCHAR,' +
+			'creationDate INTEGER,' +
+			'deadline INTEGER,' +
+			'isDone INTEGER(1),' +
+			'userId INTEGER);', (err: Error) => {
+				if (err) {
+					throw err;
+				}
+			}
+		);
+	}
+
+	private static createUserTable(): void {
 		DataBase.db.run('CREATE TABLE IF NOT EXISTS user (' +
 			'id INTEGER PRIMARY KEY,' +
-			'login VARCHAR,' +
+			'login VARCHAR UNIQUE,' +
 			'password VARCHAR,' +
 			'name VARCHAR);', (err: Error) => {
 				if (err) {
@@ -28,5 +80,12 @@ export class DataBase {
 				}
 			}
 		);
+	}
+}
+
+export namespace DataBase {
+	export enum Result {
+		USER_NOT_EXISTS = -1,
+		WRONG_PASSWORD = -2
 	}
 }
