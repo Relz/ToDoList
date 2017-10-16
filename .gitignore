@@ -11,3 +11,6 @@
 
 # PhpStorm project specific settings
 **/.idea/
+
+# Coverage results
+**/coverage/
