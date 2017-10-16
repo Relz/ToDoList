@@ -5,6 +5,7 @@
 **/build/
 *.log
 **/.baseDir.ts
+*.db
 
 # Build cache
 **/.tscache/
