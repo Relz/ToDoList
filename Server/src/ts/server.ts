@@ -5,6 +5,7 @@ import { DataBase } from './DataBase';
 import { Config } from './Config';
 import { JsonResponse } from './JsonResponse';
 import { Token } from './Token';
+import { UserInfo } from './UserInfo';
 
 const app: express.Express = express();
 
@@ -23,7 +24,20 @@ DataBase.init();
 app.get('/', () => {
 });
 
-app.get('/users', () => {
+app.get('/users/:token', (req: express.Request, res: express.Response) => {
+	DataBase.getUserInfoByToken(req.params.token, (userInfo: UserInfo) => {
+		const jsonResponse: JsonResponse = new JsonResponse();
+		jsonResponse.response = userInfo;
+		let responseStatus: number;
+		if (userInfo) {
+			jsonResponse.responseCode = 0;
+			responseStatus = ResponseStatus.OK;
+		} else {
+			jsonResponse.responseCode = 1;
+			responseStatus = ResponseStatus.BAD_REQUEST;
+		}
+		res.status(responseStatus).send(jsonResponse);
+	});
 });
 
 app.post('/', () => {

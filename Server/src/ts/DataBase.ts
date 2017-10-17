@@ -1,5 +1,6 @@
 import { Config } from './Config';
 import * as sqlite3 from 'sqlite3';
+import { UserInfo } from './UserInfo';
 
 export class DataBase {
 	private static db: sqlite3.Database;
@@ -20,6 +21,24 @@ export class DataBase {
 			} else {
 				callBack(row.id);
 			}
+		});
+	}
+
+	public static getUserInfoByToken(token: string, callback: (userInfo: UserInfo) => void): void {
+		if (!DataBase.db) {
+			throw new Error('Attempting to use DB before initialization');
+		}
+
+		DataBase.db.get('SELECT * FROM user WHERE token = ?', token, (err: Error, row: any) => {
+			if (err) {
+				throw err;
+			}
+			if (!row) {
+				callback(undefined);
+				return;
+			}
+			callback (new UserInfo(row.login, row.name));
+			return;
 		});
 	}
 
@@ -74,7 +93,8 @@ export class DataBase {
 			'id INTEGER PRIMARY KEY,' +
 			'login VARCHAR UNIQUE,' +
 			'password VARCHAR,' +
-			'name VARCHAR);', (err: Error) => {
+			'name VARCHAR,' +
+			'token VARCHAR);', (err: Error) => {
 				if (err) {
 					throw err;
 				}
