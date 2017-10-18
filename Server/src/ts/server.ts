@@ -17,7 +17,7 @@ enum ResponseStatus {
 }
 
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', () => {
@@ -42,7 +42,7 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 app.post('/', () => {
 });
 
-app.post('/users/authenticate', (req: any, res: any) => {
+app.post('/users/authenticate', (req: express.Request, res: express.Response) => {
 	let responseJson: JsonResponse = new JsonResponse;
 
 	try {
