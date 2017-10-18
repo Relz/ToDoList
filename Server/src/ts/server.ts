@@ -19,7 +19,6 @@ enum ResponseStatus {
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-DataBase.init();
 
 app.get('/', () => {
 });
@@ -64,7 +63,7 @@ app.post('/users/authenticate', (req: any, res: any) => {
 				responseJson.responseCode = 3;
 				httpStatus = ResponseStatus.FORBIDDEN;
 			} else {
-				const token: string = Token.create({ userId: id });
+				const token: string = Token.create({ id: id });
 				responseJson.responseCode = 0;
 				responseJson.response = { token: token };
 				httpStatus = ResponseStatus.OK;

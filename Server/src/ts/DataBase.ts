@@ -1,16 +1,18 @@
 import { Config } from './Config';
-import * as sqlite3 from 'sqlite3';
+import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
+import { Token } from './Token';
 
 export class DataBase {
-	private static db: sqlite3.Database;
+	private static _instance: Database =
+		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
 	public static getUserId(login: string, password: string, callBack: (rowId: number) => void): void {
-		if (!DataBase.db) {
+		if (!DataBase._instance) {
 			throw new Error('Attempting to use DB before initialization');
 		}
 
-		DataBase.db.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
+		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
@@ -25,11 +27,12 @@ export class DataBase {
 	}
 
 	public static getUserInfoByToken(token: string, callback: (userInfo: UserInfo) => void): void {
-		if (!DataBase.db) {
+		if (!DataBase._instance) {
 			throw new Error('Attempting to use DB before initialization');
 		}
 
-		DataBase.db.get('SELECT * FROM user WHERE token = ?', token, (err: Error, row: any) => {
+		const id: number = Token.verify(token).id;
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
@@ -37,18 +40,18 @@ export class DataBase {
 				callback(undefined);
 				return;
 			}
-			callback (new UserInfo(row.login, row.name));
+			callback(new UserInfo(row.login, row.name));
 			return;
 		});
 	}
 
 	public static getUsers(): any[] {
-		if (!DataBase.db) {
+		if (!DataBase._instance) {
 			throw new Error('Attempting to use DB before initialization');
 		}
 
 		let result: any[] = [];
-		DataBase.db.each('SELECT * FROM user', (err: Error, row: any) => {
+		DataBase._instance.each('SELECT * FROM user', (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
@@ -58,22 +61,13 @@ export class DataBase {
 		return result;
 	}
 
-	public static init(): void {
-		if (DataBase.db) {
-			throw new Error('Attempting to initialize DB twice');
-		}
-
-		DataBase.db = new sqlite3.Database(Config.dbName, sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err: Error) => {
-			if (err) {
-				throw err;
-			}
-			DataBase.createTaskTable();
-			DataBase.createUserTable();
-		});
-	}
+	/**
+	 * Don't let anyone instantiate this class.
+	 */
+	private constructor() { }
 
 	private static createTaskTable(): void {
-		DataBase.db.run('CREATE TABLE IF NOT EXISTS task (' +
+		DataBase._instance.run('CREATE TABLE IF NOT EXISTS task (' +
 			'id INTEGER PRIMARY KEY,' +
 			'title VARCHAR,' +
 			'description VARCHAR,' +
@@ -89,17 +83,24 @@ export class DataBase {
 	}
 
 	private static createUserTable(): void {
-		DataBase.db.run('CREATE TABLE IF NOT EXISTS user (' +
+		DataBase._instance.run('CREATE TABLE IF NOT EXISTS user (' +
 			'id INTEGER PRIMARY KEY,' +
 			'login VARCHAR UNIQUE,' +
 			'password VARCHAR,' +
-			'name VARCHAR,' +
-			'token VARCHAR);', (err: Error) => {
+			'name VARCHAR);', (err: Error) => {
 				if (err) {
 					throw err;
 				}
 			}
 		);
+	}
+
+	private static initialize(err: Error): void {
+		if (err) {
+			throw err;
+		}
+		DataBase.createTaskTable();
+		DataBase.createUserTable();
 	}
 }
 
