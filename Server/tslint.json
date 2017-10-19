@@ -209,6 +209,7 @@
 			"object-destructuring",
 			"array-destructuring"
 		],
+		"max-line-length": [true, 120],
 		// Disabled tslint rules
 		"max-classes-per-file": [
 			false

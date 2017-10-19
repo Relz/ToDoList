@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
 	var path = require('path');
 	var cspellPath = path.resolve('node_modules/.bin/cspell');
 
@@ -49,10 +49,10 @@ module.exports = function (grunt) {
 							grunt.fail.fatal('File "' + filePattern + '" doesn\'t exists');
 						}
 					} else {
-						filePattern = 'src/test/*.test.ts';
+						filePattern = 'build/test/*.test.js';
 					}
 
-					return 'mocha --require ts-node/register ' + filePattern;
+					return 'mocha ' + filePattern;
 				}
 			},
 			test_coverage: {
@@ -104,6 +104,7 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask('test', [
+		'compile',
 		'shell:test'
 	]);
 
