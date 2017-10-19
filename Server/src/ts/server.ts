@@ -28,10 +28,14 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 	}
 	catch (exception) {
 		if (exception instanceof JsonWebTokenError) {
-			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
-		} else if (exception instanceof TokenExpiredError) {
 			jsonResponse.responseCode = 2;
 			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+			return;
+		}
+		if (exception instanceof TokenExpiredError) {
+			jsonResponse.responseCode = 3;
+			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+			return;
 		}
 	}
 	DataBase.getUserInfoById(id, (userInfo: UserInfo) => {
