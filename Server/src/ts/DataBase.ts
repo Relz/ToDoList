@@ -1,17 +1,12 @@
 import { Config } from './Config';
 import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
-import { Token } from './Token';
 
 export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
 	public static getUserId(login: string, password: string, callBack: (rowId: number) => void): void {
-		if (!DataBase._instance) {
-			throw new Error('Attempting to use DB before initialization');
-		}
-
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
 				throw err;
@@ -26,12 +21,7 @@ export class DataBase {
 		});
 	}
 
-	public static getUserInfoByToken(token: string, callback: (userInfo: UserInfo) => void): void {
-		if (!DataBase._instance) {
-			throw new Error('Attempting to use DB before initialization');
-		}
-
-		const id: number = Token.verify(token).id;
+	public static getUserInfoById(id: number, callback: (userInfo: UserInfo) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
@@ -46,10 +36,6 @@ export class DataBase {
 	}
 
 	public static getUsers(): any[] {
-		if (!DataBase._instance) {
-			throw new Error('Attempting to use DB before initialization');
-		}
-
 		let result: any[] = [];
 		DataBase._instance.each('SELECT * FROM user', (err: Error, row: any) => {
 			if (err) {
