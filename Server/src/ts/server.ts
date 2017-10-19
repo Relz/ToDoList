@@ -94,9 +94,6 @@ app.post('/users/authenticate', (req: express.Request, res: express.Response) =>
 	});
 });
 
-app.put('/', () => {
-});
-
 app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 	let userId: number;
 
@@ -131,7 +128,28 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 	});
 });
 
-app.delete('/', () => {
+app.delete('/users/:token', (req: express.Request, res: express.Response) => {
+	const jsonResponse: JsonResponse = new JsonResponse();
+	let id: number;
+	try {
+		id = Token.verify(req.params.token).id;
+	}
+	catch (exception) {
+		if (exception instanceof JsonWebTokenError) {
+			jsonResponse.responseCode = 2;
+			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+			return;
+		}
+		if (exception instanceof TokenExpiredError) {
+			jsonResponse.responseCode = 3;
+			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+			return;
+		}
+	}
+	DataBase.deleteUserById(id, (responseCode: number) => {
+		jsonResponse.responseCode = responseCode;
+		res.status(ResponseStatus.OK).send(jsonResponse);
+	});
 });
 
 app.listen(Config.port, () => {

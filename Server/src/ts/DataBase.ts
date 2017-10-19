@@ -53,6 +53,16 @@ export class DataBase {
 		});
 	}
 
+	public static deleteUserById(id: number, callback: (responseCode: number) => void): void {
+		DataBase._instance.run('DELETE FROM user WHERE id = ?', id, (err: Error) => {
+			if (err) {
+				throw err;
+			}
+			callback(0);
+			return;
+		});
+	}
+
 	public static getUserId(login: string, password: string, callback: (dbResult: DbResult, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
