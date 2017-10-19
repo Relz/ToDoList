@@ -1,20 +1,54 @@
 import { Config } from './Config';
 import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
+import { User } from './User';
 
 export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
+    public static editUser(id: number, oldPassword: string, newData: User, callback: (dbResult: number) => void): void {
+		if (!DataBase._instance) {
+			throw new Error('Attempting to use DB before initialization');
+		}
+
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
+			if (err) {
+				throw err;
+			}
+			if (!row) {
+				callback(DbResult.USER_NOT_EXISTS);
+				return;
+			}
+
+			if (oldPassword !== row.password) {
+				callback(DbResult.WRONG_PASSWORD);
+				return;
+			}
+
+			if (newData.login !== row.login) {
+				DataBase.isLoginInUse(newData.login, (isInUse: boolean) => {
+					if (isInUse) {
+						callback(DbResult.LOGIN_IN_USE);
+ 					} else {
+						DataBase.updateUser(id, newData, callback);
+					}
+				});
+			} else {
+				DataBase.updateUser(id, newData, callback);
+			}
+		});
+	}    
+        
 	public static getUserId(login: string, password: string, callBack: (rowId: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
 			if (!row) {
-				callBack(DataBase.Result.USER_NOT_EXISTS);
+				callBack(DbResult.USER_NOT_EXISTS);
 			} else if (password !== row.password) {
-				callBack(DataBase.Result.WRONG_PASSWORD);
+				callBack(DbResult.WRONG_PASSWORD);
 			} else {
 				callBack(row.id);
 			}
@@ -45,6 +79,20 @@ export class DataBase {
 		});
 
 		return result;
+	}
+    
+    public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
+		if (!DataBase._instance) {
+			throw new Error('Attempting to use DB before initialization');
+		}
+
+		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: any) => {
+			if (err) {
+				throw err;
+			}
+
+			callback(!!row);
+		});
 	}
 
 	/**
@@ -88,11 +136,21 @@ export class DataBase {
 		DataBase.createTaskTable();
 		DataBase.createUserTable();
 	}
+    
+    private static updateUser(id: number, newData: User, callback: (dbResult: number) => void): void {
+		const query: string = 'UPDATE user SET login = ?, password = ?, name = ? WHERE id = ?';
+		DataBase._instance.run(query, [newData.login, newData.password, newData.name, id], (err: Error) => {
+			if (err) {
+				throw err;
+			}
+			callback(DbResult.OK);
+		})
+	}
 }
 
-export namespace DataBase {
-	export enum Result {
-		USER_NOT_EXISTS = -1,
-		WRONG_PASSWORD = -2
-	}
+export enum DbResult {
+	USER_NOT_EXISTS = -1,
+	WRONG_PASSWORD = -2,
+	LOGIN_IN_USE = -3,
+	OK = -4
 }

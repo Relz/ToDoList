@@ -1,12 +1,13 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { DataBase } from './DataBase';
+import { DataBase, DbResult } from './DataBase';
 import { Config } from './Config';
 import { JsonResponse } from './JsonResponse';
 import { Token } from './Token';
 import { UserInfo } from './UserInfo';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
+import { User } from './User';
 
 const app: express.Express = express();
 app.use(cors());
@@ -66,10 +67,10 @@ app.post('/users/authenticate', (req: express.Request, res: express.Response) =>
 
 		DataBase.getUserId(login, password, (id: number) => {
 			let httpStatus: number;
-			if (id === DataBase.Result.USER_NOT_EXISTS) {
+			if (id === DbResult.USER_NOT_EXISTS) {
 				jsonResponse.responseCode = 2;
 				httpStatus = ResponseStatus.FORBIDDEN;
-			} else if (id === DataBase.Result.WRONG_PASSWORD) {
+			} else if (id === DbResult.WRONG_PASSWORD) {
 				jsonResponse.responseCode = 3;
 				httpStatus = ResponseStatus.FORBIDDEN;
 			} else {
@@ -86,6 +87,52 @@ app.post('/users/authenticate', (req: express.Request, res: express.Response) =>
 });
 
 app.put('/', () => {
+});
+
+
+app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
+	let jsonResponse: JsonResponse = new JsonResponse;
+	try {
+		let userId: number;
+
+		try {
+			userId = Token.verify(req.params.token).id;
+		} catch (err) {
+			jsonResponse.responseCode = 5;
+			return res.status(ResponseStatus.FORBIDDEN).send(jsonResponse);
+		}
+
+		if (!req.body || !req.body.login || !req.body.name || !req.body.password) {
+			jsonResponse.responseCode = 1;
+			return res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+		}
+
+		let newData: User = new User;
+		newData.login = req.body.login;
+		newData.name = req.body.name;
+		newData.password = (!!req.body.newPassword) ? req.body.newPassword : req.body.password;
+
+		DataBase.editUser(userId, req.body.password, newData, (dbResult: number) => {
+			let responseStatus: number;
+			if (dbResult === DbResult.USER_NOT_EXISTS) {
+				jsonResponse.responseCode = 2;
+				responseStatus = ResponseStatus.FORBIDDEN;
+			} else if (dbResult === DbResult.WRONG_PASSWORD){
+				jsonResponse.responseCode = 3;
+				responseStatus = ResponseStatus.FORBIDDEN;
+			} else if (dbResult === DbResult.LOGIN_IN_USE) {
+				jsonResponse.responseCode = 6;
+				responseStatus = ResponseStatus.FORBIDDEN;
+			} else {
+				jsonResponse.responseCode = 0;
+				responseStatus = ResponseStatus.OK;
+			}
+			return res.status(responseStatus).send(jsonResponse);
+		});
+	} catch (err) {
+		jsonResponse.responseCode = 4;
+		res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(jsonResponse);
+	}
 });
 
 app.delete('/', () => {
