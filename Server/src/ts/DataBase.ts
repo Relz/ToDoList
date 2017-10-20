@@ -7,7 +7,7 @@ export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
-    public static editUser(id: number, oldPassword: string, newData: User, callback: (dbResult: number) => void): void {
+    public static editUser(id: number, password: string, newData: User, callback: (dbResult: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
@@ -17,12 +17,14 @@ export class DataBase {
 				return;
 			}
 
-			if (oldPassword !== row.password) {
+			const currentData: User = new User(row.id, row.login, row.password, row.name);
+
+			if (password !== currentData.password) {
 				callback(DbResult.WRONG_PASSWORD);
 				return;
 			}
 
-			if (newData.login !== row.login) {
+			if (newData.login !== currentData.login) {
 				DataBase.isLoginInUse(newData.login, (isInUse: boolean) => {
 					if (isInUse) {
 						callback(DbResult.LOGIN_IN_USE);

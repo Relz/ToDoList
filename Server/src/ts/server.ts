@@ -107,25 +107,30 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 			return res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
 		}
 
-		let newData: User = new User;
-		newData.login = req.body.login;
-		newData.name = req.body.name;
-		newData.password = (req.body.newPassword !== undefined) ? req.body.newPassword : req.body.password;
+		let newData: User = new User(
+			userId,
+			req.body.login,
+			(req.body.newPassword !== undefined) ? req.body.newPassword : req.body.password,
+			req.body.name);
 
 		DataBase.editUser(userId, req.body.password, newData, (dbResult: number) => {
 			let responseStatus: number;
-			if (dbResult === DbResult.USER_NOT_EXISTS) {
-				jsonResponse.responseCode = 2;
-				responseStatus = ResponseStatus.FORBIDDEN;
-			} else if (dbResult === DbResult.WRONG_PASSWORD){
-				jsonResponse.responseCode = 3;
-				responseStatus = ResponseStatus.FORBIDDEN;
-			} else if (dbResult === DbResult.LOGIN_IN_USE) {
-				jsonResponse.responseCode = 6;
-				responseStatus = ResponseStatus.FORBIDDEN;
-			} else {
-				jsonResponse.responseCode = 0;
-				responseStatus = ResponseStatus.OK;
+			switch (dbResult) {
+				case DbResult.USER_NOT_EXISTS:
+					jsonResponse.responseCode = 2;
+					responseStatus = ResponseStatus.FORBIDDEN;
+					break;
+				case DbResult.WRONG_PASSWORD:
+					jsonResponse.responseCode = 3;
+					responseStatus = ResponseStatus.FORBIDDEN;
+					break;
+				case DbResult.LOGIN_IN_USE:
+					jsonResponse.responseCode = 6;
+					responseStatus = ResponseStatus.FORBIDDEN;
+					break;
+				default:
+					jsonResponse.responseCode = 0;
+					responseStatus = ResponseStatus.OK;
 			}
 			return res.status(responseStatus).send(jsonResponse);
 		});
