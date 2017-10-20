@@ -110,7 +110,7 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 		let newData: User = new User;
 		newData.login = req.body.login;
 		newData.name = req.body.name;
-		newData.password = (!!req.body.newPassword) ? req.body.newPassword : req.body.password;
+		newData.password = (req.body.newPassword !== undefined) ? req.body.newPassword : req.body.password;
 
 		DataBase.editUser(userId, req.body.password, newData, (dbResult: number) => {
 			let responseStatus: number;

@@ -8,10 +8,6 @@ export class DataBase {
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
     public static editUser(id: number, oldPassword: string, newData: User, callback: (dbResult: number) => void): void {
-		if (!DataBase._instance) {
-			throw new Error('Attempting to use DB before initialization');
-		}
-
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
@@ -82,16 +78,12 @@ export class DataBase {
 	}
     
     public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
-		if (!DataBase._instance) {
-			throw new Error('Attempting to use DB before initialization');
-		}
-
 		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
 
-			callback(!!row);
+			callback(row !== undefined);
 		});
 	}
 
