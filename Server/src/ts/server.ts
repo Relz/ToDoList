@@ -53,7 +53,7 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 	});
 });
 
-app.post('/user/registration', (req: express.Request, res: express.Response) => {
+app.post('/users/registration', (req: express.Request, res: express.Response) => {
 	let responseBody: JsonResponse = new JsonResponse();
 
 	if (!req.body || !req.body.login || !req.body.password) {
@@ -64,22 +64,25 @@ app.post('/user/registration', (req: express.Request, res: express.Response) => 
 	const login: string = req.body.login;
 	const password: string = req.body.password;
 
-	let onTakeNewUserId: any = (takeIdResult: DbResult, id: number) => {
+	const onTakeNewUserId: any = (takeIdResult: DbResult, id: number) => {
 		if (takeIdResult == DbResult.OK) {
 			const token: string = Token.create({ id: id });
 			responseBody.response = { token: token };
 			res.status(ResponseStatus.OK).send(responseBody);
 		} else {
+			responseBody.responseCode = 4;
 			res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(responseBody);
 		}
 	}
 
-	let onEndInsert: any = (insertResult: DbResult) => {
+	const onEndInsert: any = (insertResult: DbResult) => {
 		switch (insertResult) {
 			case DbResult.QUERY_ERROR:
+				responseBody.responseCode = 2;
 				res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(responseBody);
 				break;
 			case DbResult.LOGIN_IN_USE:
+				responseBody.responseCode = 3;
 				res.status(ResponseStatus.BAD_REQUEST).send(responseBody);
 				break;
 			case DbResult.OK:
