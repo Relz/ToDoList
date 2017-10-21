@@ -53,42 +53,80 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 	});
 });
 
+app.post('/user/registration', (req: express.Request, res: express.Response) => {
+	let responseBody: JsonResponse = new JsonResponse();
+
+	if (!req.body || !req.body.login || !req.body.password) {
+		responseBody.responseCode = 1;
+		return res.status(ResponseStatus.BAD_REQUEST).send(responseBody);
+	}
+
+	const login: string = req.body.login;
+	const password: string = req.body.password;
+
+	let onTakeNewUserId: any = (takeIdResult: DbResult, id: number) => {
+		if (takeIdResult == DbResult.OK) {
+			const token: string = Token.create({ id: id });
+			responseBody.response = { token: token };
+			res.status(ResponseStatus.OK).send(responseBody);
+		} else {
+			res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(responseBody);
+		}
+	}
+
+	let onEndInsert: any = (insertResult: DbResult) => {
+		switch (insertResult) {
+			case DbResult.QUERY_ERROR:
+				res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(responseBody);
+				break;
+			case DbResult.LOGIN_IN_USE:
+				res.status(ResponseStatus.BAD_REQUEST).send(responseBody);
+				break;
+			case DbResult.OK:
+				DataBase.getUserId(login, password, onTakeNewUserId);
+				break;
+		}
+	};
+
+	DataBase.insertUser(login, password, onEndInsert);
+});
+
 app.post('/users/authenticate', (req: express.Request, res: express.Response) => {
 	let jsonResponse: JsonResponse = new JsonResponse();
 
-	try {
-		if (!req.body || !req.body.login || !req.body.password) {
-			jsonResponse.responseCode = 1;
-			return res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
-		}
+	if (!req.body || !req.body.login || !req.body.password) {
+		jsonResponse.responseCode = 1;
+		return res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+	}
 
-		const login: string = req.body.login;
-		const password: string = req.body.password;
+	const login: string = req.body.login;
+	const password: string = req.body.password;
 
-		DataBase.getUserId(login, password, (id: number) => {
-			let httpStatus: number;
-			if (id === DbResult.USER_NOT_EXISTS) {
-				jsonResponse.responseCode = 2;
-				httpStatus = ResponseStatus.FORBIDDEN;
-			} else if (id === DbResult.WRONG_PASSWORD) {
-				jsonResponse.responseCode = 3;
-				httpStatus = ResponseStatus.FORBIDDEN;
-			} else {
+	DataBase.getUserId(login, password, (resultCode: DbResult, id: number) => {
+		switch (resultCode) {
+			case DbResult.OK:
 				const token: string = Token.create({ id: id });
 				jsonResponse.responseCode = 0;
 				jsonResponse.response = { token: token };
-				httpStatus = ResponseStatus.OK;
-			}
-			res.status(httpStatus).send(jsonResponse);
-		});
-	} catch (error) {
-		res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(jsonResponse);
-	}
+				res.status(ResponseStatus.OK).send(jsonResponse);
+				break;
+			case DbResult.USER_NOT_EXISTS:
+				jsonResponse.responseCode = 2;
+				res.status(ResponseStatus.FORBIDDEN).send(jsonResponse);
+				break;
+			case DbResult.QUERY_ERROR:
+				res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(jsonResponse);
+				break;
+			case DbResult.WRONG_PASSWORD:
+				jsonResponse.responseCode = 3;
+				res.status(ResponseStatus.FORBIDDEN).send(jsonResponse);
+				break;
+		}
+	});
 });
 
 app.put('/', () => {
 });
-
 
 app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 	let jsonResponse: JsonResponse = new JsonResponse;

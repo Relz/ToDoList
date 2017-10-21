@@ -49,7 +49,7 @@
 					"private-instance-method",
 					"private-static-method"
 				],
-				"alphabetize": true
+				"alphabetize": false
 			}
 		],
 		"no-console": [
