@@ -2,6 +2,14 @@ export class JsonResponse {
 	private _responseCode: number;
 	private _response: Object;
 
+	constructor()
+	constructor(responseCode: number, response: Object)
+	constructor(responseCode: number, response?: Object)
+	constructor(responseCode?: number, response?: Object) {
+		this._responseCode = responseCode;
+		this._response = response;
+	}
+
 	public get responseCode(): number {
 		return this._responseCode;
 	}
