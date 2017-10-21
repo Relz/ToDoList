@@ -2,6 +2,7 @@ import { Config } from './Config';
 import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
+import * as HttpStatusCode from 'http-status-codes';
 
 export class DataBase {
 	private static _instance: Database =
@@ -53,13 +54,23 @@ export class DataBase {
 		});
 	}
 
-	public static deleteUserById(id: number, callback: (responseCode: number) => void): void {
-		DataBase._instance.run('DELETE FROM user WHERE id = ?', id, (err: Error) => {
+	public static deleteUserById(id: number, callback: (httpStatusCode: number, responseCode: number) => void): void {
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
-			callback(0);
-			return;
+			if (!row) {
+				callback(HttpStatusCode.BAD_REQUEST, DbResult.USER_NOT_EXISTS);
+				return;
+			}
+
+			DataBase._instance.run('DELETE FROM user WHERE id = ?', id, (err: Error) => {
+				if (err) {
+					throw err;
+				}
+				callback(HttpStatusCode.OK, DbResult.OK);
+				return;
+			});
 		});
 	}
 

@@ -8,18 +8,12 @@ import { Token } from './Token';
 import { UserInfo } from './UserInfo';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import { User } from './User';
+import * as HttpStatusCode from 'http-status-codes';
 
 const app: express.Express = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-enum ResponseStatus {
-	OK = 200,
-	BAD_REQUEST = 400,
-	FORBIDDEN = 403,
-	INTERNAL_SERVER_ERROR = 500
-}
 
 app.get('/users/:token', (req: express.Request, res: express.Response) => {
 	let id: number;
@@ -128,8 +122,9 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 	});
 });
 
-app.delete('/users/:token', (req: express.Request, res: express.Response) => {
+app.delete('/users/delete/:token', (req: express.Request, res: express.Response) => {
 	const jsonResponse: JsonResponse = new JsonResponse();
+
 	let id: number;
 	try {
 		id = Token.verify(req.params.token).id;
@@ -137,18 +132,19 @@ app.delete('/users/:token', (req: express.Request, res: express.Response) => {
 	catch (exception) {
 		if (exception instanceof JsonWebTokenError) {
 			jsonResponse.responseCode = 2;
-			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+			res.status(HttpStatusCode.BAD_REQUEST).send(jsonResponse);
 			return;
 		}
 		if (exception instanceof TokenExpiredError) {
 			jsonResponse.responseCode = 3;
-			res.status(ResponseStatus.BAD_REQUEST).send(jsonResponse);
+			res.status(HttpStatusCode.FORBIDDEN).send(jsonResponse);
 			return;
 		}
 	}
-	DataBase.deleteUserById(id, (responseCode: number) => {
+
+	DataBase.deleteUserById(id, (httpStatusCode: number, responseCode: number) => {
 		jsonResponse.responseCode = responseCode;
-		res.status(ResponseStatus.OK).send(jsonResponse);
+		res.status(httpStatusCode).send(jsonResponse);
 	});
 });
 
