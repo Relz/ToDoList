@@ -37,7 +37,7 @@ export class DataBase {
 	}
 
 	public static insertUser(login: string, password: string, onEndInsert: (result: DbResult) => void): void {
-		var onSearchLoginEnd: any = (isLoginFound: boolean): void => {
+		const onSearchLoginEnd: any = (isLoginFound: boolean): void => {
 			if (isLoginFound) {
 				onEndInsert(DbResult.LOGIN_IN_USE);
 				return;
