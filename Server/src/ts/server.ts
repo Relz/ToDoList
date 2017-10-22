@@ -75,7 +75,7 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 		}
 	};
 
-	const onEndInsert: any = (insertResult: DbResult) => {
+	DataBase.insertUser(login, password, (insertResult: DbResult) => {
 		switch (insertResult) {
 			case DbResult.QUERY_ERROR:
 				responseBody.responseCode = 2;
@@ -89,9 +89,7 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 				DataBase.getUserId(login, password, onTakeNewUserId);
 				break;
 		}
-	};
-
-	DataBase.insertUser(login, password, onEndInsert);
+	});
 });
 
 app.post('/users/authenticate', (req: express.Request, res: express.Response) => {

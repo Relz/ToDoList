@@ -36,34 +36,33 @@ export class DataBase {
 		});
 	}
 
-	public static insertUser(login: string, password: string, onEndInsert: (result: DbResult) => void): void {
-		const onSearchLoginEnd: any = (isLoginFound: boolean): void => {
+	public static insertUser(login: string, password: string, callback: (result: DbResult) => void): void {
+		DataBase.isLoginInUse(login, (isLoginFound: boolean): void => {
 			if (isLoginFound) {
-				onEndInsert(DbResult.LOGIN_IN_USE);
+				callback(DbResult.LOGIN_IN_USE);
 				return;
 			}
 			const query: string = 'INSERT INTO user (login, password) VALUES (?, ?)';
 			DataBase._instance.run(query, login, password, (err: Error): void => {
 				if (err) {
-					onEndInsert(DbResult.QUERY_ERROR);
+					callback(DbResult.QUERY_ERROR);
 					return;
 				}
-				onEndInsert(DbResult.OK);
+				callback(DbResult.OK);
 			});
-		};
-		DataBase.isLoginInUse(login, onSearchLoginEnd);
+		});
 	}
 
-	public static getUserId(login: string, password: string, callBack: (result: DbResult, id: number) => void): void {
+	public static getUserId(login: string, password: string, callback: (result: DbResult, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
-				callBack(DbResult.QUERY_ERROR, 0);
+				callback(DbResult.QUERY_ERROR, 0);
 			} else if (!row) {
-				callBack(DbResult.USER_NOT_EXISTS, 0);
+				callback(DbResult.USER_NOT_EXISTS, 0);
 			} else if (password !== row.password) {
-				callBack(DbResult.WRONG_PASSWORD, 0);
+				callback(DbResult.WRONG_PASSWORD, 0);
 			} else {
-				callBack(DbResult.OK, row.id);
+				callback(DbResult.OK, row.id);
 			}
 		});
 	}
