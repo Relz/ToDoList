@@ -7,16 +7,6 @@ export class Task {
 	private _isDone: boolean;
 	private _userId: number;
 
-	constructor()
-	constructor(
-		id: number,
-		title: string,
-		description: string,
-		creationDate: number,
-		deadline: number,
-		isDone: boolean,
-		userId: number
-	)
 	constructor(
 		id?: number,
 		title?: string,

@@ -4,8 +4,6 @@ export class User {
 	private _password: string;
 	private _name: string;
 
-	constructor()
-	constructor(id: number, login: string, password: string, name: string)
 	constructor(id?: number, login?: string, password?: string, name?: string) {
 		this._id = id;
 		this._login = login;
