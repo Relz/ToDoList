@@ -53,6 +53,25 @@ export class DataBase {
 		});
 	}
 
+	public static deleteUserById(id: number, callback: (dbResult: DbResult) => void): void {
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
+			if (err) {
+				throw err;
+			}
+			if (!row) {
+				callback(DbResult.USER_NOT_EXISTS);
+				return;
+			}
+
+			DataBase._instance.run('DELETE FROM user WHERE id = ?', id, (err: Error) => {
+				if (err) {
+					throw err;
+				}
+				callback(DbResult.OK);
+			});
+		});
+	}
+
 	public static getUserId(login: string, password: string, callback: (dbResult: DbResult, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
@@ -75,7 +94,6 @@ export class DataBase {
 				return;
 			}
 			callback(new UserInfo(row.login, row.name));
-			return;
 		});
 	}
 
@@ -95,11 +113,6 @@ export class DataBase {
 			callback(row !== undefined);
 		});
 	}
-
-	/**
-	 * Don't let anyone instantiate this class.
-	 */
-	private constructor() { }
 
 	private static createTaskTable(): void {
 		DataBase._instance.run(
