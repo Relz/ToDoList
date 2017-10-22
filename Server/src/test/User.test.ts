@@ -3,21 +3,62 @@ import { expect } from 'chai';
 import { User } from '../ts/User';
 
 describe('User class', () => {
+	describe('has constructor', () => {
+		it('empty, does nothing', () => {
+			const user: User = new User();
+			expect(user.id).to.be.undefined;
+			expect(user.login).to.be.undefined;
+			expect(user.password).to.be.undefined;
+			expect(user.name).to.be.undefined;
+		});
+		it('with parameters, sets all properties', () => {
+			const user: User = new User(1, 'login', 'password', 'name');
+			expect(user.id).to.be.equal(1);
+			expect(user.login).to.be.equal('login');
+			expect(user.password).to.be.equal('password');
+			expect(user.name).to.be.equal('name');
+		});
+	});
+
 	const user: User = new User();
 
-	it('has id property, undefined by default', () => {
-		expect(user.id).to.be.equal(undefined);
+	describe('has id property', () => {
+		it('undefined by default', () => {
+			expect(user.id).to.be.undefined;
+		});
+		it('with simple setter', () => {
+			user.id = 1;
+			expect(user.id).to.be.equal(1);
+		});
 	});
 
-	it('has login property, undefined by default', () => {
-		expect(user.login).to.be.equal(undefined);
+	describe('has login property', () => {
+		it('undefined by default', () => {
+			expect(user.login).to.be.undefined;
+		});
+		it('with simple setter', () => {
+			user.login = 'UserLogin';
+			expect(user.login).to.be.equal('UserLogin');
+		});
 	});
 
-	it('has password property, undefined by default', () => {
-		expect(user.password).to.be.equal(undefined);
+	describe('has password property', () => {
+		it('undefined by default', () => {
+			expect(user.password).to.be.undefined;
+		});
+		it('with simple setter', () => {
+			user.password = 'UserPassword';
+			expect(user.password).to.be.equal('UserPassword');
+		});
 	});
 
-	it('has name property, undefined by default', () => {
-		expect(user.name).to.be.equal(undefined);
+	describe('has name property', () => {
+		it('undefined by default', () => {
+			expect(user.name).to.be.undefined;
+		});
+		it('with simple setter', () => {
+			user.name = 'UserName';
+			expect(user.name).to.be.equal('UserName');
+		});
 	});
 });
