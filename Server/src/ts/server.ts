@@ -73,7 +73,7 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 			responseBody.responseCode = 4;
 			res.status(ResponseStatus.INTERNAL_SERVER_ERROR).send(responseBody);
 		}
-	}
+	};
 
 	const onEndInsert: any = (insertResult: DbResult) => {
 		switch (insertResult) {

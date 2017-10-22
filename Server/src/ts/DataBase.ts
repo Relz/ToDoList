@@ -50,14 +50,14 @@ export class DataBase {
 				}
 				onEndInsert(DbResult.OK);
 			});
-		}
+		};
 		DataBase.isLoginInUse(login, onSearchLoginEnd);
 	}
 
 	public static getUserId(login: string, password: string, callBack: (result: DbResult, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
-				callBack(DbResult.QUERY_ERROR, 0)
+				callBack(DbResult.QUERY_ERROR, 0);
 			} else if (!row) {
 				callBack(DbResult.USER_NOT_EXISTS, 0);
 			} else if (password !== row.password) {
@@ -138,7 +138,7 @@ export class DataBase {
 		DataBase._instance.run(query, [newData.login, newData.password, newData.name, id], (err: Error) => {
 			DataBase.throwIf(err);
 			callback(DbResult.OK);
-		})
+		});
 	}
 
 	private static throwIf(err: any): void {

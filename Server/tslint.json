@@ -209,6 +209,8 @@
 			"object-destructuring",
 			"array-destructuring"
 		],
+		"semicolon": [true, "always"],
+		"indent": [true, "tabs"],
 		"max-line-length": [true, 120],
 		// Disabled tslint rules
 		"max-classes-per-file": [
