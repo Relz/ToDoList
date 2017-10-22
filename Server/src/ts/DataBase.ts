@@ -2,7 +2,6 @@ import { Config } from './Config';
 import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
-import * as HttpStatusCode from 'http-status-codes';
 
 export class DataBase {
 	private static _instance: Database =
@@ -114,11 +113,6 @@ export class DataBase {
 			callback(row !== undefined);
 		});
 	}
-
-	/**
-	 * Don't let anyone instantiate this class.
-	 */
-	private constructor() { }
 
 	private static createTaskTable(): void {
 		DataBase._instance.run(
