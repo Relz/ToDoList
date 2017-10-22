@@ -53,7 +53,7 @@ export class DataBase {
 		});
 	}
 
-	public static getUserId(login: string, password: string, callback: (result: DbResult, id: number) => void): void {
+	public static getUserId(login: string, password: string, callback: (dbResult: DbResult, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
 				callback(DbResult.QUERY_ERROR, 0);
