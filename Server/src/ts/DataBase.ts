@@ -69,7 +69,6 @@ export class DataBase {
 					throw err;
 				}
 				callback(DbResult.OK);
-				return;
 			});
 		});
 	}
@@ -96,7 +95,6 @@ export class DataBase {
 				return;
 			}
 			callback(new UserInfo(row.login, row.name));
-			return;
 		});
 	}
 
