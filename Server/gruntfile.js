@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 					var file = process.env.npm_config_file;
 					var filePattern;
 					if (file !== undefined) {
-						filePattern = 'src/test/' + file + '.test.ts';
+						filePattern = 'build/test/' + file + '.test.js';
 						if (!grunt.file.exists(filePattern)) {
 							grunt.fail.fatal('File "' + filePattern + '" doesn\'t exists');
 						}
