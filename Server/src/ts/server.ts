@@ -142,8 +142,15 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 		}
 	}
 
-	DataBase.deleteUserById(id, (httpStatusCode: number, responseCode: number) => {
-		jsonResponse.responseCode = responseCode;
+	DataBase.deleteUserById(id, (dbResult: DbResult) => {
+		let httpStatusCode: number;
+		if (dbResult == DbResult.USER_NOT_EXISTS) {
+			jsonResponse.responseCode = 1;
+			httpStatusCode = HttpStatusCode.BAD_REQUEST;
+		} else {
+			jsonResponse.responseCode = 0;
+			httpStatusCode = HttpStatusCode.OK;
+		}
 		res.status(httpStatusCode).send(jsonResponse);
 	});
 });

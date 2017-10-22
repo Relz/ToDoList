@@ -54,13 +54,13 @@ export class DataBase {
 		});
 	}
 
-	public static deleteUserById(id: number, callback: (httpStatusCode: number, responseCode: number) => void): void {
+	public static deleteUserById(id: number, callback: (dbResult: DbResult) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
 			if (!row) {
-				callback(HttpStatusCode.BAD_REQUEST, DbResult.USER_NOT_EXISTS);
+				callback(DbResult.USER_NOT_EXISTS);
 				return;
 			}
 
@@ -68,7 +68,7 @@ export class DataBase {
 				if (err) {
 					throw err;
 				}
-				callback(HttpStatusCode.OK, DbResult.OK);
+				callback(DbResult.OK);
 				return;
 			});
 		});
