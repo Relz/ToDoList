@@ -1,9 +1,10 @@
 import * as cors from 'cors';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
-import { DataBase, DbResult } from './DataBase';
-import { Config } from './Config';
+import { DataBase } from './DataBase';
+import { ResponseCode } from './ResponseCode';
 import { JsonResponse } from './JsonResponse';
+import { Config } from './Config';
 import { Token } from './Token';
 import { UserInfo } from './UserInfo';
 import { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
@@ -17,69 +18,66 @@ app.use(bodyParser.json());
 
 app.get('/users/:token', (req: express.Request, res: express.Response) => {
 	let id: number;
+
 	try {
 		id = Token.verify(req.params.token).id;
 	}
 	catch (exception) {
-		if (exception instanceof JsonWebTokenError) {
-			return res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(2));
-		}
-		if (exception instanceof TokenExpiredError) {
-			return res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(3));
-		}
+		const responseBody: JsonResponse = new JsonResponse(ResponseCode.INVALID_TOKEN);
+		return res.status(HttpStatusCode.OK).send(responseBody);
 	}
 
-	DataBase.getUserInfoById(id, (userInfo: UserInfo) => {
-		if (userInfo) {
-			return res.status(HttpStatusCode.OK).send(new JsonResponse(0, userInfo));
-		}
-		res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(1));
+	DataBase.getUserInfoById(id, (resultCode: ResponseCode, info: UserInfo) => {
+		const responseBody: JsonResponse = new JsonResponse(resultCode, info);
+		return res.status(HttpStatusCode.OK).send(responseBody);
 	});
 });
 
 app.post('/users/registration', (req: express.Request, res: express.Response) => {
+	let responseBody: JsonResponse = new JsonResponse();
+
 	if (!req.body || !req.body.login || !req.body.password) {
-		return res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(1));
+		responseBody.responseCode = ResponseCode.BAD_REQUEST;
+		return res.status(HttpStatusCode.OK).send(responseBody);
 	}
 
 	const login: string = req.body.login;
 	const password: string = req.body.password;
 
-	const onTakeNewUserId: any = (takeIdResult: DbResult, id: number) => {
-		if (takeIdResult == DbResult.OK) {
-			return res.status(HttpStatusCode.OK).send(new JsonResponse(0, { token: Token.create({ id: id }) }));
+	const onTakeUserId: any = (resultCode: ResponseCode, id: number) => {
+		responseBody.responseCode = resultCode;
+		if (resultCode != ResponseCode.OK) {
+			return res.status(HttpStatusCode.OK).send(responseBody);
 		}
-		res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(new JsonResponse(4));
+		responseBody.response = { token: Token.createFormId(id) };
+		return res.status(HttpStatusCode.OK).send(responseBody);
 	};
 
-	DataBase.insertUser(login, password, (insertResult: DbResult) => {
-		switch (insertResult) {
-			case DbResult.QUERY_ERROR:
-				return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send(new JsonResponse(2));
-			case DbResult.LOGIN_IN_USE:
-				return res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(3));
-			case DbResult.OK:
-				DataBase.getUserId(login, password, onTakeNewUserId);
+	DataBase.insertUser(login, password, (resultCode: ResponseCode) => {
+		if (resultCode != ResponseCode.OK) {
+			responseBody.responseCode = resultCode;
+			return res.status(HttpStatusCode.OK).send(responseBody);
 		}
+		DataBase.getUserId(login, password, onTakeUserId);
 	});
 });
 
 app.post('/users/authenticate', (req: express.Request, res: express.Response) => {
 	if (!req.body || !req.body.login || !req.body.password) {
-		return res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(1));
+		return res.status(HttpStatusCode.OK).send(new JsonResponse(1));
 	}
 
 	const login: string = req.body.login;
 	const password: string = req.body.password;
 
-	DataBase.getUserId(login, password, (dbResult: DbResult, id: number) => {
-		switch (dbResult) {
-			case DbResult.QUERY_ERROR:
-				return res.status(HttpStatusCode.FORBIDDEN).send(new JsonResponse(1));
-			case DbResult.USER_NOT_EXISTS:
-				return res.status(HttpStatusCode.FORBIDDEN).send(new JsonResponse(2));
-			case DbResult.WRONG_PASSWORD:
-				return res.status(HttpStatusCode.FORBIDDEN).send(new JsonResponse(3));
+	DataBase.getUserId(login, password, (result: ResponseCode, id: number) => {
+		switch (result) {
+			case ResponseCode.INTERNAL_ERROR:
+				return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send();
+			case ResponseCode.USER_NOT_EXISTS:
+				return res.status(HttpStatusCode.OK).send(new JsonResponse(2));
+			case ResponseCode.WRONG_PASSWORD:
+				return res.status(HttpStatusCode.OK).send(new JsonResponse(3));
 			default:
 				res.status(HttpStatusCode.OK).send(new JsonResponse(0, { token: Token.create({ id: id }) }));
 		}
@@ -106,13 +104,13 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 
 	const newData: User = new User(userId, login, newPassword, name);
 
-	DataBase.editUser(userId, password, newData, (dbResult: number) => {
-		switch (dbResult) {
-			case DbResult.USER_NOT_EXISTS:
+	DataBase.editUser(userId, password, newData, (result: ResponseCode) => {
+		switch (result) {
+			case ResponseCode.USER_NOT_EXISTS:
 				return res.status(HttpStatusCode.FORBIDDEN).send(new JsonResponse(2));
-			case DbResult.WRONG_PASSWORD:
+			case ResponseCode.WRONG_PASSWORD:
 				return res.status(HttpStatusCode.FORBIDDEN).send(new JsonResponse(3));
-			case DbResult.LOGIN_IN_USE:
+			case ResponseCode.LOGIN_IN_USE:
 				return res.status(HttpStatusCode.FORBIDDEN).send(new JsonResponse(6));
 			default:
 				res.status(HttpStatusCode.OK).send(new JsonResponse(0));
@@ -134,8 +132,8 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 		}
 	}
 
-	DataBase.deleteUserById(id, (dbResult: DbResult) => {
-		if (dbResult == DbResult.USER_NOT_EXISTS) {
+	DataBase.deleteUserById(id, (result: ResponseCode) => {
+		if (result == ResponseCode.USER_NOT_EXISTS) {
 			return res.status(HttpStatusCode.BAD_REQUEST).send(new JsonResponse(1));
 		}
 		res.status(HttpStatusCode.OK).send(new JsonResponse(0));

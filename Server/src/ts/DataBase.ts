@@ -2,30 +2,31 @@ import { Config } from './Config';
 import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
+import { ResponseCode } from './ResponseCode';
 
 export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
-	public static editUser(id: number, password: string, newData: User, callback: (dbResult: number) => void): void {
+	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			DataBase.throwIf(err);
 			if (!row) {
-				callback(DbResult.USER_NOT_EXISTS);
+				callback(ResponseCode.USER_NOT_EXISTS);
 				return;
 			}
 
 			const currentData: User = new User(row.id, row.login, row.password, row.name);
 
 			if (password !== currentData.password) {
-				callback(DbResult.WRONG_PASSWORD);
+				callback(ResponseCode.WRONG_PASSWORD);
 				return;
 			}
 
 			if (newData.login !== currentData.login) {
 				DataBase.isLoginInUse(newData.login, (isInUse: boolean) => {
 					if (isInUse) {
-						callback(DbResult.LOGIN_IN_USE);
+						callback(ResponseCode.LOGIN_IN_USE);
 					} else {
 						DataBase.updateUser(id, newData, callback);
 					}
@@ -36,30 +37,30 @@ export class DataBase {
 		});
 	}
 
-	public static insertUser(login: string, password: string, callback: (result: DbResult) => void): void {
+	public static insertUser(login: string, password: string, callback: (result: ResponseCode) => void): void {
 		DataBase.isLoginInUse(login, (isLoginFound: boolean): void => {
 			if (isLoginFound) {
-				callback(DbResult.LOGIN_IN_USE);
+				callback(ResponseCode.LOGIN_IN_USE);
 				return;
 			}
 			const query: string = 'INSERT INTO user (login, password) VALUES (?, ?)';
 			DataBase._instance.run(query, login, password, (err: Error): void => {
 				if (err) {
-					callback(DbResult.QUERY_ERROR);
+					callback(ResponseCode.INTERNAL_ERROR);
 					return;
 				}
-				callback(DbResult.OK);
+				callback(ResponseCode.OK);
 			});
 		});
 	}
 
-	public static deleteUserById(id: number, callback: (dbResult: DbResult) => void): void {
+	public static deleteUserById(id: number, callback: (result: ResponseCode) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
 			if (err) {
 				throw err;
 			}
 			if (!row) {
-				callback(DbResult.USER_NOT_EXISTS);
+				callback(ResponseCode.USER_NOT_EXISTS);
 				return;
 			}
 
@@ -67,33 +68,34 @@ export class DataBase {
 				if (err) {
 					throw err;
 				}
-				callback(DbResult.OK);
+				callback(ResponseCode.OK);
 			});
 		});
 	}
 
-	public static getUserId(login: string, password: string, callback: (dbResult: DbResult, id: number) => void): void {
+	public static getUserId(login: string, password: string, callback: (result: ResponseCode, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
 			if (err) {
-				callback(DbResult.QUERY_ERROR, 0);
+				callback(ResponseCode.INTERNAL_ERROR, 0);
 			} else if (!row) {
-				callback(DbResult.USER_NOT_EXISTS, 0);
+				callback(ResponseCode.USER_NOT_EXISTS, 0);
 			} else if (password !== row.password) {
-				callback(DbResult.WRONG_PASSWORD, 0);
+				callback(ResponseCode.WRONG_PASSWORD, 0);
 			} else {
-				callback(DbResult.OK, row.id);
+				callback(ResponseCode.OK, row.id);
 			}
 		});
 	}
 
-	public static getUserInfoById(id: number, callback: (userInfo: UserInfo) => void): void {
+	public static getUserInfoById(id: number, callback: (result: ResponseCode, info: UserInfo) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
-			DataBase.throwIf(err);
-			if (!row) {
-				callback(undefined);
-				return;
+			if (err) {
+				callback(ResponseCode.INTERNAL_ERROR, null);
+			} else if (!row) {
+				callback(ResponseCode.USER_NOT_EXISTS, null);
+			} else {
+				callback(ResponseCode.OK, new UserInfo(row.login, row.name));
 			}
-			callback(new UserInfo(row.login, row.name));
 		});
 	}
 
@@ -145,11 +147,11 @@ export class DataBase {
 		DataBase.createUserTable();
 	}
 
-	private static updateUser(id: number, newData: User, callback: (dbResult: number) => void): void {
+	private static updateUser(id: number, newData: User, callback: (result: number) => void): void {
 		const query: string = 'UPDATE user SET login = ?, password = ?, name = ? WHERE id = ?';
 		DataBase._instance.run(query, [newData.login, newData.password, newData.name, id], (err: Error) => {
 			DataBase.throwIf(err);
-			callback(DbResult.OK);
+			callback(ResponseCode.OK);
 		});
 	}
 
@@ -158,12 +160,4 @@ export class DataBase {
 			throw err;
 		}
 	}
-}
-
-export enum DbResult {
-	OK = 0,
-	QUERY_ERROR = 1,
-	USER_NOT_EXISTS = 2,
-	WRONG_PASSWORD = 3,
-	LOGIN_IN_USE = 4
 }
