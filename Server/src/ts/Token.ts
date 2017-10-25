@@ -2,7 +2,7 @@ import * as jsonWebToken from 'jsonwebtoken';
 import { Config } from './Config';
 
 export class Token {
-	static createFormId(id: number): string {
+	static createFrom(id: number): string {
 		return jsonWebToken.sign({ id: id }, Config.secret, { expiresIn: Config.tokenLifeTime });
 	}
 

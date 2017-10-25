@@ -1,27 +1,27 @@
 import { ResponseCode } from './ResponseCode';
 
 export class JsonResponse {
-	private _responseCode: ResponseCode;
-	private _response: Object;
+	private _code: ResponseCode;
+	private _body: Object;
 
 	constructor(responseCode?: ResponseCode, response?: Object) {
-		this._responseCode = responseCode;
-		this._response = response;
+		this._code = responseCode;
+		this._body = response;
 	}
 
-	public get responseCode(): ResponseCode {
-		return this._responseCode;
+	public get code(): ResponseCode {
+		return this._code;
 	}
 
-	public set responseCode(value: ResponseCode) {
-		this._responseCode = value;
+	public set code(value: ResponseCode) {
+		this._code = value;
 	}
 
-	public get response(): Object {
-		return this._response;
+	public get body(): Object {
+		return this._body;
 	}
 
-	public set response(value: Object) {
-		this._response = value;
+	public set body(value: Object) {
+		this._body = value;
 	}
 }
