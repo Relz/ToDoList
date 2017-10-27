@@ -11,17 +11,18 @@ export class JsonResponse {
 	}
 
 	public get httpStatus(): number {
-		if (this._code == ResponseCode.OK) {
-			return HttpStatusCode.OK;
+		switch (this._code) {
+			case ResponseCode.OK:
+				return HttpStatusCode.OK;
+			case ResponseCode.BAD_TOKEN:
+			case ResponseCode.BAD_BODY:
+			case ResponseCode.WRONG_ID:
+			case ResponseCode.WRONG_LOGIN:
+			case ResponseCode.WRONG_PASSWORD:
+				return HttpStatusCode.BAD_REQUEST;
+			default:
+				return HttpStatusCode.INTERNAL_SERVER_ERROR;
 		}
-		if (this._code == ResponseCode.BAD_BODY ||
-			this._code == ResponseCode.BAD_TOKEN ||
-			this._code == ResponseCode.WRONG_LOGIN ||
-			this._code == ResponseCode.WRONG_PASSWORD ||
-			this._code == ResponseCode.WRONG_ID) {
-			return HttpStatusCode.BAD_REQUEST;
-		}
-		return HttpStatusCode.INTERNAL_SERVER_ERROR;
 	}
 
 	public get code(): ResponseCode {
