@@ -1,0 +1,10 @@
+export enum ResponseCode {
+	OK,
+	INTERNAL_ERROR,
+	BAD_BODY,
+	BAD_TOKEN,
+	NOT_FOUND,
+	WRONG_ID,
+	WRONG_LOGIN,
+	WRONG_PASSWORD
+}
