@@ -1,0 +1,123 @@
+.button
+	display: inline-block
+	font-weight: 400
+	line-height: 1.5
+	text-align: center
+	white-space: nowrap
+	vertical-align: middle
+	+user-select(none)
+	border: none
+
+	&.disabled
+		cursor: not-allowed
+		opacity: 0.65
+
+	&.basic
+		color: #333
+		background-color: #CCC
+		border-color: #CCC
+
+	&.default
+		color: #333
+		background-color: #FFF
+		border-color: #CCC
+
+	&.primary
+		color: #FFF
+		background-color: #337AB7
+		border-color: #2E6DA4
+
+	&.success
+		color: #FFF
+		background-color: #5CB85C
+		border-color: #4CAE4C
+
+	&.info
+		color: #FFF
+		background-color: #5BC0DE
+		border-color: #46B8DA
+
+	&.warning
+		color: #FFF
+		background-color: #F0AD4E
+		border-color: #EEA236
+
+	&.danger
+		color: #FFF
+		background-color: #D9534F
+		border-color: #D43F3A
+
+	&.link
+		color: #333
+		background-color: transparent
+		border-color: transparent
+
+	&.extra_small
+		padding: 1px 5px
+		font-size: 12px
+
+	&.small
+		padding: 5px 10px
+		font-size: 12px
+
+	&.medium
+		padding: 6px 12px
+		font-size: 14px
+
+	&.large
+		padding: 10px 16px
+		font-size: 18px
+
+.button.enabled
+	cursor: pointer
+	&.basic
+		&:hover
+			background-color: #F6F6F6
+
+		&:active
+			background-color: #DDD
+
+	&.default
+		&:hover
+			background-color: #E6E6E6
+
+		&:active
+			background-color: #D3D3D3
+
+	&.primary
+		&:hover
+			background-color: #286090
+
+		&:active
+			background-color: #204D74
+
+	&.success
+		&:hover
+			background-color: #449D44
+
+		&:active
+			background-color: #398439
+
+	&.info
+		&:hover
+			background-color: #31B0D5
+
+		&:active
+			background-color: #269ABC
+
+	&.warning
+		&:hover
+			background-color: #EC971F
+
+		&:active
+			background-color: #D58512
+	&.danger
+		&:hover
+			background-color: #C9302C
+
+		&:active
+			background-color: #AC2925
+
+	&.link
+		&:hover
+			text-decoration: underline

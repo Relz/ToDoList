@@ -1,0 +1,35 @@
+=border-radius($radius)
+	-webkit-border-radius: $radius
+	-moz-border-radius:    $radius
+	border-radius:         $radius
+
+=box-shadow($value)
+	box-shadow: $value
+	-moz-box-shadow: $value
+	-webkit-box-shadow:  $value
+
+=transform($transforms)
+	-moz-transform: $transforms
+	-o-transform: $transforms
+	-ms-transform: $transforms
+	-webkit-transform: $transforms
+	transform: $transforms
+
+=rotate ($deg)
+	+transform(rotate(#{$deg}deg))
+
+=keyframes($name)
+	@-webkit-keyframes #{$name}
+		@content
+	@-moz-keyframes #{$name}
+		@content
+	@-ms-keyframes #{$name}
+		@content
+	@keyframes #{$name}
+		@content
+
+=user-select($value)
+	-webkit-user-select: $value
+	-moz-user-select: $value
+	-ms-user-select: $value
+	user-select: $value

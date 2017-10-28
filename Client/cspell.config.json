@@ -1,0 +1,13 @@
+{
+	"version": "0.1",
+	"language": "en",
+	"dictionaries": ["russian"],
+	"import": ["./node_modules/cspell-dict-russian/cspell-ext.json"],
+	"words": [
+		"keyframes",
+		"страницу"
+	],
+	"ignorePaths": [
+		"src/img/*"
+	]
+}
