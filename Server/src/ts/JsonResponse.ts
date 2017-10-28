@@ -3,9 +3,9 @@ import * as HttpStatusCode from 'http-status-codes';
 
 export class JsonResponse {
 	private _code: ResponseCode;
-	private _body: Object;
+	private _body: object;
 
-	constructor(responseCode?: ResponseCode, response?: Object) {
+	constructor(responseCode?: ResponseCode, response?: object) {
 		this._code = responseCode;
 		this._body = response;
 	}
@@ -33,11 +33,11 @@ export class JsonResponse {
 		this._code = value;
 	}
 
-	public get body(): Object {
+	public get body(): object {
 		return this._body;
 	}
 
-	public set body(value: Object) {
+	public set body(value: object) {
 		this._body = value;
 	}
 }
