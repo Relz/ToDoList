@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Constant } from './Constant';
-import { Translation } from './translation/ru';
+import { Constant } from '../Constant';
+import { Translation } from '../translation/ru';
 
 export class Menu extends React.Component<{}, {}> {
 	public render(): JSX.Element {

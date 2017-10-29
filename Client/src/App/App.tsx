@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Header } from './Header';
 import { Menu } from './Menu';
-import './sass/app.sass';
+import '../sass/app.sass';
 
 export class App extends React.Component<{}, {}> {
 	public render(): JSX.Element {
