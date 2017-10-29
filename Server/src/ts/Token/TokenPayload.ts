@@ -1,6 +1,4 @@
-import { ITokenPayload } from './ITokenPayload';
-
-export class TokenPayload implements ITokenPayload{
+export class TokenPayload {
 	constructor(id: number) {
 		this._id = id;
 	}
