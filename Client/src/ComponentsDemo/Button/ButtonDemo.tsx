@@ -212,7 +212,7 @@ export class ButtonDemo extends React.Component<{}, {}> {
 					size={ButtonSize.Medium}
 					disabled={true}
 				>
-					Неактивная средняя основаная кнопка
+					Неактивная средняя основная кнопка
 				</Button>
 			</div>
 		);

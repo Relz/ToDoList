@@ -10,7 +10,7 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 			<table className='components_demo'>
 				<thead>
 					<tr>
-						<td className='demo_column'>Демнострация</td>
+						<td className='demo_column'>Демонстрация</td>
 						<td className='description_column'>Описание</td>
 					</tr>
 				</thead>

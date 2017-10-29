@@ -14,10 +14,10 @@ module.exports = function(grunt) {
 
 		shell: {
 			compile: {
-				command: 'node ./node_modules/.bin/webpack --colors'
+				command: 'webpack --colors'
 			},
-            compile_and_run: {
-				command: './node_modules/.bin/webpack-dev-server --colors --content-base  build/'
+			compile_and_run: {
+				command: 'webpack-dev-server --colors --content-base  build/'
 			},
 			cspell: cspellPath + ' ' + '-c' + ' ' + 'cspell.config.json' + ' ' + 'src/**/*'
 		}
