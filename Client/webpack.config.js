@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require('path');
 
 module.exports = {
 	node: {
@@ -7,40 +7,41 @@ module.exports = {
 		net: 'empty',
 		tls: 'empty'
 	},
-	entry: "./src/index.tsx",
+	entry: './src/index.tsx',
 
 	output: {
-		path: path.resolve(__dirname, "build"),
-		filename: "bundle.js"
+		path: path.resolve(__dirname, 'build'),
+		filename: 'bundle.js'
 	},
 
 	devServer: {
+		contentBase: path.resolve(__dirname, 'build'),
 		historyApiFallback: true
 	},
 
-	devtool: "source-map",
+	devtool: 'source-map',
 
 	resolve: {
-		extensions: [".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+		extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js']
 	},
 
 	module: {
 		loaders: [
 			{
 				test: /\.tsx?$/,
-				loader: "awesome-typescript-loader"
+				loader: 'awesome-typescript-loader'
 			},
 			{
 				test: /\.sass$/,
-				loaders: ["style-loader", "css-loader", "sass-loader"]
+				loaders: ['style-loader', 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.css/,
-				loaders: ["style-loader", "css-loader"]
+				loaders: ['style-loader', 'css-loader']
 			},
 			{
 				test: /\.jpe?g$|\.gif$|\.png$|\.svg$|\.woff$|\.ttf$|\.wav$|\.mp3$/,
-				loader: "file-loader"
+				loader: 'file-loader'
 			},
 			{
 				test: /\.json$/,

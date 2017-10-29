@@ -2,7 +2,7 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Translation } from '../translation/ru';
 
-const logo: string = '/' + require('../img/logo.svg');
+const logo: string = require('../img/logo.svg');
 
 export class Header extends React.Component<{ menu: any }, any> {
 	public render(): JSX.Element {

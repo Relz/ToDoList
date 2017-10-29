@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { ButtonDemo } from './Button/ButtonDemo';
-import '../sass/app.sass';
-import '../sass/components_demo.sass';
 import { ButtonDemoDescription } from './Button/ButtonDemoDescription';
+import '../sass/components_demo.sass';
 
 export class ComponentsDemoPage extends React.Component<{}, {}> {
 	public render(): JSX.Element {

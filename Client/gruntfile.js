@@ -17,20 +17,31 @@ module.exports = function(grunt) {
 				command: 'webpack --colors'
 			},
 			compile_and_run: {
-				command: 'webpack-dev-server --colors --content-base  build/'
+				command: 'webpack-dev-server --colors'
 			},
 			cspell: cspellPath + ' ' + '-c' + ' ' + 'cspell.config.json' + ' ' + 'src/**/*'
+		},
+
+		copy: {
+			main: {
+				files: [
+					{expand: true, cwd: 'src/', src: ['index.html'], dest: 'build/', filter: 'isFile'}
+				]
+			}
 		}
 	});
 
 	grunt.loadNpmTasks('grunt-tslint');
 	grunt.loadNpmTasks('grunt-shell');
+	grunt.loadNpmTasks('grunt-contrib-copy');
 
 	grunt.registerTask('compile', [
+		'copy',
 		'shell:compile'
 	]);
 
 	grunt.registerTask('compile_and_run', [
+		'copy',
 		'shell:compile_and_run'
 	]);
 
