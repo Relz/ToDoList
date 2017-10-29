@@ -32,7 +32,7 @@ describe('JsonResponse class', () => {
 			expect(jsonResponse.body).to.be.undefined;
 		});
 		it('with simple setter', () => {
-			const response: any = {
+			const response: object = {
 				a: 123,
 				b: 'word'
 			};

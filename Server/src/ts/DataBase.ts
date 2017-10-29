@@ -9,7 +9,7 @@ export class DataBase {
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
-		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
 			if (err) {
 				return callback(ResponseCode.INTERNAL_ERROR);
 			}
@@ -54,7 +54,7 @@ export class DataBase {
 	}
 
 	public static deleteUserById(id: number, callback: (result: ResponseCode) => void): void {
-		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
 			if (err) {
 				return callback(ResponseCode.INTERNAL_ERROR);
 			}
@@ -72,7 +72,7 @@ export class DataBase {
 	}
 
 	public static getUserId(login: string, password: string, callback: (result: ResponseCode, id: number) => void): void {
-		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: any) => {
+		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			if (err) {
 				callback(ResponseCode.INTERNAL_ERROR, 0);
 			} else if (!row) {
@@ -86,7 +86,7 @@ export class DataBase {
 	}
 
 	public static getUserInfoById(id: number, callback: (result: ResponseCode, info: UserInfo) => void): void {
-		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: any) => {
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
 			if (err) {
 				callback(ResponseCode.INTERNAL_ERROR, null);
 			} else if (!row) {
@@ -98,7 +98,7 @@ export class DataBase {
 	}
 
 	public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
-		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: any) => {
+		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			callback(row !== undefined);
 		});
 	}
@@ -113,7 +113,7 @@ export class DataBase {
 			'deadline     INTEGER,' +
 			'isDone       INTEGER(1),' +
 			'userId       INTEGER' +
-			');', (err: Error) => {}
+			');', () => {}
 		);
 	}
 
@@ -124,7 +124,7 @@ export class DataBase {
 			'login    VARCHAR UNIQUE,' +
 			'password VARCHAR,' +
 			'name     VARCHAR' +
-			');', (err: Error) => {}
+			');', () => {}
 		);
 	}
 

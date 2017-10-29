@@ -5,7 +5,7 @@ import { DataBase } from './DataBase';
 import { ResponseCode } from './ResponseCode';
 import { JsonResponse } from './JsonResponse';
 import { Config } from './Config';
-import { Token } from './Token';
+import { Token } from './Token/Token';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import * as HttpStatusCode from 'http-status-codes';
@@ -19,7 +19,7 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 	let id: number;
 
 	try {
-		id = Token.verify(req.params.token).id;
+		id = Token.decodeId(req.params.token);
 	} catch (exception) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response);
@@ -44,7 +44,7 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 		if (result != ResponseCode.OK) {
 			return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send();
 		}
-		const responseBody: Object = { token: Token.createFromId(id) };
+		const responseBody: object = { token: Token.createFromId(id) };
 		const response: JsonResponse = new JsonResponse(result, responseBody);
 		res.status(response.httpStatus).send(response);
 	};
@@ -68,7 +68,7 @@ app.post('/users/authenticate', (req: express.Request, res: express.Response) =>
 	const password: string = req.body.password;
 
 	DataBase.getUserId(login, password, (result: ResponseCode, id: number) => {
-		const responseBody: Object = { token: Token.createFromId(id) };
+		const responseBody: object = { token: Token.createFromId(id) };
 		const response: JsonResponse = new JsonResponse(result, responseBody);
 		res.status(response.httpStatus).send(response);
 	});
@@ -78,7 +78,7 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 	let userId: number;
 
 	try {
-		userId = Token.verify(req.params.token).id;
+		userId = Token.decodeId(req.params.token);
 	} catch (exception) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response);
@@ -105,7 +105,7 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 	let id: number;
 
 	try {
-		id = Token.verify(req.params.token).id;
+		id = Token.decodeId(req.params.token);
 	} catch (err) {
 		let response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response);
