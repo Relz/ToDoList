@@ -1,0 +1,45 @@
+.header
+	background-color: #222
+	padding: 10px
+	display: flex
+	justify-content: flex-start
+	flex-direction: row
+	align-items: baseline
+
+	.logo
+		display: inline-block
+		outline: none
+
+		.image
+			animation: app-logo-image-spin infinite 20s linear
+			height: 80px
+			display: inline-block
+
+		.text
+			display: inline-block
+			color: white
+
+	.menu
+		margin: 0
+		display: inline-block
+		border-bottom: 1px solid #222
+		margin-left: auto
+
+		.item
+			list-style-type: none
+			display: inline-block
+			padding: 10px
+
+			a
+				color: #EEE
+				text-decoration: none
+				outline: none
+
+				&:hover
+					color: #61DAFB
+
++keyframes(app-logo-image-spin)
+	0%
+		+rotate(0)
+	100%
+		+rotate(360)

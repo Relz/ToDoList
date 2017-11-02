@@ -1,0 +1,52 @@
+{
+  "name": "ToDoListClient",
+  "version": "1.0.0",
+  "description": "Project for study",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Relz/ToDoList.git"
+  },
+  "scripts": {
+    "compile": "node ./node_modules/grunt/bin/grunt -gruntfile=gruntfile.js compile",
+    "start": "node ./node_modules/grunt/bin/grunt -gruntfile=gruntfile.js compile_and_run",
+    "validate": "node node_modules/grunt/bin/grunt -gruntfile=gruntfile.js validate"
+  },
+  "author": "Relz and Co. <relz0071@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "@types/classnames": "^2.2.3",
+    "classnames": "^2.2.5",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "@types/react": "^16.0.18",
+    "@types/react-dom": "^16.0.2",
+    "@types/react-router": "^4.0.16",
+    "@types/react-router-dom": "^4.2.0",
+    "awesome-typescript-loader": "^3.2.3",
+    "cspell": "^1.10.6",
+    "cspell-dict-russian": "^1.1.3",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.5",
+    "fs-extra": "^4.0.2",
+    "grunt": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-shell": "^2.1.0",
+    "grunt-tslint": "^5.0.1",
+    "node-sass": "^4.5.3",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.0",
+    "tslint": "^5.8.0",
+    "tslint-consistent-codestyle": "^1.8.0",
+    "tslint-eslint-rules": "^4.1.1",
+    "tslint-react": "^3.2.0",
+    "tslint-react-recommended": "^1.0.15",
+    "typescript": "^2.5.3",
+    "vrsource-tslint-rules": "^5.1.1",
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.3"
+  }
+}
