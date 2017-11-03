@@ -6,6 +6,7 @@ import * as classNames from 'classnames';
 
 export class Button extends React.Component<IButtonProps, {}> {
 	public render(): JSX.Element {
+		const disabled: boolean = (this.props.disabled === undefined) ? false : this.props.disabled;
 		const classes: any = classNames({
 			button: true,
 			basic: this.props.type === ButtonType.Basic,
@@ -22,13 +23,14 @@ export class Button extends React.Component<IButtonProps, {}> {
 			medium: this.props.size === ButtonSize.Medium,
 			large: this.props.size === ButtonSize.Large,
 
-			enabled: (this.props.disabled === undefined) ? true : !this.props.disabled,
-			disabled: (this.props.disabled === undefined) ? false : this.props.disabled
+			enabled: !disabled,
+			disabled: disabled
 		});
 
 		return (
 			<button
 				className={classes}
+				disabled={disabled}
 			>
 				{this.props.children}
 			</button>

@@ -1,19 +1,19 @@
-=border-radius($radius)
-	-webkit-border-radius: $radius
-	-moz-border-radius:    $radius
-	border-radius:         $radius
+=border-radius($value)
+	-webkit-border-radius: $value
+	-moz-border-radius: $value
+	border-radius: $value
 
 =box-shadow($value)
 	box-shadow: $value
 	-moz-box-shadow: $value
 	-webkit-box-shadow:  $value
 
-=transform($transforms)
-	-moz-transform: $transforms
-	-o-transform: $transforms
-	-ms-transform: $transforms
-	-webkit-transform: $transforms
-	transform: $transforms
+=transform($value)
+	-moz-transform: $value
+	-o-transform: $value
+	-ms-transform: $value
+	-webkit-transform: $value
+	transform: $value
 
 =rotate($deg)
 	+transform(rotate(#{$deg}deg))
@@ -33,3 +33,8 @@
 	-moz-user-select: $value
 	-ms-user-select: $value
 	user-select: $value
+
+=transition($value0, $value1)
+	-webkit-transition: $value0 $value1
+	-o-transition: $value0 $value1
+	transition: $value0 $value1

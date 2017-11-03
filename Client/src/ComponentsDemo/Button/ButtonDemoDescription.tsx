@@ -4,7 +4,7 @@ export class ButtonDemoDescription extends React.Component<{}, {}> {
 	public render(): JSX.Element {
 		return (
 			<span>
-				При использовании компонента от разработчика потребуется указать эти классы с помощью перечислимых типов:<br/>
+				При использовании компонента от разработчика потребуется тип и размер с помощью перечислимых типов:<br/>
 				ButtonType:<br/>
 				&emsp;&emsp;- Basic<br/>
 				&emsp;&emsp;- Default<br/>
