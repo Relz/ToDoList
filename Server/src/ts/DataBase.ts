@@ -3,10 +3,23 @@ import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import { ResponseCode } from './ResponseCode';
+import { Task } from './Task';
 
 export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
+
+	public static insertTask(task: Task, callback: (result: ResponseCode) => void): void {
+		const query: string = 'INSERT INTO task (title, description, creationDate, deadline, isDone, userId)' +
+			'VALUES (?, ?, ?, ?, ?, ?)';
+		DataBase._instance.run(query, task.title, task.description, task.creationDate, task.deadline,
+			task.isDone, task.userId, (err: Error) => {
+				if (err) {
+					return callback(ResponseCode.INTERNAL_ERROR);
+				}
+				return callback(ResponseCode.OK);
+			});
+	}
 
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
