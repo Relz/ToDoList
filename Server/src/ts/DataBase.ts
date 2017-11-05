@@ -13,7 +13,7 @@ export class DataBase {
 		const query: string = 'INSERT INTO task (title, description, creationDate, deadline, isDone, userId)' +
 			'VALUES (?, ?, ?, ?, ?, ?)';
 		DataBase._instance.run(query, task.title, task.description, task.creationDate, task.deadline,
-			task.isDone, task.userId, (err: Error) => {
+			0, task.userId, (err: Error) => {
 				if (err) {
 					return callback(ResponseCode.INTERNAL_ERROR);
 				}
