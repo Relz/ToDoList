@@ -1,6 +1,13 @@
 @import mixin
 
+=size($width, $height)
+	min-width: $width
+	min-height: $height
+
 .components_demo
+	.description_title
+		margin-bottom: 15px
+
 	th
 		border: 1px solid #7f7f7f
 		&.demo_column
@@ -15,5 +22,29 @@
 		.button
 			margin: 5px 0 0 5px
 
-	@import button
-	@import form-control
+	.container
+		width: 100%
+		border: 1px solid black
+	.container_content
+		&.red
+			background-color: darkRed
+			+size(35px, 70px)
+		&.yellow
+			background-color: darkOrange
+			+size(50px, 50px)
+		&.green
+			background-color: darkGreen
+			+size(70px, 30px)
+		&.blue
+			background-color: darkBlue
+			+size(42px, 64px)
+	.property_title
+		margin-bottom: 10px
+		font-weight: bold
+	.property_example_block
+		margin-bottom: 20px
+	.property_example_name
+		margin-bottom: 5px
+
+@import button
+@import container
