@@ -38,3 +38,31 @@
 	-webkit-transition: $value0 $value1
 	-o-transition: $value0 $value1
 	transition: $value0 $value1
+
+=animation($animation, $delay, $duration)
+	-webkit-animation-name: $animation
+	-webkit-animation-delay: $delay
+	-webkit-animation-duration: $duration
+	-webkit-animation-fill-mode: forwards
+
+	-moz-animation-name: $animation
+	-moz-animation-delay: $delay
+	-moz-animation-duration: $duration
+	-moz-animation-fill-mode: forwards
+
+	-o-animation-name: $animation
+	-o-animation-delay: $delay
+	-o-animation-duration: $duration
+	-o-animation-fill-mode: forwards
+
+	animation-name: $animation
+	animation-delay: $delay
+	animation-duration: $duration
+	animation-fill-mode: forwards
+
+=fadeEffect()
+	+keyframes(fadeEffect)
+		0%
+			opacity: 0
+		100%
+			opacity: 1

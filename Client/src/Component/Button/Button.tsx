@@ -1,27 +1,76 @@
 import * as React from 'react';
 import { IButtonProps } from '../Props/IButtonProps';
-import { Utils } from '../../Utils/Utils';
+import { ButtonType } from './ButtonType';
+import { ButtonSize } from './ButtonSize';
 import * as classNames from 'classnames';
+import { IButtonState } from '../State/IButtonState';
 
-export class Button extends React.Component<IButtonProps, {}> {
+export class Button extends React.Component<IButtonProps, IButtonState> {
+	private _firstRender: boolean = true;
+	public constructor() {
+		super();
+		this.state = { type: ButtonType.Basic };
+	}
+
+	componentDidMount(): void {
+		if (this.props.onRef) {
+			this.props.onRef(this);
+		}
+	}
+
+	componentWillUnmount(): void {
+		if (this.props.onRef) {
+			this.props.onRef(undefined);
+		}
+	}
+
 	public render(): JSX.Element {
+		if (this._firstRender) {
+			this._firstRender = false;
+			this.setState({ type: this.props.type });
+		}
 		const disabled: boolean = (this.props.disabled === undefined) ? false : this.props.disabled;
-		const classes: any = classNames({
+		const classes: string = classNames({
 			button: true,
+			basic: this.state.type === ButtonType.Basic,
+			default: this.state.type === ButtonType.Default,
+			primary: this.state.type === ButtonType.Primary,
+			success: this.state.type === ButtonType.Success,
+			info: this.state.type === ButtonType.Info,
+			warning: this.state.type === ButtonType.Warning,
+			danger: this.state.type === ButtonType.Danger,
+			link: this.state.type === ButtonType.Link,
+
+			extra_small: this.props.size === ButtonSize.ExtraSmall,
+			small: this.props.size === ButtonSize.Small,
+			medium: this.props.size === ButtonSize.Medium,
+			large: this.props.size === ButtonSize.Large,
+
 			enabled: !disabled,
 			disabled: disabled
 		});
 
+		let onClick: (() => void) | undefined = this.props.onClick;
+		if (!onClick) {
+			onClick = () => {};
+		}
+
 		return (
 			<button
-				className={classes + Utils.toClassNames(
-					this.props.type,
-					this.props.size
-				)}
+				className={classes}
 				disabled={disabled}
+				onClick={onClick}
 			>
 				{this.props.children}
 			</button>
 		);
+	}
+
+	public get type(): ButtonType {
+		return this.state.type;
+	}
+
+	public set type(value: ButtonType) {
+		this.setState({ type: value });
 	}
 }

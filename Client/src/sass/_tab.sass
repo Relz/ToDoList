@@ -1,0 +1,32 @@
+@import mixin
+
+.tab_header
+	overflow: hidden
+	border: 1px solid #ccc
+	background-color: #f1f1f1
+
+	button
+		background-color: inherit
+		float: left
+		border: none
+		outline: none
+		cursor: pointer
+		padding: 14px 16px
+		transition: 0.3s
+		font-size: 17px
+
+		&:hover
+			background-color: #ddd
+
+		&.active
+			color: #333
+			background-color: #FFF
+			border-color: #CCC
+
+.tab_content
+	display: none
+	padding: 6px 12px
+	+animation(fadeEffect, 0s, 5s)
+
+	&.active
+		display: block
