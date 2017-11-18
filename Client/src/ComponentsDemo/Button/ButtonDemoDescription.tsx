@@ -5,20 +5,27 @@ export class ButtonDemoDescription extends React.Component<{}, {}> {
 		return (
 			<span>
 				При использовании компонента от разработчика потребуется тип и размер с помощью перечислимых типов:<br/>
-				ButtonType:<br/>
-				&emsp;&emsp;- Basic<br/>
-				&emsp;&emsp;- Default<br/>
-				&emsp;&emsp;- Primary<br/>
-				&emsp;&emsp;- Success<br/>
-				&emsp;&emsp;- Info<br/>
-				&emsp;&emsp;- Warning<br/>
-				&emsp;&emsp;- Danger<br/>
-				&emsp;&emsp;- Link<br/>
-				ButtonSize:<br/>
-				&emsp;&emsp;- ExtraSmall<br/>
-				&emsp;&emsp;- Small<br/>
-				&emsp;&emsp;- Medium<br/>
-				&emsp;&emsp;- Large<br/>
+				ButtonType:
+				<ul>
+					<li>Basic</li>
+					<li>Default</li>
+					<li>Primary</li>
+					<li>Success</li>
+					<li>Info</li>
+					<li>Warning</li>
+					<li>Danger</li>
+					<li>Link</li>
+					<li>Basic</li>
+					<li>Basic</li>
+					<li>Basic</li>
+				</ul>
+				ButtonSize:
+				<ul>
+					<li>ExtraSmall</li>
+					<li>Small</li>
+					<li>Medium</li>
+					<li>Large</li>
+				</ul>
 				Также можно указать параметр disabled = {'true'}, если хотите применить стиль неактивной кнопки.<br/>
 				<br/>
 				Пример:<br/>

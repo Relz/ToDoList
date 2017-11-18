@@ -5,28 +5,29 @@ export class InputDemoDescription extends React.Component<{}, {}> {
 		return (
 			<span>
 				При использовании компонента от разработчика потребуется указать тип с помощью перечислимых типов:<br/>
-				InputType:<br/>
-				&emsp;&emsp;- Text<br/>
-				&emsp;&emsp;- Password<br/>
-				&emsp;&emsp;- DateTime<br/>
-				&emsp;&emsp;- DateTImeLocal<br/>
-				&emsp;&emsp;- Date<br/>
-				&emsp;&emsp;- Month<br/>
-				&emsp;&emsp;- Time<br/>
-				&emsp;&emsp;- Week<br/>
-				&emsp;&emsp;- Number<br/>
-				&emsp;&emsp;- Email<br/>
-				&emsp;&emsp;- Url<br/>
-				&emsp;&emsp;- Search<br/>
-				&emsp;&emsp;- TelephoneNumber<br/>
-				&emsp;&emsp;- Color<br/>
+				InputType:
+				<ul>
+					<li>Text</li>
+					<li>Password</li>
+					<li>DateTime <b>(поддерживается в Chrome/Opera и Edge для рабочего стола)</b></li>
+					<li>DateTImeLocal <b>(поддерживается в Chrome/Opera и Edge для рабочего стола)</b></li>
+					<li>Date</li>
+					<li>Month <b>(поддерживается в Chrome/Opera и Edge для рабочего стола)</b></li>
+					<li>Time</li>
+					<li>Week <b>(поддерживается в Chrome/Opera и Edge для рабочего стола)</b></li>
+					<li>Number</li>
+					<li>Email</li>
+					<li>Url</li>
+					<li>Search</li>
+					<li>TelephoneNumber</li>
+					<li>Color</li>
+				</ul>
 				Также можно указать параметр disabled = {'true'}, если хотите применить стиль неактивного поля ввода.<br/>
 				<br/>
 				Пример:<br/>
 				&lt;Input<br/>
 				&emsp;type={'InputType.Text'}<br/>
 				/><br/>
-				<br/>
 				<br/>
 				&lt;Input<br/>
 				&emsp;type={'InputType.Password'}<br/>
