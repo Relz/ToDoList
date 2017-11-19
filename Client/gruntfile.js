@@ -19,7 +19,7 @@ module.exports = function(grunt) {
 			compile_and_run: {
 				command: 'webpack-dev-server --colors'
 			},
-			cspell: cspellPath + ' ' + '-c' + ' ' + 'cspell.config.json' + ' ' + 'src/**/*'
+			cspell: cspellPath + ' ' + 'src/**/*'
 		},
 
 		copy: {

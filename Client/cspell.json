@@ -1,0 +1,18 @@
+{
+	"version": "0.1",
+	"language": "ru, en",
+	"dictionaries": [],
+	"import": [
+			"./node_modules/cspell-dict-russian/cspell-ext.json",
+			"./node_modules/cspell-dict-ru_ru/cspell-ext.json"
+	],
+	"words": [
+		"keyframes",
+		"nowrap",
+		"emsp",
+		"дефолтная"
+	],
+	"ignorePaths": [
+		"src/img/*"
+	]
+}
