@@ -61,7 +61,10 @@
 		"eofline": true,
 		"ter-indent": [
 			true,
-			"tab"
+			"tab",
+			{
+				"SwitchCase": "1"
+			}
 		],
 		// Custom rules
 		"ascii-only": false,
