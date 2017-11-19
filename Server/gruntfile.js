@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 					stderr: true
 				}
 			},
-			cspell: cspellPath + ' ' + '-c' + ' ' + 'cspell.config.json' + ' ' + 'src/**/*',
+			cspell: cspellPath + ' ' + 'src/**/*',
 			test: {
 				command: function() {
 					var file = process.env.npm_config_file;
