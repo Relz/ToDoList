@@ -15,7 +15,6 @@ export class Tab extends React.Component<ITabProps, {}> {
 		});
 
 		const tabItems: TabItem[] = this.props.tabItems;
-		console.log()
 
 		return (
 			<div>
@@ -38,9 +37,8 @@ export class Tab extends React.Component<ITabProps, {}> {
 						<TabContent
 							key={tabItem.id}
 							onRef={(ref: TabContent) => { this.onTabContentRef(ref, tabItem.id); }}
-						>
-							{tabItem.content}
-						</TabContent>
+							loadContent={tabItem.loadContent}
+						/>
 					)
 				}
 			</div>
@@ -60,7 +58,7 @@ export class Tab extends React.Component<ITabProps, {}> {
 			tabTitle.active = false;
 		});
 		this._idsToTabContents.forEach((tabContent: TabContent) => {
-			tabContent.active = false;
+			tabContent.setActive(false, () => {});
 		});
 		const tabTitleToSetActive: TabTitle | undefined = this._idsToTabTitles.get(`${tabItemId}Title`);
 		if (tabTitleToSetActive) {
@@ -68,7 +66,9 @@ export class Tab extends React.Component<ITabProps, {}> {
 		}
 		const tabContentToShow: TabContent | undefined = this._idsToTabContents.get(`${tabItemId}Content`);
 		if (tabContentToShow) {
-			tabContentToShow.active = true;
+			tabContentToShow.setActive(true, () => {
+				tabContentToShow.loadContent();
+			});
 		}
 	}
 }

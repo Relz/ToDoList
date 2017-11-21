@@ -6,7 +6,7 @@ import * as classNames from 'classnames';
 export class TabContent extends React.Component<ITabContentProps, ITabContentState> {
 	public constructor() {
 		super();
-		this.state = { active: false };
+		this.state = { active: false, content: undefined };
 	}
 
 	componentDidMount(): void {
@@ -29,16 +29,20 @@ export class TabContent extends React.Component<ITabContentProps, ITabContentSta
 
 		return (
 			<div className={classes}>
-				{this.props.children}
+				{this.state.content}
 			</div>
 		);
 	}
 
-	public get active(): boolean {
+	public getActive(): boolean {
 		return this.state.active;
 	}
 
-	public set active(value: boolean) {
-		this.setState({ active: value });
+	public setActive(value: boolean, callback: () => void) {
+		this.setState({ active: value, content: this.state.content }, callback);
+	}
+
+	public loadContent(): void {
+		this.setState({ active: this.state.active, content: this.props.loadContent() });
 	}
 }

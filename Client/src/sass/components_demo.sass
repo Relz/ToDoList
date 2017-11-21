@@ -1,24 +1,22 @@
 @import mixin
 
-=size($width, $height)
-	min-width: $width
-	min-height: $height
-
 .components_demo
 	.description_title
 		margin-bottom: 15px
 
-	th
+	thead
 		border: 1px solid #7f7f7f
+
+	td
+		border: 1px solid #7f7f7f
+		padding: 5px
+
 		&.demo_column
 			width: 60%
 
 		&.description_column
 			width: 40%
 
-	td
-		border: 1px solid #7f7f7f
-		padding: 5px
 		.button
 			margin: 5px 0 0 5px
 
@@ -32,16 +30,16 @@
 	.container_content
 		&.red
 			background-color: darkRed
-			+size(35px, 70px)
+			+minSize(35px, 70px)
 		&.yellow
 			background-color: darkOrange
-			+size(50px, 50px)
+			+minSize(50px, 50px)
 		&.green
 			background-color: darkGreen
-			+size(70px, 30px)
+			+minSize(70px, 30px)
 		&.blue
 			background-color: darkBlue
-			+size(42px, 64px)
+			+minSize(42px, 64px)
 	.property_title
 		margin-bottom: 10px
 		font-weight: bold
@@ -53,3 +51,4 @@
 	@import button
 	@import form-control
 	@import container
+	@import tab

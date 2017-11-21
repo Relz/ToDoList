@@ -23,7 +23,7 @@ export class TabTitle extends React.Component<ITabTitleProps, ITabTitleState> {
 	public render(): JSX.Element {
 		return (
 			<Button
-				type={ButtonType.Basic}
+				type={ButtonType.Default}
 				size={ButtonSize.Medium}
 				onClick={this.props.onClick}
 				onRef={(ref: Button) => { this._button = ref; }}
@@ -34,7 +34,7 @@ export class TabTitle extends React.Component<ITabTitleProps, ITabTitleState> {
 	}
 
 	public get active(): boolean {
-		return this._button.state.type === ButtonType.Primary;
+		return this._button.type === ButtonType.Primary;
 	}
 
 	public set active(value: boolean) {

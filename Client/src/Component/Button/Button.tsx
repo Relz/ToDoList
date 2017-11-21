@@ -6,7 +6,6 @@ import * as classNames from 'classnames';
 import { IButtonState } from '../State/IButtonState';
 
 export class Button extends React.Component<IButtonProps, IButtonState> {
-	private _firstRender: boolean = true;
 	public constructor() {
 		super();
 		this.state = { type: ButtonType.Basic };
@@ -16,6 +15,7 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 		if (this.props.onRef) {
 			this.props.onRef(this);
 		}
+		this.setState({ type: this.props.type });
 	}
 
 	componentWillUnmount(): void {
@@ -25,10 +25,6 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 	}
 
 	public render(): JSX.Element {
-		if (this._firstRender) {
-			this._firstRender = false;
-			this.setState({ type: this.props.type });
-		}
 		const disabled: boolean = (this.props.disabled === undefined) ? false : this.props.disabled;
 		const classes: string = classNames({
 			button: true,

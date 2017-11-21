@@ -1,10 +1,10 @@
+import './sass/index.sass';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { App } from './App/App';
-import { Page404 } from './Page404';
-import './sass/index.sass';
 import { ComponentsDemoPage } from './ComponentsDemo/ComponentsDemoPage';
+import { Page404 } from './Page404';
 
 ReactDOM.render(
 	<BrowserRouter>

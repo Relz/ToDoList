@@ -1,3 +1,7 @@
+=minSize($width, $height)
+	min-width: $width
+	min-height: $height
+
 =border-radius($value)
 	-webkit-border-radius: $value
 	-moz-border-radius: $value
@@ -59,10 +63,3 @@
 	animation-delay: $delay
 	animation-duration: $duration
 	animation-fill-mode: forwards
-
-=fadeEffect()
-	+keyframes(fadeEffect)
-		0%
-			opacity: 0
-		100%
-			opacity: 1

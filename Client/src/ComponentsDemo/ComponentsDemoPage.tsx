@@ -7,7 +7,7 @@ import { ContainerDemo } from './Container/ContainerDemo';
 import { ContainerDemoDescription } from './Container/ContainerDemoDescription';
 import { TabDemo } from './Tab/TabDemo';
 import { TabDemoDescription } from './Tab/TabDemoDescription';
-
+import '../sass/components_demo.sass';
 
 export class ComponentsDemoPage extends React.Component<{}, {}> {
 	public render(): JSX.Element {
