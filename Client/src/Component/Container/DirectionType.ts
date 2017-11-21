@@ -1,6 +1,6 @@
 export enum DirectionType {
-	Row,
-	RowReverse,
-	Column,
-	ColumnReverse
+	Row = 'direction_row',
+	RowReverse = 'direction_row_reverse',
+	Column = 'direction_column',
+	ColumnReverse = 'direction_column_reverse'
 }

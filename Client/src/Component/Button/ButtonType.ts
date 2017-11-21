@@ -1,10 +1,10 @@
 export enum ButtonType {
-	Basic,
-	Default,
-	Primary,
-	Success,
-	Info,
-	Warning,
-	Danger,
-	Link
+	Basic = 'basic',
+	Default = 'default',
+	Primary = 'primary',
+	Success = 'success',
+	Info = 'info',
+	Warning = 'warning',
+	Danger = 'danger',
+	Link = 'link'
 }

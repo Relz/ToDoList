@@ -1,10 +1,11 @@
 import { DirectionType } from '../Container/DirectionType';
 import { JustifyType } from '../Container/JustifyType';
-import { AlignType } from '../Container/AlignType';
+import { AlignItemsType } from '../Container/AlignItemsType';
+import { AlignSelfType } from '../Container/AlignSelfType';
 
 export interface IContainerProps {
 	directionType: DirectionType;
 	justifyType: JustifyType;
-	alignItemsType: AlignType;
-	alignSelfType: AlignType;
+	alignItemsType: AlignItemsType;
+	alignSelfType: AlignSelfType;
 }
