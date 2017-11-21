@@ -10,7 +10,10 @@
 		"keyframes",
 		"nowrap",
 		"emsp",
-		"дефолтная"
+		"дефолтная",
+		"rgba",
+		"Disableable",
+		"datetime"
 	],
 	"ignorePaths": [
 		"src/img/*"
