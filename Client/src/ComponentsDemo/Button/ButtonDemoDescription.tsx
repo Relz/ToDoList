@@ -30,17 +30,17 @@ export class ButtonDemoDescription extends React.Component<{}, {}> {
 				<br/>
 				Пример:<br/>
 				&lt;Button<br/>
-				&emsp;type={'ButtonType.Basic'}<br/>
-				&emsp;size={'ButtonSize.ExtraSmall'}<br/>
+				&emsp;type={'{ButtonType.Basic}'}<br/>
+				&emsp;size={'{ButtonSize.ExtraSmall}'}<br/>
 				><br/>
 				&emsp;Пример кнопки<br/>
 				&lt;/Button&gt;
 				<br/>
 				<br/>
 				&lt;Button<br/>
-				&emsp;type={'ButtonType.Basic'}<br/>
-				&emsp;size={'ButtonSize.ExtraSmall'}<br/>
-				&emsp;disabled={'true'}<br/>
+				&emsp;type={'{ButtonType.Basic}'}<br/>
+				&emsp;size={'{ButtonSize.ExtraSmall}'}<br/>
+				&emsp;disabled={'{true}'}<br/>
 				><br/>
 				&emsp;Пример неактивной кнопки<br/>
 				&lt;/Button&gt;
