@@ -38,10 +38,10 @@
 	-ms-user-select: $value
 	user-select: $value
 
-=transition($value0, $value1)
-	-webkit-transition: $value0 $value1
-	-o-transition: $value0 $value1
-	transition: $value0 $value1
+=transition($property, $duration, $timingFunction, $delay)
+	-webkit-transition: $property $duration, $timingFunction, $delay
+	-o-transition: $property $duration, $timingFunction, $delay
+	transition: $property $duration, $timingFunction, $delay
 
 =animation($animation, $delay, $duration)
 	-webkit-animation-name: $animation

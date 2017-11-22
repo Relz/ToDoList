@@ -4,6 +4,11 @@ import * as classNames from 'classnames';
 import { TabItem } from './TabItem';
 import { TabContent } from './TabContent';
 import { TabTitle } from './TabTitle';
+import { Container } from '../Container/Container';
+import { AlignItemsType } from '../Container/AlignItemsType';
+import { DirectionType } from '../Container/DirectionType';
+import { JustifyType } from '../Container/JustifyType';
+import { AlignSelfType } from '../Container/AlignSelfType';
 
 export class Tab extends React.Component<ITabProps, {}> {
 	private _idsToTabTitles: Map<string, TabTitle> = new Map();
@@ -19,17 +24,24 @@ export class Tab extends React.Component<ITabProps, {}> {
 		return (
 			<div>
 				<div className={classes}>
-					{
-						tabItems.map((tabItem: TabItem, index: number) =>
-							<TabTitle
-								key={tabItem.id}
-								onClick={this.onTabItemLabelClick.bind(this, tabItem.id)}
-								onRef={(ref: TabTitle) => { this.onTabTitleRef(ref, tabItem.id); }}
-							>
-								{tabItem.label}
-							</TabTitle>
-						)
-					}
+					<Container
+						alignItemsType={AlignItemsType.Stretch}
+						alignSelfType={AlignSelfType.Stretch}
+						directionType={DirectionType.Row}
+						justifyType={JustifyType.SpaceBetween}
+					>
+						{
+							tabItems.map((tabItem: TabItem, index: number) =>
+								<TabTitle
+									key={tabItem.id}
+									onClick={this.onTabItemLabelClick.bind(this, tabItem.id)}
+									onRef={(ref: TabTitle) => { this.onTabTitleRef(ref, tabItem.id); }}
+								>
+									{tabItem.label}
+								</TabTitle>
+							)
+						}
+					</Container>
 				</div>
 
 				{
@@ -46,11 +58,11 @@ export class Tab extends React.Component<ITabProps, {}> {
 	}
 
 	private onTabTitleRef(ref: TabTitle, tabItemId: string): void {
-		this._idsToTabTitles.set(`${tabItemId}Title`, ref);
+		this._idsToTabTitles.set(tabItemId, ref);
 	}
 
 	private onTabContentRef(ref: TabContent, tabItemId: string): void {
-		this._idsToTabContents.set(`${tabItemId}Content`, ref);
+		this._idsToTabContents.set(tabItemId, ref);
 	}
 
 	private onTabItemLabelClick(tabItemId: string): void {
@@ -58,16 +70,18 @@ export class Tab extends React.Component<ITabProps, {}> {
 			tabTitle.active = false;
 		});
 		this._idsToTabContents.forEach((tabContent: TabContent) => {
-			tabContent.setActive(false, () => {});
+			tabContent.setActive(false, () => undefined);
 		});
-		const tabTitleToSetActive: TabTitle | undefined = this._idsToTabTitles.get(`${tabItemId}Title`);
+		const tabTitleToSetActive: TabTitle | undefined = this._idsToTabTitles.get(tabItemId);
 		if (tabTitleToSetActive) {
 			tabTitleToSetActive.active = true;
 		}
-		const tabContentToShow: TabContent | undefined = this._idsToTabContents.get(`${tabItemId}Content`);
+		const tabContentToShow: TabContent | undefined = this._idsToTabContents.get(tabItemId);
 		if (tabContentToShow) {
 			tabContentToShow.setActive(true, () => {
-				tabContentToShow.loadContent();
+				if (!tabContentToShow.getContent()) {
+					tabContentToShow.loadContent();
+				}
 			});
 		}
 	}

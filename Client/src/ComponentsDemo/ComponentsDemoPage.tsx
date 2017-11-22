@@ -20,22 +20,22 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 					</tr>
 				</thead>
 				<tbody>
-				    <tr>
-					    <td><TabDemo/></td>
-					    <td><TabDemoDescription/></td>
-				    </tr>
+					<tr>
+						<td><TabDemo/></td>
+						<td><TabDemoDescription/></td>
+					</tr>
 					<tr>
 						<td><ContainerDemo/></td>
 						<td><ContainerDemoDescription/></td>
 					</tr>
-				    <tr>
-					    <td><InputDemo/></td>
-					    <td><InputDemoDescription/></td>
-				    </tr>
-				    <tr>
-					    <td><ButtonDemo/></td>
-					    <td><ButtonDemoDescription/></td>
-				    </tr>
+					<tr>
+						<td><InputDemo/></td>
+						<td><InputDemoDescription/></td>
+					</tr>
+					<tr>
+						<td><ButtonDemo/></td>
+						<td><ButtonDemoDescription/></td>
+					</tr>
 				</tbody>
 			</table>
 		);

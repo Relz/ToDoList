@@ -1,3 +1,3 @@
 export interface IClickable {
-	onClick?(): void;
+	onClick?: () => void;
 }

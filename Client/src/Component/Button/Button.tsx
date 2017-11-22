@@ -11,14 +11,14 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 		this.state = { type: ButtonType.Basic };
 	}
 
-	componentDidMount(): void {
+	public componentDidMount(): void {
 		if (this.props.onRef) {
 			this.props.onRef(this);
 		}
 		this.setState({ type: this.props.type });
 	}
 
-	componentWillUnmount(): void {
+	public componentWillUnmount(): void {
 		if (this.props.onRef) {
 			this.props.onRef(undefined);
 		}
@@ -28,6 +28,7 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 		const disabled: boolean = (this.props.disabled === undefined) ? false : this.props.disabled;
 		const classes: string = classNames({
 			button: true,
+			stretch: true,
 			basic: this.state.type === ButtonType.Basic,
 			default: this.state.type === ButtonType.Default,
 			primary: this.state.type === ButtonType.Primary,
@@ -48,7 +49,7 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 
 		let onClick: (() => void) | undefined = this.props.onClick;
 		if (!onClick) {
-			onClick = () => {};
+			onClick = () => undefined;
 		}
 
 		return (

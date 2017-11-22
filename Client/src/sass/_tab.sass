@@ -1,5 +1,4 @@
 @import mixin
-@import effect/fade
 
 .tab_header
 	overflow: hidden
@@ -25,9 +24,10 @@
 			border-color: #CCC
 
 .tab_content
-	display: none
 	padding: 6px 12px
-	+animation(fadeEffect, 0s, 1s)
+	opacity: 0
+	display: none
 
 	&.active
+		opacity: 1
 		display: block

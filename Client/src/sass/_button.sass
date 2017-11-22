@@ -1,3 +1,5 @@
+@import mixin
+
 .button
 	display: inline-block
 	font-weight: 400
@@ -7,6 +9,10 @@
 	vertical-align: middle
 	+user-select(none)
 	border: none
+
+	&.stretch
+		display: block
+		width: 100%
 
 	&.disabled
 		cursor: not-allowed

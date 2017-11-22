@@ -34,11 +34,19 @@ export class TabContent extends React.Component<ITabContentProps, ITabContentSta
 		);
 	}
 
+	public getContent(): JSX.Element | undefined {
+		return this.state.content;
+	}
+
+	public setContent(value: JSX.Element, callback: () => void): void {
+		this.setState({ active: this.state.active, content: value }, callback);
+	}
+
 	public getActive(): boolean {
 		return this.state.active;
 	}
 
-	public setActive(value: boolean, callback: () => void) {
+	public setActive(value: boolean, callback: () => void): void {
 		this.setState({ active: value, content: this.state.content }, callback);
 	}
 
