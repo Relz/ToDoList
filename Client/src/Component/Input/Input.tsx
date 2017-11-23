@@ -6,18 +6,12 @@ import { InputTypeUtils } from './InputTypeUtils';
 import { IInputState } from '../State/IInputState';
 
 export class Input extends React.Component<IInputProps, IInputState> {
-	public constructor() {
-		super();
-		this.state = { value: '' };
-	}
-
-	public componentDidMount(): void {
+	public constructor(props: IInputProps) {
+		super(props);
 		if (this.props.onRef) {
 			this.props.onRef(this);
 		}
-		if (this.props.value !== undefined) {
-			this.setState({ value: this.props.value });
-		}
+		this.state = { value: this.props.value !== undefined ? this.props.value : '' };
 	}
 
 	public componentWillUnmount(): void {

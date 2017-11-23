@@ -7,18 +7,12 @@ import { Translation } from '../../translation/ru';
 const logo: string = require('../../img/logo.svg');
 
 export class LoadingSpinner extends React.Component<ILoadingSpinnerProps, ILoadingSpinnerState> {
-	public constructor() {
-		super();
-		this.state = { active: false };
-	}
-
-	public componentDidMount(): void {
+	public constructor(props: ILoadingSpinnerProps) {
+		super(props);
 		if (this.props.onRef) {
 			this.props.onRef(this);
 		}
-		if (this.props.active !== undefined) {
-			this.setState({ active: this.props.active });
-		}
+		this.state = { active: this.props.active !== undefined && this.props.active };
 	}
 
 	public componentWillUnmount(): void {

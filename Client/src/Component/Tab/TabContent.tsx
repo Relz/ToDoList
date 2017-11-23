@@ -4,12 +4,9 @@ import * as React from 'react';
 import * as classNames from 'classnames';
 
 export class TabContent extends React.Component<ITabContentProps, ITabContentState> {
-	public constructor() {
-		super();
+	public constructor(props: ITabContentProps) {
+		super(props);
 		this.state = { active: false, content: undefined };
-	}
-
-	componentDidMount(): void {
 		if (this.props.onRef) {
 			this.props.onRef(this);
 		}

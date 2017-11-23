@@ -6,16 +6,12 @@ import { IButtonState } from '../State/IButtonState';
 import { Utils } from '../../Utils/Utils';
 
 export class Button extends React.Component<IButtonProps, IButtonState> {
-	public constructor() {
-		super();
-		this.state = { type: ButtonType.Basic };
-	}
-
-	public componentDidMount(): void {
+	public constructor(props: IButtonProps) {
+		super(props);
 		if (this.props.onRef) {
 			this.props.onRef(this);
 		}
-		this.setState({ type: this.props.type });
+		this.state = { type: this.props.type };
 	}
 
 	public componentWillUnmount(): void {
