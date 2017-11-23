@@ -10,7 +10,8 @@
 	color: #555
 	background: #FFF none
 	border: 0
-	+transition(border-color ease-in-out .15s, box-shadow ease-in-out .15s)
+	+transition(border-color, .15s, ease-in-out, 0s)
+	+transition(box-shadow, .15s, ease-in-out, 0s)
 
 	&:valid
 		+box-shadow(inset 0px 0px 1px 1px rgba(0, 0, 0, .175))

@@ -1,3 +1,5 @@
+@import mixin
+
 .header
 	background-color: #222
 	padding: 10px
@@ -11,6 +13,7 @@
 		outline: none
 
 		.image
+			+rotationEffect(app-logo-image-spin)
 			animation: app-logo-image-spin infinite 20s linear
 			height: 80px
 			display: inline-block
@@ -20,10 +23,9 @@
 			color: white
 
 	.menu
-		margin: 0
 		display: inline-block
 		border-bottom: 1px solid #222
-		margin-left: auto
+		margin: 0 0 0 auto
 
 		.item
 			list-style-type: none
@@ -37,9 +39,3 @@
 
 				&:hover
 					color: #61DAFB
-
-+keyframes(app-logo-image-spin)
-	0%
-		+rotate(0)
-	100%
-		+rotate(360)

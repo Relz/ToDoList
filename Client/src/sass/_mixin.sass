@@ -1,3 +1,7 @@
+=minSize($width, $height)
+	min-width: $width
+	min-height: $height
+
 =border-radius($value)
 	-webkit-border-radius: $value
 	-moz-border-radius: $value
@@ -34,7 +38,35 @@
 	-ms-user-select: $value
 	user-select: $value
 
-=transition($value0, $value1)
-	-webkit-transition: $value0 $value1
-	-o-transition: $value0 $value1
-	transition: $value0 $value1
+=transition($property, $duration, $timingFunction, $delay)
+	-webkit-transition: $property $duration, $timingFunction, $delay
+	-o-transition: $property $duration, $timingFunction, $delay
+	transition: $property $duration, $timingFunction, $delay
+
+=animation($animation, $delay, $duration)
+	-webkit-animation-name: $animation
+	-webkit-animation-delay: $delay
+	-webkit-animation-duration: $duration
+	-webkit-animation-fill-mode: forwards
+
+	-moz-animation-name: $animation
+	-moz-animation-delay: $delay
+	-moz-animation-duration: $duration
+	-moz-animation-fill-mode: forwards
+
+	-o-animation-name: $animation
+	-o-animation-delay: $delay
+	-o-animation-duration: $duration
+	-o-animation-fill-mode: forwards
+
+	animation-name: $animation
+	animation-delay: $delay
+	animation-duration: $duration
+	animation-fill-mode: forwards
+
+=rotationEffect($name)
+	+keyframes($name)
+		from
+			+rotate(0)
+		to
+			+rotate(360)

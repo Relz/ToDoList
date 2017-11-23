@@ -2,7 +2,8 @@
 export class Translation {
 	public static pageHeader: string = 'To Do List';
 	public static Alt = class {
-		public static logo: string = '';
+		public static logo: string = 'To Do List';
+		public static loadingSpinner: string = 'Загрузка...';
 	};
 	public static Menu = class {
 		public static readonly login: string = 'Войти';

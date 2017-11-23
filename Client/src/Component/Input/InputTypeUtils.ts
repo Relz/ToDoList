@@ -4,33 +4,33 @@ export class InputTypeUtils {
 	public static getPattern(inputType: InputType): string {
 		switch (inputType) {
 			case InputType.Text:
-				return '*';
+				return '.*';
 			case InputType.Password:
-				return '*';
+				return '.*';
 			case InputType.DateTime:
-				return '*';
+				return '.*';
 			case InputType.DateTimeLocal:
-				return '*';
+				return '.*';
 			case InputType.Date:
-				return '*';
+				return '.*';
 			case InputType.Month:
-				return '*';
+				return '.*';
 			case InputType.Time:
-				return '*';
+				return '.*';
 			case InputType.Week:
-				return '*';
+				return '.*';
 			case InputType.Number:
-				return '*';
+				return '.*';
 			case InputType.Email:
-				return '*';
+				return '.*';
 			case InputType.Url:
-				return '*';
+				return '.*';
 			case InputType.Search:
-				return '*';
+				return '.*';
 			case InputType.TelephoneNumber:
 				return '[0-9]{3}-[0-9]{3}-[0-9]{4}';
 			case InputType.Color:
-				return '*';
+				return '.*';
 		}
 	}
 }

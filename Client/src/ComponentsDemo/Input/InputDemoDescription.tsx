@@ -22,16 +22,24 @@ export class InputDemoDescription extends React.Component<{}, {}> {
 					<li>TelephoneNumber</li>
 					<li>Color</li>
 				</ul>
-				Также можно указать параметр disabled = {'true'}, если хотите применить стиль неактивного поля ввода.<br/>
+				Можно указать свойство disabled = {'true'}, если хотите применить стиль неактивного поля ввода.<br/><br/>
+				Также можно указать функцию в свойство onChange,
+				которая будет выполняться при каждом изменении <b>value</b> в поле ввода.<br/>
 				<br/>
 				Пример:<br/>
 				&lt;Input<br/>
-				&emsp;type={'InputType.Text'}<br/>
+				&emsp;type={'{InputType.Text}'}<br/>
 				/><br/>
 				<br/>
 				&lt;Input<br/>
-				&emsp;type={'InputType.Password'}<br/>
-				&emsp;disabled={'true'}<br/>
+				&emsp;type={'{InputType.Password}'}<br/>
+				&emsp;disabled={'{true}'}<br/>
+				/><br/>
+				<br/>
+				&lt;Input<br/>
+				&emsp;type={'{InputType.Password}'}<br/>
+				&emsp;disabled={'{true}'}<br/>
+				&emsp;onChange={'{(value: string) => console.log(value)}'}<br/>
 				/><br/>
 			</span>
 		);

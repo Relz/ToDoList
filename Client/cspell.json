@@ -13,7 +13,8 @@
 		"дефолтная",
 		"rgba",
 		"Disableable",
-		"datetime"
+		"datetime",
+		"thead"
 	],
 	"ignorePaths": [
 		"src/img/*"
