@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { IEditTaskFormProps } from '../Props/Form/IEditTaskFormProps';
 import { TaskDto } from '../../DTO/TaskDto';
-import { IEditTaskFormState } from '../State/IEditTaskFormState';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
 import { ButtonSize } from '../Button/ButtonSize';
 import { ButtonType } from '../Button/ButtonType';
 import { Button } from '../Button/Button';
 
-export class EditTaskForm extends React.Component<IEditTaskFormProps, IEditTaskFormState> {
-	private _model: TaskDto = new TaskDto();
+export class EditTaskForm extends React.Component<IEditTaskFormProps, {}> {
+	private _model: TaskDto;
+
+	public constructor(props: IEditTaskFormProps) {
+		super(props);
+		this._model = props.task === undefined ? new TaskDto() : props.task;
+	}
 
 	public render(): JSX.Element {
 		return (
@@ -38,14 +42,5 @@ export class EditTaskForm extends React.Component<IEditTaskFormProps, IEditTaskF
 				</Button>
 			</form>
 		);
-	}
-
-	public get task(): TaskDto {
-		return this._model;
-	}
-
-	public set task(value: TaskDto) {
-		this._model = value;
-		this.forceUpdate();
 	}
 }

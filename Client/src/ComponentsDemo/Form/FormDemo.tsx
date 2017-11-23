@@ -7,12 +7,27 @@ import { TaskDto } from '../../DTO/TaskDto';
 import { EditTaskForm } from '../../Component/Form/EditTaskForm';
 
 export class FormDemo extends React.Component<{}, {}> {
+	private _task: TaskDto = new TaskDto();
+
+	constructor(props: any) {
+		super(props);
+
+		this._task.title = 'Title';
+		this._task.description = 'Hello, my friend! This is first task in our list...';
+	}
+
 	public render(): JSX.Element {
 		return (
 			<div>
 				<SignInForm onSubmit={this.onLogin}/>
 				<RegisterForm onSubmit={this.onRegister}/>
-				<EditTaskForm onSubmit={this.onEditTask}/>
+				<EditTaskForm
+					onSubmit={this.onEditTask}
+				/>
+				<EditTaskForm
+					onSubmit={this.onEditTask}
+					task={this._task}
+				/>
 			</div>
 		);
 	}
