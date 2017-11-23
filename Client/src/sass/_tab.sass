@@ -1,33 +1,44 @@
 @import mixin
 
-.tab_header
-	overflow: hidden
-	border: 1px solid #ccc
-	background-color: #f1f1f1
+.tab
 
-	button
-		background-color: inherit
-		float: left
-		border: none
-		outline: none
-		cursor: pointer
-		padding: 14px 16px
-		transition: 0.3s
-		font-size: 17px
+	.tab_header
+		overflow: hidden
+		border: 1px solid #ccc
+		background-color: #f1f1f1
 
-		&:hover
-			background-color: #ddd
+		button
+			float: left
+			border: none
+			outline: none
+			cursor: pointer
+			padding: 14px 16px
+			transition: 0.3s
+			font-size: 17px
+
+			&:hover
+				background-color: #ddd
+
+			&.active
+				color: #333
+				background-color: #FFF
+				border-color: #CCC
+
+	.tab_content
+		padding: 6px 12px
+		opacity: 0
+		display: none
 
 		&.active
-			color: #333
-			background-color: #FFF
-			border-color: #CCC
+			opacity: 1
+			display: block
 
-.tab_content
-	padding: 6px 12px
-	opacity: 0
-	display: none
+	.loading_spinner
+		height: 80px
+		margin: 0 auto
+		display: none
 
-	&.active
-		opacity: 1
-		display: block
+		&.active
+			display: block
+			+rotationEffect(tab-loading-spinner)
+			animation: tab-loading-spinner infinite 2s linear

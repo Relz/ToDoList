@@ -7,18 +7,38 @@ export class TabDemo extends React.Component<{}, {}> {
 		return (
 			<div>
 				<Tab tabItems={[
-					new TabItem('demoTab1', 'Tab1', () => TabDemo.createContent('First tab')),
-					new TabItem('demoTab2', 'Tab2', () => TabDemo.createContent('Second tab')),
-					new TabItem('demoTab3', 'Tab3', () => TabDemo.createContent('Third tab')),
-					new TabItem('demoTab4', 'Tab4', () => TabDemo.createContent('Fours tab'))
+					new TabItem(
+						'demoTab1',
+						'Tab1',
+						(onLoadComplete: (content: JSX.Element) => void) => TabDemo.createContent('First tab', onLoadComplete)
+					),
+					new TabItem(
+						'demoTab2',
+						'Tab2',
+						(onLoadComplete: (content: JSX.Element) => void) => TabDemo.createContent('Second tab', onLoadComplete)
+					),
+					new TabItem(
+						'demoTab3',
+						'Tab3',
+						(onLoadComplete: (content: JSX.Element) => void) => TabDemo.createContent('Third tab', onLoadComplete)
+					),
+					new TabItem(
+						'demoTab4',
+						'Tab4',
+						(onLoadComplete: (content: JSX.Element) => void) => TabDemo.createContent('Fours tab', onLoadComplete)
+					)
 				]}/>
 			</div>
 		);
 	}
 
-	private static createContent(text: string): JSX.Element {
-		return <div>
-			<span>{text}</span>
-		</div>;
+	private static createContent(text: string, onLoadComplete: (content: JSX.Element) => void): void {
+		setTimeout(() => {
+			onLoadComplete(
+				<div>
+					<span>{text}</span>
+				</div>
+			);
+		}, 2000);
 	}
 }

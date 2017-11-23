@@ -63,3 +63,10 @@
 	animation-delay: $delay
 	animation-duration: $duration
 	animation-fill-mode: forwards
+
+=rotationEffect($name)
+	+keyframes($name)
+		from
+			+rotate(0)
+		to
+			+rotate(360)

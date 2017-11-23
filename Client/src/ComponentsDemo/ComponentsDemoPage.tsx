@@ -21,7 +21,7 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 				</thead>
 				<tbody>
 					<tr>
-						<td><TabDemo/></td>
+						<td className='cell_alignment_top'><TabDemo/></td>
 						<td><TabDemoDescription/></td>
 					</tr>
 					<tr>

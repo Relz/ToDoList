@@ -9,10 +9,12 @@ import { AlignItemsType } from '../Container/AlignItemsType';
 import { DirectionType } from '../Container/DirectionType';
 import { JustifyType } from '../Container/JustifyType';
 import { AlignSelfType } from '../Container/AlignSelfType';
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner';
 
 export class Tab extends React.Component<ITabProps, {}> {
 	private _idsToTabTitles: Map<string, TabTitle> = new Map();
 	private _idsToTabContents: Map<string, TabContent> = new Map();
+	private _loadingSpinner: LoadingSpinner;
 
 	public render(): JSX.Element {
 		const classes: any = classNames({
@@ -22,7 +24,7 @@ export class Tab extends React.Component<ITabProps, {}> {
 		const tabItems: TabItem[] = this.props.tabItems;
 
 		return (
-			<div>
+			<div className={'tab'}>
 				<div className={classes}>
 					<Container
 						alignItemsType={AlignItemsType.Stretch}
@@ -43,7 +45,6 @@ export class Tab extends React.Component<ITabProps, {}> {
 						}
 					</Container>
 				</div>
-
 				{
 					tabItems.map((tabItem: TabItem, index: number) =>
 						<TabContent
@@ -53,6 +54,17 @@ export class Tab extends React.Component<ITabProps, {}> {
 						/>
 					)
 				}
+				<Container
+					directionType={DirectionType.Row}
+					justifyType={JustifyType.Center}
+					alignItemsType={AlignItemsType.Center}
+					alignSelfType={AlignSelfType.Center}
+				>
+					<LoadingSpinner
+						active={false}
+						onRef={(ref: LoadingSpinner) => this._loadingSpinner = ref}
+					/>
+				</Container>
 			</div>
 		);
 	}
@@ -66,6 +78,7 @@ export class Tab extends React.Component<ITabProps, {}> {
 	}
 
 	private onTabItemLabelClick(tabItemId: string): void {
+		this._loadingSpinner.setActive(true, () => undefined);
 		this._idsToTabTitles.forEach((tabTitle: TabTitle) => {
 			tabTitle.active = false;
 		});
@@ -80,7 +93,11 @@ export class Tab extends React.Component<ITabProps, {}> {
 		if (tabContentToShow) {
 			tabContentToShow.setActive(true, () => {
 				if (!tabContentToShow.getContent()) {
-					tabContentToShow.loadContent();
+					tabContentToShow.loadContent(() => {
+						this._loadingSpinner.setActive(false, () => undefined);
+					});
+				} else {
+					this._loadingSpinner.setActive(false, () => undefined);
 				}
 			});
 		}

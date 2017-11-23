@@ -50,7 +50,10 @@ export class TabContent extends React.Component<ITabContentProps, ITabContentSta
 		this.setState({ active: value, content: this.state.content }, callback);
 	}
 
-	public loadContent(): void {
-		this.setState({ active: this.state.active, content: this.props.loadContent() });
+	public loadContent(onLoadComplete: () => void): void {
+		this.props.loadContent((content: JSX.Element) => {
+			this.setState({ active: this.state.active, content: content });
+			onLoadComplete();
+		});
 	}
 }

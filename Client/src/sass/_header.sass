@@ -13,6 +13,7 @@
 		outline: none
 
 		.image
+			+rotationEffect(app-logo-image-spin)
 			animation: app-logo-image-spin infinite 20s linear
 			height: 80px
 			display: inline-block
@@ -38,9 +39,3 @@
 
 				&:hover
 					color: #61DAFB
-
-+keyframes(app-logo-image-spin)
-	0%
-		+rotate(0)
-	100%
-		+rotate(360)
