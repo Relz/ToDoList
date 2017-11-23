@@ -1,14 +1,47 @@
 import * as React from 'react';
-import { LoginForm } from '../../Component/Form/LoginForm'
+import { SignInForm } from '../../Component/Form/SignInForm';
+import { RegisterForm } from '../../Component/Form/RegisterForm';
+import { SignInDto } from '../../DTO/SignInDto';
+import { RegisterDto } from '../../DTO/RegisterDto';
+import { TaskDto } from '../../DTO/TaskDto';
+import { EditTaskForm } from '../../Component/Form/EditTaskForm';
 
 export class FormDemo extends React.Component<{}, {}> {
 	public render(): JSX.Element {
 		return (
-			<LoginForm
-				onSubmit={(login: string, password: string): void => {
-					alert('Login: ' + login +'\n' + 'Password: ' + password);
-				}}
-			></LoginForm>
+			<div>
+				<SignInForm onSubmit={this.onLogin}/>
+				<RegisterForm onSubmit={this.onRegister}/>
+				<EditTaskForm onSubmit={this.onEditTask}/>
+			</div>
+		);
+	}
+
+	private onLogin(model: SignInDto): void {
+		alert(
+			'LOGIN DATA:\n' +
+			'email: \"' + model.email + '\"\n' +
+			'password: \"' + model.password + '\"'
+		);
+	}
+
+	private onRegister(model: RegisterDto): void {
+		alert(
+			'REGISTER DATA\n' +
+			'email: \"' + model.email + '\"\n' +
+			'password: \"' + model.password + '\"\n' +
+			'repeat password: \"' + model.repeatPassword + '\"\n' +
+			'name: \"' + model.name + '\"'
+		);
+	}
+
+	private onEditTask(model: TaskDto): void {
+		alert(
+			'TASK DATA:\n' +
+			'title: \"' + model.title + '\"\n' +
+			'description: \"' + model.description + '\"\n' +
+			'isDeadlineExist: \"' + model.isDeadlineExist + '\"\n' +
+			'deadline: \"' + model.deadLine + '\"'
 		);
 	}
 }

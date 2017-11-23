@@ -9,15 +9,17 @@ import { AlignItemsType } from '../Container/AlignItemsType';
 import { JustifyType } from '../Container/JustifyType';
 import { Container } from '../Container/Container';
 import { DirectionType } from '../Container/DirectionType';
-import { ILoginFormProps } from '../Props/Form/ILoginFormProps';
+import { ISignInFormProps } from '../Props/Form/ISignInFormProps';
+import { SignInDto } from '../../DTO/SignInDto';
 
-export class LoginForm extends React.Component<ILoginFormProps, {}> {
+export class SignInForm extends React.Component<ISignInFormProps, {}> {
 	public render(): JSX.Element {
 		return (
 			<form
 				className='form_block'
 				onSubmit={(event: any): void => {
 					event.preventDefault();
+					this.props.onSubmit(this.model);
 				}}
 			>
 				<Container
@@ -26,8 +28,14 @@ export class LoginForm extends React.Component<ILoginFormProps, {}> {
 					alignItemsType={AlignItemsType.Center}
 					alignSelfType={AlignSelfType.Auto}
 				>
-					<Input type={InputType.Email}/>
-					<Input type={InputType.Password}/>
+					<Input
+						type={InputType.Email}
+						onChange={(value: string) => this.model.email = value}
+					/>
+					<Input
+						type={InputType.Password}
+						onChange={(value: string) => this.model.password = value}
+					/>
 					<Button
 						type={ButtonType.Success}
 						size={ButtonSize.Large}
@@ -38,4 +46,6 @@ export class LoginForm extends React.Component<ILoginFormProps, {}> {
 			</form>
 		);
 	}
+
+	private model: SignInDto = new SignInDto();
 }

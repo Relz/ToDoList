@@ -1,5 +1,6 @@
 import { IFormProps } from './IFormProps';
+import { RegisterDto } from '../../../DTO/RegisterDto';
 
 export interface IRegisterProperties extends IFormProps {
-	onSubmit: (login: string, password: string, name: string) => void;
+	onSubmit: (model: RegisterDto) => void;
 }

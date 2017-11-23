@@ -8,20 +8,14 @@ import { IInputState } from '../State/IInputState';
 export class Input extends React.Component<IInputProps, IInputState> {
 	public constructor(props: IInputProps) {
 		super(props);
-		if (this.props.onRef) {
-			this.props.onRef(this);
-		}
-		this.state = { value: this.props.value !== undefined ? this.props.value : '' };
-	}
-
-	public componentWillUnmount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(undefined);
-		}
+		this.state = {
+			value: this.props.value !== undefined ? this.props.value : '',
+			disabled: false
+		};
 	}
 
 	public render(): JSX.Element {
-		const disabled: boolean = (this.props.disabled === undefined) ? false : this.props.disabled;
+		const disabled: boolean = (this.state.disabled === undefined) ? false : this.state.disabled;
 		const classes: any = classNames({
 			'form-control': true,
 			enabled: !disabled,

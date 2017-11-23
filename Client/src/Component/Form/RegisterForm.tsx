@@ -10,6 +10,7 @@ import { ButtonType } from '../Button/ButtonType';
 import { ButtonSize } from '../Button/ButtonSize';
 import { Container } from '../Container/Container';
 import { Button } from '../Button/Button';
+import { RegisterDto } from '../../DTO/RegisterDto';
 
 export class RegisterForm extends React.Component <IRegisterProperties, {}> {
 	public render(): JSX.Element {
@@ -18,6 +19,7 @@ export class RegisterForm extends React.Component <IRegisterProperties, {}> {
 				className='form_block'
 				onSubmit={(event: any): void => {
 					event.preventDefault();
+					this.props.onSubmit(this._model);
 				}}
 			>
 				<Container
@@ -26,10 +28,22 @@ export class RegisterForm extends React.Component <IRegisterProperties, {}> {
 					alignItemsType={AlignItemsType.Center}
 					alignSelfType={AlignSelfType.Auto}
 				>
-					<Input type={InputType.Email}/>
-					<Input type={InputType.Text}/>
-					<Input type={InputType.Password}/>
-					<Input type={InputType.Password}/>
+					<Input
+						type={InputType.Email}
+						onChange={(value: string) => this._model.email = value}
+					/>
+					<Input
+						type={InputType.Text}
+						onChange={(value: string) => this._model.name = value}
+					/>
+					<Input
+						type={InputType.Password}
+						onChange={(value: string) => this._model.password = value}
+					/>
+					<Input
+						type={InputType.Password}
+						onChange={(value: string) => this._model.repeatPassword = value}
+					/>
 					<Button
 						type={ButtonType.Success}
 						size={ButtonSize.Large}
@@ -40,4 +54,6 @@ export class RegisterForm extends React.Component <IRegisterProperties, {}> {
 			</form>
 		);
 	}
+
+	private _model: RegisterDto = new RegisterDto();
 }

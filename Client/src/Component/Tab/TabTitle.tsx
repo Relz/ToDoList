@@ -8,25 +8,13 @@ import { ITabTitleState } from '../State/ITabTitleState';
 export class TabTitle extends React.Component<ITabTitleProps, ITabTitleState> {
 	private _button: Button;
 
-	componentDidMount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(this);
-		}
-	}
-
-	componentWillUnmount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(undefined);
-		}
-	}
-
 	public render(): JSX.Element {
 		return (
 			<Button
 				type={ButtonType.Default}
 				size={ButtonSize.Medium}
 				onClick={this.props.onClick}
-				onRef={(ref: Button) => { this._button = ref; }}
+				ref={(ref: Button) => { this._button = ref; }}
 			>
 				{this.props.children}
 			</Button>

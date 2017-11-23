@@ -9,16 +9,7 @@ const logo: string = require('../../img/logo.svg');
 export class LoadingSpinner extends React.Component<ILoadingSpinnerProps, ILoadingSpinnerState> {
 	public constructor(props: ILoadingSpinnerProps) {
 		super(props);
-		if (this.props.onRef) {
-			this.props.onRef(this);
-		}
 		this.state = { active: this.props.active !== undefined && this.props.active };
-	}
-
-	public componentWillUnmount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(undefined);
-		}
 	}
 
 	public render(): JSX.Element {

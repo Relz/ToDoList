@@ -7,15 +7,6 @@ export class TabContent extends React.Component<ITabContentProps, ITabContentSta
 	public constructor(props: ITabContentProps) {
 		super(props);
 		this.state = { active: false, content: undefined };
-		if (this.props.onRef) {
-			this.props.onRef(this);
-		}
-	}
-
-	componentWillUnmount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(undefined);
-		}
 	}
 
 	public render(): JSX.Element {

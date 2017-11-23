@@ -37,7 +37,7 @@ export class Tab extends React.Component<ITabProps, {}> {
 								<TabTitle
 									key={tabItem.id}
 									onClick={this.onTabItemLabelClick.bind(this, tabItem.id)}
-									onRef={(ref: TabTitle) => { this.onTabTitleRef(ref, tabItem.id); }}
+									ref={(ref: TabTitle) => { this.onTabTitleRef(ref, tabItem.id); }}
 								>
 									{tabItem.label}
 								</TabTitle>
@@ -49,7 +49,7 @@ export class Tab extends React.Component<ITabProps, {}> {
 					tabItems.map((tabItem: TabItem, index: number) =>
 						<TabContent
 							key={tabItem.id}
-							onRef={(ref: TabContent) => { this.onTabContentRef(ref, tabItem.id); }}
+							ref={(ref: TabContent) => { this.onTabContentRef(ref, tabItem.id); }}
 							loadContent={tabItem.loadContent}
 						/>
 					)
@@ -62,7 +62,7 @@ export class Tab extends React.Component<ITabProps, {}> {
 				>
 					<LoadingSpinner
 						active={false}
-						onRef={(ref: LoadingSpinner) => this._loadingSpinner = ref}
+						ref={(ref: LoadingSpinner) => this._loadingSpinner = ref}
 					/>
 				</Container>
 			</div>

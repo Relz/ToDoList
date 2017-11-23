@@ -1,5 +1,3 @@
-import { IReferable } from './IReferable';
-
-export interface ILoadingSpinnerProps extends IReferable {
+export interface ILoadingSpinnerProps {
 	active: boolean;
 }
