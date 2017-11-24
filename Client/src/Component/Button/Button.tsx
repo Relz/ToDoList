@@ -6,25 +6,28 @@ import { IButtonState } from '../State/IButtonState';
 import { Utils } from '../../Utils/Utils';
 
 export class Button extends React.Component<IButtonProps, IButtonState> {
+	private _onClick: (() => void) | undefined;
+
 	public constructor(props: IButtonProps) {
 		super(props);
+		this._onClick = this.props.onClick ? this.props.onClick : () => undefined;
 		this.state = { type: this.props.type, disabled: false };
 	}
 
+	public componentWillUnmount(): void {
+		if (this.props.onRef) {
+			this.props.onRef(undefined);
+		}
+	}
+
 	public render(): JSX.Element {
-		const disabled: boolean = (this.disabled === undefined) ? false : this.disabled;
 		const classes: string = classNames({
 			button: true,
 			stretch: true,
 
-			enabled: !disabled,
-			disabled: disabled
+			enabled: !this.state.disabled,
+			disabled: this.state.disabled
 		});
-
-		let onClick: (() => void) | undefined = this.props.onClick;
-		if (!onClick) {
-			onClick = () => undefined;
-		}
 
 		return (
 			<button
@@ -32,8 +35,8 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 					this.state.type,
 					this.props.size
 				)}
-				disabled={disabled}
-				onClick={onClick}
+				disabled={this.state.disabled}
+				onClick={this._onClick}
 			>
 				{this.props.children}
 			</button>

@@ -37,4 +37,11 @@ export class Translation {
 		public static readonly passwordPlaceholder: string = 'Пароль';
 		public static readonly passwordRepeatPlaceholder: string = 'Повторите пароль';
 	};
+	public static Task = class {
+		public static setDoneButtonText: string = 'Сделана';
+		public static setNotDoneButtonText: string = 'Не сделана';
+		public static setImportantButtonText: string = 'Пометить как важная';
+		public static setNotImportantButtonText: string = 'Пометить как не важная';
+		public static editButtonText: string = 'Редактировать';
+	};
 }

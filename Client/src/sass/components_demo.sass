@@ -20,44 +20,50 @@
 		&.cell_alignment_top
 			vertical-align: top
 
-		.button
-			margin-top: 5px
-
 		.tab_header
 			.button
 				margin: 0
 
-	.container_demo
-		.container
-			width: 100%
-			border: 1px solid black
-	.container_content
-		&.red
-			background-color: darkRed
-			+minSize(35px, 70px)
-		&.yellow
-			background-color: darkOrange
-			+minSize(50px, 50px)
-		&.green
-			background-color: darkGreen
-			+minSize(70px, 30px)
-		&.blue
-			background-color: darkBlue
-			+minSize(42px, 64px)
-	.property_title
-		margin-bottom: 10px
-		font-weight: bold
-	.property_example_block
-		margin-bottom: 20px
-	.property_example_name
-		margin-bottom: 5px
+		&.demo_specified_button
+			.button
+				margin-top: 10px
 
-	.form_demo
-		.form
-			width: 60%
-			margin-bottom: 20px
+		&.demo_specified_container
+			.container
+				width: 100%
+				border: 1px solid black
+			.container_content
+				&.red
+					background-color: darkRed
+					+minSize(35px, 70px)
+				&.yellow
+					background-color: darkOrange
+					+minSize(50px, 50px)
+				&.green
+					background-color: darkGreen
+					+minSize(70px, 30px)
+				&.blue
+					background-color: darkBlue
+					+minSize(42px, 64px)
+			.property_title
+				margin-bottom: 10px
+				font-weight: bold
+			.property_example_block
+				margin-bottom: 20px
+			.property_example_name
+				margin-bottom: 5px
+
+		.form_demo
+			.form
+				width: 60%
+				margin-bottom: 20px
+
+		&.demo_specified_task
+			.task
+				margin-top: 20px
 
 	@import button
 	@import form-control
 	@import container
 	@import tab
+	@import task

@@ -10,6 +10,8 @@ import { TabDemo } from './Tab/TabDemo';
 import { TabDemoDescription } from './Tab/TabDemoDescription';
 import { FormDemo } from './Form/FormDemo';
 import { FormDemoDescription } from './Form/FormDemoDescription';
+import { TaskDemo } from './Task/TaskDemo';
+import { TaskDemoDescription } from './Task/TaskDemoDescription';
 
 export class ComponentsDemoPage extends React.Component<{}, {}> {
 	public render(): JSX.Element {
@@ -23,6 +25,10 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 				</thead>
 				<tbody>
 					<tr>
+						<td className={'demo_specified_task'}><TaskDemo/></td>
+						<td><TaskDemoDescription/></td>
+					</tr>
+					<tr>
 						<td><FormDemo/></td>
 						<td><FormDemoDescription/></td>
 					</tr>
@@ -31,7 +37,7 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 						<td><TabDemoDescription/></td>
 					</tr>
 					<tr>
-						<td><ContainerDemo/></td>
+						<td className={'demo_specified_container'}><ContainerDemo/></td>
 						<td><ContainerDemoDescription/></td>
 					</tr>
 					<tr>
@@ -39,7 +45,7 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 						<td><InputDemoDescription/></td>
 					</tr>
 					<tr>
-						<td><ButtonDemo/></td>
+						<td className={'demo_specified_button'}><ButtonDemo/></td>
 						<td><ButtonDemoDescription/></td>
 					</tr>
 				</tbody>
