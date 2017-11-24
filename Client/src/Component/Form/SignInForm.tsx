@@ -1,51 +1,39 @@
 import * as React from 'react';
-import { ButtonSize } from '../Button/ButtonSize';
-import { ButtonType } from '../Button/ButtonType';
-import { Button } from '../Button/Button';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
-import { AlignSelfType } from '../Container/AlignSelfType';
-import { AlignItemsType } from '../Container/AlignItemsType';
-import { JustifyType } from '../Container/JustifyType';
 import { Container } from '../Container/Container';
 import { DirectionType } from '../Container/DirectionType';
 import { ISignInFormProps } from '../Props/Form/ISignInFormProps';
 import { SignInDto } from '../../DTO/SignInDto';
+import { Form } from './Form';
 
-export class SignInForm extends React.Component<ISignInFormProps, {}> {
-	public render(): JSX.Element {
+export class SignInForm extends Form<ISignInFormProps, {}> {
+	private _model: SignInDto = new SignInDto();
+
+	constructor(props: ISignInFormProps) {
+		super(props);
+		this.title = 'Sign in';
+		this.buttonTitle = 'Sign in';
+	}
+
+	protected getInner(): JSX.Element {
 		return (
-			<form
-				className='form_block'
-				onSubmit={(event: any): void => {
-					event.preventDefault();
-					this.props.onSubmit(this.model);
-				}}
-			>
-				<Container
-					directionType={DirectionType.Column}
-					justifyType={JustifyType.Center}
-					alignItemsType={AlignItemsType.Center}
-					alignSelfType={AlignSelfType.Auto}
-				>
+			<div>
+				<Container directionType={DirectionType.Column}>
 					<Input
 						type={InputType.Email}
-						onChange={(value: string) => this.model.email = value}
+						onChange={(value: string) => this._model.email = value}
 					/>
 					<Input
 						type={InputType.Password}
-						onChange={(value: string) => this.model.password = value}
+						onChange={(value: string) => this._model.password = value}
 					/>
-					<Button
-						type={ButtonType.Success}
-						size={ButtonSize.Large}
-					>
-						Login
-					</Button>
 				</Container>
-			</form>
+			</div>
 		);
 	}
 
-	private model: SignInDto = new SignInDto();
+	protected onSubmit(): void {
+		this.props.onSubmit(this._model);
+	}
 }

@@ -8,13 +8,14 @@ export class Container extends React.Component<IContainerProps, {}> {
 		const classes: any = classNames({
 			container: true
 		});
+
 		return (
 			<div
 				className={classes + Utils.toClassNames(
-					this.props.directionType,
-					this.props.justifyType,
-					this.props.alignItemsType,
-					this.props.alignSelfType
+					this.props.directionType === undefined ? '' : this.props.directionType,
+					this.props.justifyType === undefined ? '' : this.props.justifyType,
+					this.props.alignItemsType === undefined ? '' : this.props.alignItemsType,
+					this.props.alignSelfType === undefined ? '' : this.props.alignSelfType
 				)}
 			>
 				{this.props.children}

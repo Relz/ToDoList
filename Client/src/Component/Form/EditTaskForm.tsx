@@ -3,11 +3,11 @@ import { IEditTaskFormProps } from '../Props/Form/IEditTaskFormProps';
 import { TaskDto } from '../../DTO/TaskDto';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
-import { ButtonSize } from '../Button/ButtonSize';
-import { ButtonType } from '../Button/ButtonType';
-import { Button } from '../Button/Button';
+import { Form } from './Form';
+import { Container } from '../Container/Container';
+import { DirectionType } from '../Container/DirectionType';
 
-export class EditTaskForm extends React.Component<IEditTaskFormProps, {}> {
+export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
 	private _model: TaskDto;
 
 	public constructor(props: IEditTaskFormProps) {
@@ -15,15 +15,9 @@ export class EditTaskForm extends React.Component<IEditTaskFormProps, {}> {
 		this._model = props.task === undefined ? new TaskDto() : props.task;
 	}
 
-	public render(): JSX.Element {
+	protected getInner(): JSX.Element {
 		return (
-			<form
-				className='form_block'
-				onSubmit={(event: any): void => {
-					event.preventDefault();
-					this.props.onSubmit(this._model);
-				}}
-			>
+			<Container directionType={DirectionType.Column}>
 				<Input
 					type={InputType.Text}
 					value={this._model.title}
@@ -34,13 +28,11 @@ export class EditTaskForm extends React.Component<IEditTaskFormProps, {}> {
 					value={this._model.description}
 					onChange={(value: string) => this._model.description = value}
 				/>
-				<Button
-					type={ButtonType.Success}
-					size={ButtonSize.Large}
-				>
-					Edit
-				</Button>
-			</form>
+			</Container>
 		);
+	}
+
+	protected onSubmit(event: any): void {
+		this.props.onSubmit(this._model);
 	}
 }

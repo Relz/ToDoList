@@ -1,33 +1,25 @@
 import * as React from 'react';
 import { IRegisterProperties } from '../Props/Form/IRegisterProperties';
 import { DirectionType } from '../Container/DirectionType';
-import { JustifyType } from '../Container/JustifyType';
-import { AlignItemsType } from '../Container/AlignItemsType';
-import { AlignSelfType } from '../Container/AlignSelfType';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
-import { ButtonType } from '../Button/ButtonType';
-import { ButtonSize } from '../Button/ButtonSize';
 import { Container } from '../Container/Container';
-import { Button } from '../Button/Button';
 import { RegisterDto } from '../../DTO/RegisterDto';
+import { Form } from './Form';
 
-export class RegisterForm extends React.Component <IRegisterProperties, {}> {
-	public render(): JSX.Element {
+export class RegisterForm extends Form <IRegisterProperties, {}> {
+	private _model: RegisterDto = new RegisterDto();
+
+	public constructor(props: IRegisterProperties) {
+		super(props);
+		this.title = 'Register';
+		this.buttonTitle = 'Register';
+	}
+
+	protected getInner(): JSX.Element {
 		return (
-			<form
-				className='form_block'
-				onSubmit={(event: any): void => {
-					event.preventDefault();
-					this.props.onSubmit(this._model);
-				}}
-			>
-				<Container
-					directionType={DirectionType.Column}
-					justifyType={JustifyType.Center}
-					alignItemsType={AlignItemsType.Center}
-					alignSelfType={AlignSelfType.Auto}
-				>
+			<div>
+				<Container directionType={DirectionType.Column}>
 					<Input
 						type={InputType.Email}
 						onChange={(value: string) => this._model.email = value}
@@ -44,16 +36,12 @@ export class RegisterForm extends React.Component <IRegisterProperties, {}> {
 						type={InputType.Password}
 						onChange={(value: string) => this._model.repeatPassword = value}
 					/>
-					<Button
-						type={ButtonType.Success}
-						size={ButtonSize.Large}
-					>
-						Register
-					</Button>
 				</Container>
-			</form>
+			</div>
 		);
 	}
 
-	private _model: RegisterDto = new RegisterDto();
+	protected onSubmit(event: any): void {
+		this.props.onSubmit(this._model);
+	}
 }

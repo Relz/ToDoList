@@ -23,10 +23,14 @@ export class FormDemo extends React.Component<{}, {}> {
 				<RegisterForm onSubmit={this.onRegister}/>
 				<EditTaskForm
 					onSubmit={this.onEditTask}
+					title={'Create task'}
+					buttonTitle={'Create'}
 				/>
 				<EditTaskForm
 					onSubmit={this.onEditTask}
 					task={this._task}
+					title={'Edit task'}
+					buttonTitle={'Save'}
 				/>
 			</div>
 		);

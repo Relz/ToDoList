@@ -4,8 +4,8 @@ import { AlignItemsType } from '../Container/AlignItemsType';
 import { AlignSelfType } from '../Container/AlignSelfType';
 
 export interface IContainerProps {
-	directionType: DirectionType;
-	justifyType: JustifyType;
-	alignItemsType: AlignItemsType;
-	alignSelfType: AlignSelfType;
+	directionType?: DirectionType;
+	justifyType?: JustifyType;
+	alignItemsType?: AlignItemsType;
+	alignSelfType?: AlignSelfType;
 }
