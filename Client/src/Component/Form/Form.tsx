@@ -3,6 +3,8 @@ import { ButtonSize } from '../Button/ButtonSize';
 import { ButtonType } from '../Button/ButtonType';
 import { Button } from '../Button/Button';
 import { IFormProps } from '../Props/Form/IFormProps';
+import { DirectionType } from '../Container/DirectionType';
+import { Container } from '../Container/Container';
 
 export abstract class Form<T extends IFormProps, U> extends React.Component <T, U> {
 	private readonly TITLE: string = 'Title';
@@ -26,9 +28,11 @@ export abstract class Form<T extends IFormProps, U> extends React.Component <T, 
 					this.onSubmit(event);
 			}}
 			>
-				<div className='form_title'>{this._title}</div>
-				{this.getInner()}
-				{this.getButton()}
+				<Container directionType={DirectionType.Column}>
+					<div className='form_title'>{this._title}</div>
+					{this.getInner()}
+					{this.getButton()}
+				</Container>
 			</form>
 		)
 	}
@@ -52,7 +56,7 @@ export abstract class Form<T extends IFormProps, U> extends React.Component <T, 
 		)
 	}
 
-	protected abstract getInner(): JSX.Element;
+	protected abstract getInner(): JSX.Element[];
 
 	protected abstract onSubmit(event: any): void;
 }

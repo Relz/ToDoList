@@ -1,7 +1,7 @@
 export class TaskDto {
 	private _title: string;
 	private _description: string;
-	private _isDeadlineExist: boolean;
+	private _isDeadlineExist: boolean = false;
 	private _deadLine: string;
 
 	public get title(): string {

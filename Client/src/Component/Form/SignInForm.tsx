@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
-import { Container } from '../Container/Container';
-import { DirectionType } from '../Container/DirectionType';
 import { ISignInFormProps } from '../Props/Form/ISignInFormProps';
 import { SignInDto } from '../../DTO/SignInDto';
 import { Form } from './Form';
@@ -16,21 +14,19 @@ export class SignInForm extends Form<ISignInFormProps, {}> {
 		this.buttonTitle = 'Sign in';
 	}
 
-	protected getInner(): JSX.Element {
-		return (
-			<div>
-				<Container directionType={DirectionType.Column}>
-					<Input
-						type={InputType.Email}
-						onChange={(value: string) => this._model.email = value}
-					/>
-					<Input
-						type={InputType.Password}
-						onChange={(value: string) => this._model.password = value}
-					/>
-				</Container>
-			</div>
-		);
+	protected getInner(): JSX.Element[] {
+		return ([
+			<Input
+				key='sign_in_email'
+				type={InputType.Email}
+				onChange={(value: string) => this._model.email = value}
+			/>,
+			<Input
+				key='sign_in_password'
+				type={InputType.Password}
+				onChange={(value: string) => this._model.password = value}
+			/>
+		]);
 	}
 
 	protected onSubmit(): void {

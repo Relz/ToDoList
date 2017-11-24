@@ -23,6 +23,10 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 				</thead>
 				<tbody>
 					<tr>
+						<td><FormDemo/></td>
+						<td><FormDemoDescription/></td>
+					</tr>
+					<tr>
 						<td className='cell_alignment_top'><TabDemo/></td>
 						<td><TabDemoDescription/></td>
 					</tr>
@@ -37,10 +41,6 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 					<tr>
 						<td><ButtonDemo/></td>
 						<td><ButtonDemoDescription/></td>
-					</tr>
-					<tr>
-						<td><FormDemo/></td>
-						<td><FormDemoDescription/></td>
 					</tr>
 				</tbody>
 			</table>
