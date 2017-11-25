@@ -14,7 +14,7 @@ export class SignInDto {
 		return this._email;
 	}
 
-	public set email(email: string) {
-		this._email = email;
+	public set email(value: string) {
+		this._email = value;
 	}
 }
