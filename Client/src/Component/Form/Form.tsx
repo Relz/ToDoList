@@ -5,6 +5,7 @@ import { Button } from '../Button/Button';
 import { IFormProps } from '../Props/Form/IFormProps';
 import { DirectionType } from '../Container/DirectionType';
 import { Container } from '../Container/Container';
+import { JustifyType } from '../Container/JustifyType';
 
 export abstract class Form<T extends IFormProps, U> extends React.Component <T, U> {
 	private readonly TITLE: string = 'Title';
@@ -22,19 +23,22 @@ export abstract class Form<T extends IFormProps, U> extends React.Component <T, 
 	public render(): JSX.Element {
 		return (
 			<form
-				className='form_block'
+				className='form'
 				onSubmit={(event: any) => {
 					event.preventDefault();
 					this.onSubmit(event);
-			}}
+				}}
 			>
-				<Container directionType={DirectionType.Column}>
+				<Container
+					directionType={DirectionType.Column}
+					justifyType={JustifyType.Center}
+				>
 					<div className='form_title'>{this._title}</div>
 					{this.getInner()}
 					{this.getButton()}
 				</Container>
 			</form>
-		)
+		);
 	}
 
 	protected set title(value: string) {
@@ -49,11 +53,11 @@ export abstract class Form<T extends IFormProps, U> extends React.Component <T, 
 		return (
 			<Button
 				type={ButtonType.Success}
-				size={ButtonSize.Large}
+				size={ButtonSize.Medium}
 			>
 				{this._buttonTitle}
 			</Button>
-		)
+		);
 	}
 
 	protected abstract getInner(): JSX.Element[];

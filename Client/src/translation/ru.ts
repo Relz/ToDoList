@@ -14,4 +14,27 @@ export class Translation {
 		public static readonly header: string = 'Страница не найдена';
 		public static readonly backToMainPage: string = 'Вернуться на главную страницу';
 	};
+	public static EditTaskForm = class {
+		public static readonly editTitle: string = 'Редактирование задачи';
+		public static readonly createTitle: string = 'Создание задачи';
+		public static readonly checkBoxTitle: string = 'Дедлайн';
+		public static readonly namePlaceholder: string = 'Название';
+		public static readonly descriptionPlaceholder: string = 'Описание';
+		public static readonly editButton: string = 'Сохранить';
+		public static readonly createButton: string = 'Создать';
+	};
+	public static SignInForm = class {
+		public static readonly title: string = 'Авторизация';
+		public static readonly button: string = 'Вход';
+		public static readonly emailPlaceholder = 'Эл. почта';
+		public static readonly passwordPlaceholder = 'Пароль';
+	};
+	public static RegisterForm = class {
+		public static readonly title: string = 'Регистрация';
+		public static readonly button: string = 'Зарегестрироваться';
+		public static readonly emailPlaceholder: string = 'Эл.почта';
+		public static readonly namePlaceholder: string = 'Имя';
+		public static readonly passwordPlaceholder: string = 'Пароль';
+		public static readonly passwordRepeatPlaceholder: string = 'Повторите пароль';
+	};
 }

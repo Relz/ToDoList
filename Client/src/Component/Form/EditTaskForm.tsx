@@ -4,12 +4,9 @@ import { TaskDto } from '../../DTO/TaskDto';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
 import { Form } from './Form';
-import ChangeEvent = require('react');
-import ChangeEventHandler = require('react');
+import { Translation } from '../../translation/ru';
 
 export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
-	private readonly DEADLINE_CHECKBOX_TITLE: string = 'Is deadline exist';
-
 	private _model: TaskDto;
 	private _calendar: Input;
 
@@ -24,25 +21,28 @@ export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
 				key='edit_task_title'
 				type={InputType.Text}
 				value={this._model.title}
+				placeholder={Translation.EditTaskForm.namePlaceholder}
 				onChange={(value: string) => this._model.title = value}
 			/>,
 			<Input
 				key='edit_task_description'
 				type={InputType.Text}
 				value={this._model.description}
+				placeholder={Translation.EditTaskForm.descriptionPlaceholder}
 				onChange={(value: string) => this._model.description = value}
 			/>,
 			<label key='edit_task_deadline_checkbox'>
 				<input
 					type='checkbox'
+					value={this._model.deadLine}
 					onChange={(event: any) => this.updateCalendar(event)}
 				/>
-				{this.DEADLINE_CHECKBOX_TITLE}
+				{Translation.EditTaskForm.checkBoxTitle}
 			</label>,
 			<Input
 				key='edit_task_deadline'
 				type={InputType.DateTimeLocal}
-				value={''}
+				value={this._model.deadLine}
 				onChange={(value: string) => this._model.deadLine = value}
 				ref={(ref: Input) => {
 					this._calendar = ref;
@@ -57,9 +57,8 @@ export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
 	}
 
 	private updateCalendar(event: any): void {
-		const isDeadlineExist = event.target.checked;
+		const isDeadlineExist: boolean = event.target.checked;
 		this._calendar.disabled = !isDeadlineExist;
 		this._model.isDeadlineExist = isDeadlineExist;
-		console.log('update')
 	}
 }

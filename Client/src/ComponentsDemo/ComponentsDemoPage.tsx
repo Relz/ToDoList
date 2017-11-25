@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../sass/components_demo.sass';
 import { ButtonDemo } from './Button/ButtonDemo';
 import { ButtonDemoDescription } from './Button/ButtonDemoDescription';
 import { InputDemo } from './Input/InputDemo';
@@ -7,7 +8,6 @@ import { ContainerDemo } from './Container/ContainerDemo';
 import { ContainerDemoDescription } from './Container/ContainerDemoDescription';
 import { TabDemo } from './Tab/TabDemo';
 import { TabDemoDescription } from './Tab/TabDemoDescription';
-import '../sass/components_demo.sass';
 import { FormDemo } from './Form/FormDemo';
 import { FormDemoDescription } from './Form/FormDemoDescription';
 

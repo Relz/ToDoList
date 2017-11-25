@@ -3,5 +3,6 @@ import { IChangeable } from './IChangeable';
 
 export interface IInputProps extends IChangeable {
 	type: InputType;
-	value?: string | undefined;
+	value?: string;
+	placeholder?: string;
 }

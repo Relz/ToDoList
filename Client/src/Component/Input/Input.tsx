@@ -39,6 +39,7 @@ export class Input extends React.Component<IInputProps, IInputState> {
 				disabled={disabled}
 				pattern={InputTypeUtils.getPattern(inputType)}
 				onChange={(e: React.FormEvent<HTMLInputElement>) => this.onChange(e.currentTarget.value)}
+				placeholder={this.props.placeholder === undefined ? '' : this.props.placeholder}
 			>
 				{this.props.children}
 			</input>
