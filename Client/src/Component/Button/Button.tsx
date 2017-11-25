@@ -8,20 +8,11 @@ import { Utils } from '../../Utils/Utils';
 export class Button extends React.Component<IButtonProps, IButtonState> {
 	public constructor(props: IButtonProps) {
 		super(props);
-		if (this.props.onRef) {
-			this.props.onRef(this);
-		}
-		this.state = { type: this.props.type };
-	}
-
-	public componentWillUnmount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(undefined);
-		}
+		this.state = { type: this.props.type, disabled: false };
 	}
 
 	public render(): JSX.Element {
-		const disabled: boolean = (this.props.disabled === undefined) ? false : this.props.disabled;
+		const disabled: boolean = (this.disabled === undefined) ? false : this.disabled;
 		const classes: string = classNames({
 			button: true,
 			stretch: true,
@@ -55,5 +46,13 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 
 	public set type(value: ButtonType) {
 		this.setState({ type: value });
+	}
+
+	public get disabled(): boolean {
+		return this.state.disabled;
+	}
+
+	public set disabled(value: boolean) {
+		this.setState({ disabled: value });
 	}
 }

@@ -1,15 +1,16 @@
 import * as React from 'react';
+import * as classNames from 'classnames';
 import { Container } from '../../Component/Container/Container';
 import { DirectionType } from '../../Component/Container/DirectionType';
 import { JustifyType } from '../../Component/Container/JustifyType';
 import { AlignItemsType } from '../../Component/Container/AlignItemsType';
 import { AlignSelfType } from '../../Component/Container/AlignSelfType';
-import * as classNames from 'classnames';
+import '../../sass/components_demo.sass';
 
 export class ContainerDemo extends React.Component<{}, {}> {
 	public render(): JSX.Element {
 		return (
-			<div>
+			<div className='container_demo'>
 				<div className='property_title'>Direction type</div>
 				<ul>
 					<li>{ContainerDemo.getDirectionExample(DirectionType.Row, 'Row')}</li>

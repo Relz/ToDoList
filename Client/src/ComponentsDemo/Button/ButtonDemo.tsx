@@ -243,7 +243,11 @@ export class ButtonDemo extends React.Component<{}, {}> {
 					type={ButtonType.Primary}
 					size={ButtonSize.Medium}
 					onClick={this.onClick}
-					disabled={true}
+					ref={(button: Button) => {
+						if (button) {
+							button.disabled = true;
+						}
+					}}
 				>
 					Неактивная средняя основная кнопка
 				</Button>

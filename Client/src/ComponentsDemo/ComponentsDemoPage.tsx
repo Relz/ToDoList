@@ -1,4 +1,5 @@
 import * as React from 'react';
+import '../sass/components_demo.sass';
 import { ButtonDemo } from './Button/ButtonDemo';
 import { ButtonDemoDescription } from './Button/ButtonDemoDescription';
 import { InputDemo } from './Input/InputDemo';
@@ -7,7 +8,8 @@ import { ContainerDemo } from './Container/ContainerDemo';
 import { ContainerDemoDescription } from './Container/ContainerDemoDescription';
 import { TabDemo } from './Tab/TabDemo';
 import { TabDemoDescription } from './Tab/TabDemoDescription';
-import '../sass/components_demo.sass';
+import { FormDemo } from './Form/FormDemo';
+import { FormDemoDescription } from './Form/FormDemoDescription';
 
 export class ComponentsDemoPage extends React.Component<{}, {}> {
 	public render(): JSX.Element {
@@ -20,6 +22,10 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td><FormDemo/></td>
+						<td><FormDemoDescription/></td>
+					</tr>
 					<tr>
 						<td className='cell_alignment_top'><TabDemo/></td>
 						<td><TabDemoDescription/></td>

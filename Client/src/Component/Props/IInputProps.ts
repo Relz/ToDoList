@@ -1,9 +1,8 @@
-import { IDisableable } from './IDisableable';
 import { InputType } from '../Input/InputType';
 import { IChangeable } from './IChangeable';
-import { IReferable } from './IReferable';
 
-export interface IInputProps extends IDisableable, IChangeable, IReferable {
+export interface IInputProps extends IChangeable {
 	type: InputType;
-	value?: string | undefined;
+	value?: string;
+	placeholder?: string;
 }

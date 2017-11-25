@@ -49,7 +49,7 @@ export class InputDemo extends React.Component<{}, {}> {
 					<Input type={InputType.Color} onChange={this.onChange}/>
 				</label>
 				<label>Color(disabled):
-					<Input type={InputType.Color} disabled={true} onChange={this.onChange}/>
+					<Input type={InputType.Color} onChange={this.onChange}/>
 				</label>
 			</div>
 		);
