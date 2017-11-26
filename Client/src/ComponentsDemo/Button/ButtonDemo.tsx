@@ -10,28 +10,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Basic}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая базовая кнопка
 				</Button>
 				<Button
 					type={ButtonType.Basic}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая базовая кнопка
 				</Button>
 				<Button
 					type={ButtonType.Basic}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя базовая кнопка
 				</Button>
 				<Button
 					type={ButtonType.Basic}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная базовая кнопка
 				</Button>
@@ -39,28 +39,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Default}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая дефолтная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Default}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая дефолтная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Default}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя дефолтная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Default}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная дефолтная кнопка
 				</Button>
@@ -68,28 +68,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Primary}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая основная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Primary}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая основная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Primary}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя основная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Primary}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная основная кнопка
 				</Button>
@@ -97,28 +97,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Success}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая кнопка успеха
 				</Button>
 				<Button
 					type={ButtonType.Success}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая кнопка успеха
 				</Button>
 				<Button
 					type={ButtonType.Success}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя кнопка успеха
 				</Button>
 				<Button
 					type={ButtonType.Success}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная кнопка успеха
 				</Button>
@@ -126,28 +126,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Info}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая информационная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Info}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая информационная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Info}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя информационная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Info}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная информационная кнопка
 				</Button>
@@ -155,28 +155,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Warning}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая предупреждающая кнопка
 				</Button>
 				<Button
 					type={ButtonType.Warning}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая предупреждающая кнопка
 				</Button>
 				<Button
 					type={ButtonType.Warning}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя предупреждающая кнопка
 				</Button>
 				<Button
 					type={ButtonType.Warning}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная предупреждающая кнопка
 				</Button>
@@ -184,28 +184,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Danger}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая кнопка, требующая внимания
 				</Button>
 				<Button
 					type={ButtonType.Danger}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая кнопка, требующая внимания
 				</Button>
 				<Button
 					type={ButtonType.Danger}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя кнопка, требующая внимания
 				</Button>
 				<Button
 					type={ButtonType.Danger}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная кнопка, требующая внимания
 				</Button>
@@ -213,28 +213,28 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Link}
 					size={ButtonSize.ExtraSmall}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Очень маленькая ссылочная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Link}
 					size={ButtonSize.Small}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Маленькая ссылочная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Link}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Средняя ссылочная кнопка
 				</Button>
 				<Button
 					type={ButtonType.Link}
 					size={ButtonSize.Large}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 				>
 					Огромная ссылочная кнопка
 				</Button>
@@ -242,7 +242,7 @@ export class ButtonDemo extends React.Component<{}, {}> {
 				<Button
 					type={ButtonType.Primary}
 					size={ButtonSize.Medium}
-					onClick={this.onClick}
+					onClick={ButtonDemo.onClick}
 					ref={(button: Button) => {
 						if (button) {
 							button.disabled = true;
@@ -255,7 +255,7 @@ export class ButtonDemo extends React.Component<{}, {}> {
 		);
 	}
 
-	private onClick(): void {
+	private static onClick(): void {
 		/*tslint:disable-next-line:no-console*/
 		console.log('click!');
 	}
