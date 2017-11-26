@@ -128,7 +128,7 @@ app.post('/tasks/create/:token', (req: express.Request, res: express.Response) =
 		return res.status(response.httpStatus).send(response);
 	}
 
-	if (!req.body || !req.body.title || !req.body.description || !req.body.deadline) {
+	if (!req.body || !req.body.title || !req.body.description) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response);
 	}
