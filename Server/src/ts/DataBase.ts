@@ -104,27 +104,14 @@ export class DataBase {
 		});
 	}
 
-	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {		
-		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {									
-			if (!rows) {
-				callback(ResponseCode.WRONG_ID, null);
-			}
-
-			let tasks: Task[] = [];
-			rows.forEach((row: Task) => {
-				tasks.push(
-					new Task(row.id, 
-					row.title,
-					row.description, 
-					row.creationDate,
-					row.deadline,
-					row.isDone,
-					row.userId));
-			});	
+	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {
+		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {
 			if (err) {
 				callback(ResponseCode.INTERNAL_ERROR, null);
+			} else if (!rows) {
+				callback(ResponseCode.WRONG_ID, null);
 			} else {
-				callback(ResponseCode.OK, tasks);
+				callback(ResponseCode.OK, rows);
 			}
 		});
 	}
