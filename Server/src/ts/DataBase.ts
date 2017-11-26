@@ -104,7 +104,7 @@ export class DataBase {
 		});
 	}
 
-	public static getUserTasks(id: number, callback: (result: ResponseCode, info: Task[]) => void): void {		
+	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {		
 		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {									
 			if (!rows) {
 				callback(ResponseCode.WRONG_ID, null);
