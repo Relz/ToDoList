@@ -3,10 +3,21 @@ import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import { ResponseCode } from './ResponseCode';
+import { Task } from './Task';
 
 export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
+
+	public static insertTask(task: Task, callback: (result: ResponseCode) => void): void {
+		const query: string =
+			'INSERT INTO task (title, description, creationDate, deadline, isDone, userId) VALUES (?, ?, ?, ?, ?, ?)';
+		DataBase._instance.run(
+			query, task.title, task.description, task.creationDate, task.deadline, 0, task.userId, (err: Error) => {
+				callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
+			}
+		);
+	}
 
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
@@ -44,11 +55,7 @@ export class DataBase {
 			}
 			const query: string = 'INSERT INTO user (login, password) VALUES (?, ?)';
 			DataBase._instance.run(query, login, password, (err: Error): void => {
-				if (err) {
-					callback(ResponseCode.INTERNAL_ERROR);
-				} else {
-					callback(ResponseCode.OK);
-				}
+				callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 			});
 		});
 	}
@@ -62,11 +69,7 @@ export class DataBase {
 				return callback(ResponseCode.WRONG_ID);
 			}
 			DataBase._instance.run('DELETE FROM user WHERE id = ?', id, (err: Error) => {
-				if (err) {
-					callback(ResponseCode.INTERNAL_ERROR);
-				} else {
-					callback(ResponseCode.OK);
-				}
+				callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 			});
 		});
 	}
@@ -139,11 +142,7 @@ export class DataBase {
 	private static updateUser(id: number, newData: User, callback: (result: number) => void): void {
 		const query: string = 'UPDATE user SET login = ?, password = ?, name = ? WHERE id = ?';
 		DataBase._instance.run(query, newData.login, newData.password, newData.name, id, (err: Error) => {
-			if (err) {
-				callback(ResponseCode.INTERNAL_ERROR);
-			} else {
-				callback(ResponseCode.OK);
-			}
+			callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 		});
 	}
 }

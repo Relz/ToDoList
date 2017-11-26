@@ -9,6 +9,7 @@ import { Token } from './Token/Token';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import * as HttpStatusCode from 'http-status-codes';
+import { Task } from './Task';
 
 const app: express.Express = express();
 app.use(cors());
@@ -113,6 +114,30 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 
 	DataBase.deleteUserById(id, (result: ResponseCode) => {
 		let response: JsonResponse = new JsonResponse(result);
+		res.status(response.httpStatus).send(response);
+	});
+});
+
+app.post('/tasks/create/:token', (req: express.Request, res: express.Response) => {
+	let userId: number;
+
+	try {
+		userId = Token.decodeId(req.params.token);
+	} catch (exception) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response);
+	}
+
+	if (!req.body || !req.body.title || !req.body.description) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
+		return res.status(response.httpStatus).send(response);
+	}
+
+	const task: Task = new Task(
+		undefined, req.body.title, req.body.description, Date.now(), req.body.deadline, false, userId);
+
+	DataBase.insertTask(task, (result: ResponseCode) => {
+		const response: JsonResponse = new JsonResponse(result);
 		res.status(response.httpStatus).send(response);
 	});
 });
