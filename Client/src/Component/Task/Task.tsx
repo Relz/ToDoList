@@ -48,59 +48,38 @@ export class Task extends React.Component<ITaskProp, ITaskState> {
 							alignItemsType={AlignItemsType.Center}
 							alignSelfType={AlignSelfType.Stretch}
 						>
-							<Container
-								directionType={DirectionType.Column}
-								justifyType={JustifyType.Center}
-								alignItemsType={AlignItemsType.Center}
-								alignSelfType={AlignSelfType.Start}
+							<Button
+								type={this.getDoneButtonType()}
+								size={ButtonSize.Medium}
+								onClick={this.onDoneButtonClick.bind(this)}
+								ref={(ref: Button) => this._setDoneButton = ref}
 							>
-								<Button
-									type={this.getDoneButtonType()}
-									size={ButtonSize.Medium}
-									onClick={this.onDoneButtonClick.bind(this)}
-									ref={(ref: Button) => this._setDoneButton = ref}
-								>
-									{
-										this.state.isDone
-											? Translation.Task.setNotDoneButtonText
-											: Translation.Task.setDoneButtonText
-									}
-								</Button>
-							</Container>
-							<Container
-								directionType={DirectionType.Column}
-								justifyType={JustifyType.Center}
-								alignItemsType={AlignItemsType.Center}
-								alignSelfType={AlignSelfType.Start}
+								{
+									this.state.isDone
+										? Translation.Task.setNotDoneButtonText
+										: Translation.Task.setDoneButtonText
+								}
+							</Button>
+							<Button
+								type={this.getImportantButtonType()}
+								size={ButtonSize.Medium}
+								onClick={this.onImportantButtonClick.bind(this)}
+								ref={(ref: Button) => this._setImportantButton = ref}
 							>
-								<Button
-									type={this.getImportantButtonType()}
-									size={ButtonSize.Medium}
-									onClick={this.onImportantButtonClick.bind(this)}
-									ref={(ref: Button) => this._setImportantButton = ref}
-								>
-									{
-										this.state.isImportant
-											? Translation.Task.setNotImportantButtonText
-											: Translation.Task.setImportantButtonText
-									}
-								</Button>
-							</Container>
-							<Container
-								directionType={DirectionType.Column}
-								justifyType={JustifyType.Center}
-								alignItemsType={AlignItemsType.Center}
-								alignSelfType={AlignSelfType.Start}
+								{
+									this.state.isImportant
+										? Translation.Task.setNotImportantButtonText
+										: Translation.Task.setImportantButtonText
+								}
+							</Button>
+							<Button
+								type={ButtonType.Primary}
+								size={ButtonSize.Medium}
+								onClick={this.onEditButtonClick.bind(this)}
+								ref={(ref: Button) => this._editButton = ref}
 							>
-								<Button
-									type={ButtonType.Primary}
-									size={ButtonSize.Medium}
-									onClick={this.onEditButtonClick.bind(this)}
-									ref={(ref: Button) => this._editButton = ref}
-								>
-									{Translation.Task.editButtonText}
-								</Button>
-							</Container>
+								{Translation.Task.editButtonText}
+							</Button>
 						</Container>
 					</div>
 				</Container>

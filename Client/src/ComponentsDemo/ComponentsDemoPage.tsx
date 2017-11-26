@@ -29,7 +29,7 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 						<td><TaskDemoDescription/></td>
 					</tr>
 					<tr>
-						<td><FormDemo/></td>
+						<td className={'demo_specified_form'}><FormDemo/></td>
 						<td><FormDemoDescription/></td>
 					</tr>
 					<tr>
