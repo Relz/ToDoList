@@ -133,8 +133,8 @@ app.post('/tasks/create/:token', (req: express.Request, res: express.Response) =
 		return res.status(response.httpStatus).send(response);
 	}
 
-	const task: Task = new Task(undefined, req.body.title, req.body.description,
-		Date.now(), req.body.deadline, false, userId);
+	const task: Task = new Task(
+		undefined, req.body.title, req.body.description, Date.now(), req.body.deadline, false, userId);
 
 	DataBase.insertTask(task, (result: ResponseCode) => {
 		const response: JsonResponse = new JsonResponse(result);
