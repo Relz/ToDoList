@@ -9,6 +9,7 @@ import { Token } from './Token/Token';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import * as HttpStatusCode from 'http-status-codes';
+import { Task } from './Task';
 
 const app: express.Express = express();
 app.use(cors());
@@ -114,6 +115,21 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 	DataBase.deleteUserById(id, (result: ResponseCode) => {
 		let response: JsonResponse = new JsonResponse(result);
 		res.status(response.httpStatus).send(response);
+	});
+});
+
+app.get('/tasks/:token', (req: express.Request, res: express.Response) => {
+	let id: number;
+
+	try {
+		id = Token.decodeId(req.params.token);
+	} catch (exception) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response);
+	}
+	DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
+		const response: JsonResponse = new JsonResponse(result, userTasks);
+		return res.status(response.httpStatus).send(response);
 	});
 });
 

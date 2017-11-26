@@ -3,6 +3,7 @@ import { Database, OPEN_CREATE, OPEN_READWRITE } from 'sqlite3';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import { ResponseCode } from './ResponseCode';
+import { Task } from './Task';
 
 export class DataBase {
 	private static _instance: Database =
@@ -100,6 +101,28 @@ export class DataBase {
 	public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
 		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			callback(row !== undefined);
+		});
+	}
+
+	public static getUserTasks(id: number, callback: (result: ResponseCode, info: Task[]) => void): void {		
+		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {									
+			let tasks: Task[] = [];
+			rows.forEach((row: Task) => {
+				tasks.push(new Task(row.id, 
+				row.title,
+				row.description, 
+				row.creationDate,
+				row.deadline,
+				row.isDone,
+				row.userId));
+			});	
+			if (err) {
+				callback(ResponseCode.INTERNAL_ERROR, null);
+			} else if (!tasks) {
+				callback(ResponseCode.WRONG_ID, null);
+			} else {
+				callback(ResponseCode.OK, tasks);
+			}
 		});
 	}
 
