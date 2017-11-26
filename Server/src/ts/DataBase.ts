@@ -106,20 +106,23 @@ export class DataBase {
 
 	public static getUserTasks(id: number, callback: (result: ResponseCode, info: Task[]) => void): void {		
 		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {									
+			if (!rows) {
+				callback(ResponseCode.WRONG_ID, null);
+			}
+
 			let tasks: Task[] = [];
 			rows.forEach((row: Task) => {
-				tasks.push(new Task(row.id, 
-				row.title,
-				row.description, 
-				row.creationDate,
-				row.deadline,
-				row.isDone,
-				row.userId));
+				tasks.push(
+					new Task(row.id, 
+					row.title,
+					row.description, 
+					row.creationDate,
+					row.deadline,
+					row.isDone,
+					row.userId));
 			});	
 			if (err) {
 				callback(ResponseCode.INTERNAL_ERROR, null);
-			} else if (!tasks) {
-				callback(ResponseCode.WRONG_ID, null);
 			} else {
 				callback(ResponseCode.OK, tasks);
 			}
