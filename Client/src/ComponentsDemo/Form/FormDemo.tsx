@@ -58,7 +58,7 @@ export class FormDemo extends React.Component<{}, {}> {
 	private static onRegister(model: RegisterDto): void {
 		alert(
 			`REGISTER DATA\n` +
-			`email: "${model.email}"\n` +
+			`email: "${model.login}"\n` +
 			`name: "${model.name}"\n` +
 			`password: "${model.password}"\n` +
 			`repeat password: "${model.repeatPassword}"`

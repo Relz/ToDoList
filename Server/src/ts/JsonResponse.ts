@@ -40,4 +40,11 @@ export class JsonResponse {
 	public set body(value: object) {
 		this._body = value;
 	}
+
+	public jsonString(): string {
+		return JSON.stringify({
+			code: this._code,
+			body: this._body
+		});
+	}
 }

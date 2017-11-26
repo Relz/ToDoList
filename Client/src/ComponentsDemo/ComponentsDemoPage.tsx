@@ -12,6 +12,8 @@ import { FormDemo } from './Form/FormDemo';
 import { FormDemoDescription } from './Form/FormDemoDescription';
 import { TaskDemo } from './Task/TaskDemo';
 import { TaskDemoDescription } from './Task/TaskDemoDescription';
+import { AlertDemo } from './Alert/AlertDemo';
+import { AlertDemoDescription } from './Alert/AlertDemoDescription';
 
 export class ComponentsDemoPage extends React.Component<{}, {}> {
 	public render(): JSX.Element {
@@ -24,6 +26,10 @@ export class ComponentsDemoPage extends React.Component<{}, {}> {
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<td><AlertDemo/></td>
+						<td><AlertDemoDescription/></td>
+					</tr>
 					<tr>
 						<td className={'demo_specified_task'}><TaskDemo/></td>
 						<td><TaskDemoDescription/></td>

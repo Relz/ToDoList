@@ -1,9 +1,9 @@
 /*tslint:disable:typedef*/
 export class Translation {
-	public static pageHeader: string = 'To Do List';
+	public static readonly pageHeader: string = 'To Do List';
 	public static Alt = class {
-		public static logo: string = 'To Do List';
-		public static loadingSpinner: string = 'Загрузка...';
+		public static readonly logo: string = 'To Do List';
+		public static readonly loadingSpinner: string = 'Загрузка...';
 	};
 	public static Menu = class {
 		public static readonly login: string = 'Войти';
@@ -38,10 +38,21 @@ export class Translation {
 		public static readonly passwordRepeatPlaceholder: string = 'Повторите пароль';
 	};
 	public static Task = class {
-		public static setDoneButtonText: string = 'Сделана';
-		public static setNotDoneButtonText: string = 'Не сделана';
-		public static setImportantButtonText: string = 'Пометить как важная';
-		public static setNotImportantButtonText: string = 'Пометить как не важная';
-		public static editButtonText: string = 'Редактировать';
+		public static readonly setDoneButtonText: string = 'Сделана';
+		public static readonly setNotDoneButtonText: string = 'Не сделана';
+		public static readonly setImportantButtonText: string = 'Пометить как важная';
+		public static readonly setNotImportantButtonText: string = 'Пометить как не важная';
+		public static readonly editButtonText: string = 'Редактировать';
+	};
+	public static Page = class {
+		public static Register = class {
+			public static FormMessage = class {
+				public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
+				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
+				public static readonly userAlreadyExists = 'Данный email уже зарегистрирован в системе';
+				public static readonly success = 'Вы успешно зарегистрированы в системе!';
+				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+			};
+		};
 	};
 }

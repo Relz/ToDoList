@@ -15,9 +15,6 @@ export class ButtonDemoDescription extends React.Component<{}, {}> {
 					<li>Warning</li>
 					<li>Danger</li>
 					<li>Link</li>
-					<li>Basic</li>
-					<li>Basic</li>
-					<li>Basic</li>
 				</ul>
 				ButtonSize:
 				<ul>
