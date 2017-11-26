@@ -14,12 +14,6 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 		this.state = { type: this.props.type, disabled: false };
 	}
 
-	public componentWillUnmount(): void {
-		if (this.props.onRef) {
-			this.props.onRef(undefined);
-		}
-	}
-
 	public render(): JSX.Element {
 		const classes: string = classNames({
 			button: true,
