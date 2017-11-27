@@ -118,6 +118,22 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 	});
 });
 
+app.get('/tasks/:token', (req: express.Request, res: express.Response) => {
+	let id: number;
+
+	try {
+		id = Token.decodeId(req.params.token);
+	} catch (exception) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response);
+	}
+  
+  DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
+		const response: JsonResponse = new JsonResponse(result, userTasks);
+		return res.status(response.httpStatus).send(response);
+  });
+});
+
 app.post('/tasks/create/:token', (req: express.Request, res: express.Response) => {
 	let userId: number;
 
