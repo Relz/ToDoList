@@ -127,9 +127,34 @@ app.get('/tasks/:token', (req: express.Request, res: express.Response) => {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response);
 	}
-	DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
+  
+  DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
 		const response: JsonResponse = new JsonResponse(result, userTasks);
 		return res.status(response.httpStatus).send(response);
+  });
+});
+
+app.post('/tasks/create/:token', (req: express.Request, res: express.Response) => {
+	let userId: number;
+
+	try {
+		userId = Token.decodeId(req.params.token);
+	} catch (exception) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response);
+	}
+
+	if (!req.body || !req.body.title || !req.body.description) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
+		return res.status(response.httpStatus).send(response);
+	}
+
+	const task: Task = new Task(
+		undefined, req.body.title, req.body.description, Date.now(), req.body.deadline, false, userId);
+
+	DataBase.insertTask(task, (result: ResponseCode) => {
+		const response: JsonResponse = new JsonResponse(result);
+		res.status(response.httpStatus).send(response);
 	});
 });
 
