@@ -6,11 +6,15 @@ import { JsonResponse } from './JsonResponse/JsonResponse';
 import { ResponseCode } from './JsonResponse/ResponseCode';
 import { AlertType } from '../Component/Alert/AlertType';
 import { Translation } from '../translation/ru';
+import { Redirect } from 'react-router';
 
-export class Register extends React.Component<{}, {}> {
+export class Register extends React.Component {
 	private _registerForm: RegisterForm;
 
 	public render(): JSX.Element {
+		if (localStorage.getItem(Constant.tokenKey) !== null) {
+			return <Redirect to={'/'}/>
+		}
 		return (
 			<RegisterForm
 				ref={(ref: RegisterForm) => this._registerForm = ref}
@@ -43,6 +47,8 @@ export class Register extends React.Component<{}, {}> {
 					break;
 				case ResponseCode.OK:
 					that._registerForm.showAlert(AlertType.Success, Translation.Page.Register.FormMessage.success);
+					localStorage.setItem(Constant.tokenKey, response.body.token);
+					window.location.reload();
 					break;
 			}
 		}, () => {

@@ -8,6 +8,7 @@ export class Translation {
 	public static Menu = class {
 		public static readonly login: string = 'Войти';
 		public static readonly register: string = 'Зарегистрироваться';
+		public static readonly logout: string = 'Выйти';
 	};
 	public static Page404 = class {
 		public static readonly errorCode: string = '404';

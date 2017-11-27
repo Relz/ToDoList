@@ -15,4 +15,5 @@ export class Constant {
 			};
 		};
 	};
+	public static readonly tokenKey: string = 'token';
 }

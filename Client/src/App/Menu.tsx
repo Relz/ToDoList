@@ -2,6 +2,9 @@ import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Constant } from '../Constant';
 import { Translation } from '../translation/ru';
+import { Button } from '../Component/Button/Button';
+import { ButtonType } from '../Component/Button/ButtonType';
+import { ButtonSize } from '../Component/Button/ButtonSize';
 
 export class Menu extends React.Component {
 	public render(): JSX.Element {
@@ -13,7 +16,7 @@ export class Menu extends React.Component {
 	}
 
 	private static getMenu(): JSX.Element[] {
-		if (localStorage.getItem('token') === undefined) {
+		if (localStorage.getItem('token') === null) {
 			return [
 				<li className='item'>
 					<NavLink to={Constant.Path.login}>{Translation.Menu.login}</NavLink>
@@ -26,8 +29,22 @@ export class Menu extends React.Component {
 			return [
 				<li className='item'>
 					<NavLink to={Constant.Path.login}>Привет, пользователь!</NavLink>
+				</li>,
+				<li className='item'>
+					<Button
+						type={ButtonType.Danger}
+						size={ButtonSize.Medium}
+						onClick={this.logout}
+					>
+						{Translation.Menu.logout}
+					</Button>
 				</li>
 			];
 		}
+	}
+
+	private static logout(): void {
+		localStorage.removeItem(Constant.tokenKey);
+		window.location.reload();
 	}
 }

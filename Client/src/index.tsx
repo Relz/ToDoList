@@ -14,6 +14,7 @@ ReactDOM.render(
 			<App>
 				<Switch>
 					<Route path='/register' component={Register}/>
+					<Route path='/tasks' component={ComponentsDemoPage}/>
 					<Route component={Page404}/>
 				</Switch>
 			</App>
