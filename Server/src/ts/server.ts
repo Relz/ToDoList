@@ -35,7 +35,7 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 app.post('/users/registration', (req: express.Request, res: express.Response) => {
 	if (!req.body || !req.body.login || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	const login: string = req.body.login;
@@ -47,7 +47,7 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 		}
 		const responseBody: object = { token: Token.createFromId(id) };
 		const response: JsonResponse = new JsonResponse(result, responseBody);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
 	};
 
 	DataBase.insertUser(login, password, (result: ResponseCode) => {
@@ -55,7 +55,7 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 			return DataBase.getUserId(login, password, onTakeUserId);
 		}
 		const response: JsonResponse = new JsonResponse(result);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 

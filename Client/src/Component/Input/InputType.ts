@@ -8,7 +8,7 @@ export enum InputType {
 	Time = 'time',
 	Week = 'week', // Supported in Chrome/Opera and Edge on desktop
 	Number = 'number',
-	Email = 'email',
+	Email = 'login',
 	Url = 'url',
 	Search = 'search',
 	TelephoneNumber = 'tel',

@@ -1,15 +1,15 @@
 import * as React from 'react';
-import { IRegisterProperties } from '../Props/Form/IRegisterProperties';
+import { IRegisterProps } from '../Props/Form/IRegisterProps';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
 import { RegisterDto } from '../../DTO/RegisterDto';
 import { Form } from './Form';
 import { Translation } from '../../translation/ru';
 
-export class RegisterForm extends Form <IRegisterProperties, {}> {
+export class RegisterForm extends Form <IRegisterProps, {}> {
 	private _model: RegisterDto = new RegisterDto();
 
-	public constructor(props: IRegisterProperties) {
+	public constructor(props: IRegisterProps) {
 		super(props);
 		this.title = Translation.RegisterForm.title;
 		this.buttonTitle = Translation.RegisterForm.button;
@@ -21,7 +21,7 @@ export class RegisterForm extends Form <IRegisterProperties, {}> {
 				key='register_email'
 				type={InputType.Email}
 				placeholder={Translation.RegisterForm.emailPlaceholder}
-				onChange={(value: string) => this._model.email = value}
+				onChange={(value: string) => this._model.login = value}
 			/>,
 			<Input
 				key='register_name'

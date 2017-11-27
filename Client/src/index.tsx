@@ -5,13 +5,19 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { App } from './App/App';
 import { ComponentsDemoPage } from './ComponentsDemo/ComponentsDemoPage';
 import { Page404 } from './Page404';
+import { Register } from './App/Register';
 
 ReactDOM.render(
 	<BrowserRouter>
 		<Switch>
-			<Route exact path='/' component={App}/>
-			<Route exact path='/components_demo' component={ComponentsDemoPage}/>
-			<Route component={Page404}/>
+			<Route path='/components_demo' component={ComponentsDemoPage}/>
+			<App>
+				<Switch>
+					<Route path='/register' component={Register}/>
+					<Route path='/tasks' component={ComponentsDemoPage}/>
+					<Route component={Page404}/>
+				</Switch>
+			</App>
 		</Switch>
 	</BrowserRouter>,
 	document.getElementById('root')
