@@ -16,7 +16,7 @@ ReactDOM.render(
 			<Route path='/components_demo' component={ComponentsDemoPage}/>
 			<App>
 				<Switch>
-					<Route path='/signIn' component={SignIn}/>
+					<Route path={Constant.Path.signIn} component={SignIn}/>
 					<Route path={Constant.Path.register} component={Register}/>
 					<Route path={Constant.Path.account} component={Account}/>
 					<Route path={Constant.Path.tasks} component={ComponentsDemoPage}/>
