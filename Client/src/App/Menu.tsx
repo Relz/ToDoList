@@ -18,7 +18,7 @@ export class Menu extends React.Component {
 	private static getMenu(): JSX.Element[] {
 		if (localStorage.getItem('token') === null) {
 			return [
-				<li key='signIn' className='item'>
+				<li key='sign_in' className='item'>
 					<NavLink to={Constant.Path.signIn}>{Translation.Menu.login}</NavLink>
 				</li>,
 				<li key='register' className='item'>
@@ -30,7 +30,7 @@ export class Menu extends React.Component {
 				<li key='account' className='item'>
 					<NavLink to={Constant.Path.account}>Привет, пользователь!</NavLink>
 				</li>,
-				<li key='signOut' className='item'>
+				<li key='sign_out' className='item'>
 					<Button
 						type={ButtonType.Danger}
 						size={ButtonSize.Medium}
