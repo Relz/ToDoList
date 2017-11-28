@@ -1,6 +1,5 @@
 import { IFormProps } from './IFormProps';
-import { RegisterDto } from '../../../DTO/RegisterDto';
+import { AccountDto } from '../../../DTO/AccountDto';
 
-export interface IRegisterProps extends IFormProps {
-	onSubmit: (model: RegisterDto) => void;
+export interface IRegisterProps extends IFormProps<AccountDto> {
 }

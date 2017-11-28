@@ -22,12 +22,12 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 		id = Token.decodeId(req.params.token);
 	} catch (exception) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	DataBase.getUserInfoById(id, (result: ResponseCode, info: UserInfo) => {
 		const response: JsonResponse = new JsonResponse(result, info);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
@@ -88,12 +88,12 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 		userId = Token.decodeId(req.params.token);
 	} catch (exception) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	if (!req.body || !req.body.signIn || !req.body.name || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	const login: string = req.body.signIn;
@@ -104,7 +104,7 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 
 	DataBase.editUser(userId, password, newData, (result: ResponseCode) => {
 		const response: JsonResponse = new JsonResponse(result);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 

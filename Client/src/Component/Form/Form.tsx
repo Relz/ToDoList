@@ -9,7 +9,7 @@ import { JustifyType } from '../Container/JustifyType';
 import { AlertType } from '../Alert/AlertType';
 import { Alert } from '../Alert/Alert';
 
-export abstract class Form<T extends IFormProps, U> extends React.Component <T, U> {
+export abstract class Form<T extends IFormProps<any>, U> extends React.Component <T, U> {
 	private readonly TITLE: string = 'Title';
 	private readonly BUTTON_TITLE: string = 'Submit';
 

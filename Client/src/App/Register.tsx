@@ -7,6 +7,7 @@ import { ResponseCode } from './JsonResponse/ResponseCode';
 import { AlertType } from '../Component/Alert/AlertType';
 import { Translation } from '../translation/ru';
 import { Redirect } from 'react-router';
+import { AccountDto } from '../DTO/AccountDto';
 
 export class Register extends React.Component {
 	private _registerForm: RegisterForm;

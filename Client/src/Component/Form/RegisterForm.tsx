@@ -5,9 +5,10 @@ import { Input } from '../Input/Input';
 import { RegisterDto } from '../../Dto/RegisterDto';
 import { Form } from './Form';
 import { Translation } from '../../translation/ru';
+import { AccountDto } from '../../DTO/AccountDto';
 
-export class RegisterForm extends Form <IRegisterProps, {}> {
-	private _model: RegisterDto = new RegisterDto();
+export class RegisterForm extends Form<IRegisterProps, {}> {
+	private _model: AccountDto = new AccountDto();
 
 	public constructor(props: IRegisterProps) {
 		super(props);
@@ -39,7 +40,9 @@ export class RegisterForm extends Form <IRegisterProps, {}> {
 				key='register_repeat_password'
 				type={InputType.Password}
 				placeholder={Translation.RegisterForm.passwordRepeatPlaceholder}
-				onChange={(value: string) => this._model.repeatPassword = value}
+				onChange={(value: string) => {
+					// Check for equality
+				}}
 			/>
 		]);
 	}

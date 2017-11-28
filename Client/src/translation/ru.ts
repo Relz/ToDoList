@@ -38,6 +38,14 @@ export class Translation {
 		public static readonly passwordPlaceholder: string = 'Пароль';
 		public static readonly passwordRepeatPlaceholder: string = 'Повторите пароль';
 	};
+	public static AccountForm = class {
+		public static readonly title: string = 'Настройки аккаунта';
+		public static readonly button: string = 'Сохранить';
+		public static readonly emailPlaceholder: string = 'Логин';
+		public static readonly namePlaceholder: string = 'Имя';
+		public static readonly oldPasswordPlaceholder: string = 'Старый пароль';
+		public static readonly newPasswordPlaceholder: string = 'Новый пароль';
+	};
 	public static Task = class {
 		public static readonly setDoneButtonText: string = 'Сделана';
 		public static readonly setNotDoneButtonText: string = 'Не сделана';
@@ -49,8 +57,18 @@ export class Translation {
 		public static Register = class {
 			public static FormMessage = class {
 				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
-				public static readonly userAlreadyExists = 'Данный email уже зарегистрирован в системе';
+				public static readonly userAlreadyExists = 'Данный логин уже зарегистрирован в системе';
 				public static readonly success = 'Вы успешно зарегистрированы в системе!';
+				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+			};
+		};
+		public static Account = class {
+			public static FormMessage = class {
+				public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
+				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
+				public static readonly loginInUse = 'Данный логин уже занят';
+				public static readonly success = 'Изменения сохранены!';
+				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
 			};
 		};
 		public static SignIn = class {
@@ -59,9 +77,9 @@ export class Translation {
 				public static readonly invalidPassword = 'Чувак, ты вводишь не правильный пароль!';
 			};
 		};
-	};
-	public static Shared = class {
-		public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
-		public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+		public static Shared = class {
+			public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
+			public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+		};
 	};
 }

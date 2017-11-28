@@ -6,9 +6,10 @@ import { SignInDto } from '../../Dto/SignInDto';
 import { Form } from './Form';
 import '../../sass/_form.sass';
 import { Translation } from '../../translation/ru';
+import { AccountDto } from '../../DTO/AccountDto';
 
 export class SignInForm extends Form<ISignInFormProps, {}> {
-	private _model: SignInDto = new SignInDto();
+	private _model: AccountDto = new AccountDto();
 
 	constructor(props: ISignInFormProps) {
 		super(props);

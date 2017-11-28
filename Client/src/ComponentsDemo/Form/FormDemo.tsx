@@ -10,6 +10,7 @@ import { JustifyType } from '../../Component/Container/JustifyType';
 import { AlignItemsType } from '../../Component/Container/AlignItemsType';
 import { DirectionType } from '../../Component/Container/DirectionType';
 import { Translation } from '../../translation/ru';
+import { AccountDto } from '../../DTO/AccountDto';
 
 export class FormDemo extends React.Component<{}, {}> {
 	private _task: TaskDto = new TaskDto();
@@ -47,7 +48,7 @@ export class FormDemo extends React.Component<{}, {}> {
 		);
 	}
 
-	private static onLogin(model: SignInDto): void {
+	private static onLogin(model: AccountDto): void {
 		alert(
 			`LOGIN DATA:\n` +
 			`email: "${model.login}"\n` +
@@ -55,13 +56,12 @@ export class FormDemo extends React.Component<{}, {}> {
 		);
 	}
 
-	private static onRegister(model: RegisterDto): void {
+	private static onRegister(model: AccountDto): void {
 		alert(
 			`REGISTER DATA\n` +
 			`login: "${model.login}"\n` +
 			`name: "${model.name}"\n` +
-			`password: "${model.password}"\n` +
-			`repeat password: "${model.repeatPassword}"`
+			`password: "${model.password}"`
 		);
 	}
 

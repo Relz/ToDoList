@@ -18,23 +18,23 @@ export class Menu extends React.Component {
 	private static getMenu(): JSX.Element[] {
 		if (localStorage.getItem('token') === null) {
 			return [
-				<li className='item'>
+				<li key='signIn' className='item'>
 					<NavLink to={Constant.Path.signIn}>{Translation.Menu.login}</NavLink>
 				</li>,
-				<li className='item'>
+				<li key='register' className='item'>
 					<NavLink to={Constant.Path.register}>{Translation.Menu.register}</NavLink>
 				</li>
 			];
 		} else {
 			return [
-				<li className='item'>
+				<li key='account' className='item'>
 					<NavLink to={Constant.Path.signIn}>Привет, пользователь!</NavLink>
 				</li>,
-				<li className='item'>
+				<li key='signOut' className='item'>
 					<Button
 						type={ButtonType.Danger}
 						size={ButtonSize.Medium}
-						onClick={this.logout}
+						onClick={this.signOut}
 					>
 						{Translation.Menu.logout}
 					</Button>
@@ -43,7 +43,7 @@ export class Menu extends React.Component {
 		}
 	}
 
-	private static logout(): void {
+	private static signOut(): void {
 		localStorage.removeItem(Constant.tokenKey);
 		window.location.reload();
 	}
