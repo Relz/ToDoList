@@ -41,7 +41,10 @@ export class Account extends React.Component {
 		).then((response: any) => {
 			return response.json();
 		}).then((response: JsonResponse) => {
-			console.log(response);
+			if (response === undefined) {
+				this._accountForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
+				return;
+			}
 			switch (response.code) {
 				case ResponseCode.INTERNAL_ERROR:
 					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.internalServerError);
