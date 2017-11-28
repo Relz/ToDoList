@@ -47,6 +47,7 @@ export class FormDemo extends React.Component<{}, {}> {
 		);
 	}
 
+	/* tslint:disable:prefer-template */
 	private static onLogin(model: SignInDto): void {
 		alert(
 			`LOGIN DATA:\n` +
@@ -60,8 +61,7 @@ export class FormDemo extends React.Component<{}, {}> {
 			`REGISTER DATA\n` +
 			`login: "${model.login}"\n` +
 			`name: "${model.name}"\n` +
-			`password: "${model.password}"\n` +
-			`repeat password: "${model.repeatPassword}"`
+			`password: "${model.password}"`
 		);
 	}
 
@@ -74,4 +74,5 @@ export class FormDemo extends React.Component<{}, {}> {
 			`deadline: "${model.deadLine}"`
 		);
 	}
+	/* tslint:enable:prefer-template */
 }

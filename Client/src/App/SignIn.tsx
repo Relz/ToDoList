@@ -35,7 +35,7 @@ export class SignIn extends React.Component {
 			return response.json();
 		}).then((response: JsonResponse) => {
 			if (response === undefined) {
-				this._signInForm.showAlert(AlertType.Danger, Translation.Shared.internalServerError);
+				this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
 				return;
 			}
 			switch (response.code) {
@@ -44,7 +44,7 @@ export class SignIn extends React.Component {
 					window.location.reload();
 					break;
 				case (ResponseCode.BAD_BODY):
-					this._signInForm.showAlert(AlertType.Danger, Translation.Shared.internalServerError);
+					this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
 					break;
 				case (ResponseCode.WRONG_LOGIN):
 					this._signInForm.showAlert(AlertType.Danger, Translation.Page.SignIn.FormMessage.invalidLogin);
@@ -54,7 +54,7 @@ export class SignIn extends React.Component {
 					break;
 			}
 		}, () => {
-			this._signInForm.showAlert(AlertType.Danger, Translation.Shared.badConnection);
+			this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.badConnection);
 		});
 	}
 }

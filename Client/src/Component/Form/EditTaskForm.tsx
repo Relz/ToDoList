@@ -18,20 +18,20 @@ export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
 	protected getInner(): JSX.Element[] {
 		return ([
 			<Input
-				key='edit_task_title'
+				key='title'
 				type={InputType.Text}
 				value={this._model.title}
 				placeholder={Translation.EditTaskForm.namePlaceholder}
 				onChange={(value: string) => this._model.title = value}
 			/>,
 			<Input
-				key='edit_task_description'
+				key='description'
 				type={InputType.Text}
 				value={this._model.description}
 				placeholder={Translation.EditTaskForm.descriptionPlaceholder}
 				onChange={(value: string) => this._model.description = value}
 			/>,
-			<label key='edit_task_deadline_checkbox'>
+			<label key='deadline_checkbox'>
 				<input
 					type='checkbox'
 					value={this._model.deadLine}
@@ -40,7 +40,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
 				{Translation.EditTaskForm.checkBoxTitle}
 			</label>,
 			<Input
-				key='edit_task_deadline'
+				key='deadline'
 				type={InputType.DateTimeLocal}
 				value={this._model.deadLine}
 				onChange={(value: string) => this._model.deadLine = value}

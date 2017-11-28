@@ -6,7 +6,7 @@ import { RegisterDto } from '../../Dto/RegisterDto';
 import { Form } from './Form';
 import { Translation } from '../../translation/ru';
 
-export class RegisterForm extends Form <IRegisterProps, {}> {
+export class RegisterForm extends Form<IRegisterProps, {}> {
 	private _model: RegisterDto = new RegisterDto();
 
 	public constructor(props: IRegisterProps) {
@@ -18,28 +18,30 @@ export class RegisterForm extends Form <IRegisterProps, {}> {
 	protected getInner(): JSX.Element[] {
 		return ([
 			<Input
-				key='register_email'
+				key='email'
 				type={InputType.Email}
 				placeholder={Translation.RegisterForm.emailPlaceholder}
 				onChange={(value: string) => this._model.login = value}
 			/>,
 			<Input
-				key='register_name'
+				key='name'
 				type={InputType.Text}
 				placeholder={Translation.RegisterForm.namePlaceholder}
 				onChange={(value: string) => this._model.name = value}
 			/>,
 			<Input
-				key='register_password'
+				key='password'
 				type={InputType.Password}
 				placeholder={Translation.RegisterForm.passwordPlaceholder}
 				onChange={(value: string) => this._model.password = value}
 			/>,
 			<Input
-				key='register_repeat_password'
+				key='repeat_password'
 				type={InputType.Password}
 				placeholder={Translation.RegisterForm.passwordRepeatPlaceholder}
-				onChange={(value: string) => this._model.repeatPassword = value}
+				onChange={(value: string) => {
+					// Check for equality
+				}}
 			/>
 		]);
 	}

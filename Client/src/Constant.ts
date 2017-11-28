@@ -1,8 +1,10 @@
 /*tslint:disable:typedef*/
 export class Constant {
 	public static Path = class {
-		public static readonly signIn: string = '/signin';
+		public static readonly signIn: string = '/sign_in';
 		public static readonly register: string = '/register';
+		public static readonly account: string = '/account';
+		public static readonly tasks: string = '/tasks';
 	};
 	public static Server = class {
 		public static readonly headers: Headers = new Headers({ 'Content-Type': 'application/json' });
@@ -15,6 +17,14 @@ export class Constant {
 			public static SignIn = class {
 				public static readonly path: string = '/users/authenticate';
 				public static readonly method: string = 'POST';
+			};
+			public static GetUserInfo = class {
+				public static readonly path: string = '/users/';
+				public static readonly method: string = 'GET';
+			};
+			public static EditUser = class {
+				public static readonly path: string = '/users/edit/';
+				public static readonly method: string = 'PUT';
 			};
 		};
 	};

@@ -14,6 +14,10 @@ export class Input extends React.Component<IInputProps, IInputState> {
 		};
 	}
 
+	componentWillReceiveProps(props: IInputProps): void {
+		this.setState({ value: props.value || '' });
+	}
+
 	public get disabled(): boolean {
 		return this.state.disabled;
 	}

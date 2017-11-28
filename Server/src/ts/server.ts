@@ -22,22 +22,22 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 		id = Token.decodeId(req.params.token);
 	} catch (exception) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	DataBase.getUserInfoById(id, (result: ResponseCode, info: UserInfo) => {
 		const response: JsonResponse = new JsonResponse(result, info);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
 app.post('/users/registration', (req: express.Request, res: express.Response) => {
-	if (!req.body || !req.body.signIn || !req.body.password || !req.body.name) {
+	if (!req.body || !req.body.login || !req.body.password || !req.body.name) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.signIn;
+	const login: string = req.body.login;
 	const password: string = req.body.password;
 	const name: string = req.body.name;
 
@@ -64,12 +64,12 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 });
 
 app.post('/users/authenticate', (req: express.Request, res: express.Response) => {
-	if (!req.body || !req.body.signIn || !req.body.password) {
+	if (!req.body || !req.body.login || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.signIn;
+	const login: string = req.body.login;
 	const password: string = req.body.password;
 
 	DataBase.getUserId(login, password, (result: ResponseCode, id: number) => {
@@ -88,15 +88,15 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 		userId = Token.decodeId(req.params.token);
 	} catch (exception) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	if (!req.body || !req.body.signIn || !req.body.name || !req.body.password) {
+	if (!req.body || !req.body.login || !req.body.name || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.signIn;
+	const login: string = req.body.login;
 	const password: string = req.body.password;
 	const newPassword: string = req.body.newPassword !== undefined ? req.body.newPassword : password;
 	const name: string = req.body.name;
@@ -104,7 +104,7 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 
 	DataBase.editUser(userId, password, newData, (result: ResponseCode) => {
 		const response: JsonResponse = new JsonResponse(result);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 

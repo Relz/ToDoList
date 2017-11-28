@@ -14,7 +14,8 @@
 		"rgba",
 		"Disableable",
 		"datetime",
-		"thead"
+		"thead",
+		"Дедлайн"
 	],
 	"ignorePaths": [
 		"src/img/*"
