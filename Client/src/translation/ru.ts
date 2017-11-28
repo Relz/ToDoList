@@ -48,12 +48,20 @@ export class Translation {
 	public static Page = class {
 		public static Register = class {
 			public static FormMessage = class {
-				public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
 				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
 				public static readonly userAlreadyExists = 'Данный email уже зарегистрирован в системе';
 				public static readonly success = 'Вы успешно зарегистрированы в системе!';
-				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
 			};
 		};
+		public static SignIn = class {
+			public static FormMessage = class {
+				public static readonly invalidLogin = 'Чувак, такого логина не существует!';
+				public static readonly invalidPassword = 'Чувак, ты вводишь не правильный пароль!';
+			};
+		};
+	};
+	public static Shared = class {
+		public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
+		public static readonly badConnection = 'Не удаётся установить соединение с сервером';
 	};
 }

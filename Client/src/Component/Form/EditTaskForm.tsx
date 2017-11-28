@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { IEditTaskFormProps } from '../Props/Form/IEditTaskFormProps';
-import { TaskDto } from '../../DTO/TaskDto';
+import { TaskDto } from '../../Dto/TaskDto';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
 import { Form } from './Form';

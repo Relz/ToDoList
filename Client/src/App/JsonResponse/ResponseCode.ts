@@ -1,5 +1,5 @@
 export enum ResponseCode {
-	OK,
+	OK = 0,
 	INTERNAL_ERROR,
 	BAD_BODY,
 	BAD_TOKEN,

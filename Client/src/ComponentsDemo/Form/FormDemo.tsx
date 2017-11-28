@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { SignInForm } from '../../Component/Form/SignInForm';
 import { RegisterForm } from '../../Component/Form/RegisterForm';
-import { SignInDto } from '../../DTO/SignInDto';
-import { RegisterDto } from '../../DTO/RegisterDto';
-import { TaskDto } from '../../DTO/TaskDto';
+import { SignInDto } from '../../Dto/SignInDto';
+import { RegisterDto } from '../../Dto/RegisterDto';
+import { TaskDto } from '../../Dto/TaskDto';
 import { EditTaskForm } from '../../Component/Form/EditTaskForm';
 import { Container } from '../../Component/Container/Container';
 import { JustifyType } from '../../Component/Container/JustifyType';
@@ -50,7 +50,7 @@ export class FormDemo extends React.Component<{}, {}> {
 	private static onLogin(model: SignInDto): void {
 		alert(
 			`LOGIN DATA:\n` +
-			`email: "${model.email}"\n` +
+			`email: "${model.login}"\n` +
 			`password: "${model.password}"`
 		);
 	}

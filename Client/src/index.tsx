@@ -6,6 +6,7 @@ import { App } from './App/App';
 import { ComponentsDemoPage } from './ComponentsDemo/ComponentsDemoPage';
 import { Page404 } from './Page404';
 import { Register } from './App/Register';
+import { SignIn } from './App/SignIn';
 
 ReactDOM.render(
 	<BrowserRouter>
@@ -13,6 +14,7 @@ ReactDOM.render(
 			<Route path='/components_demo' component={ComponentsDemoPage}/>
 			<App>
 				<Switch>
+					<Route path='/signIn' component={SignIn}/>
 					<Route path='/register' component={Register}/>
 					<Route path='/tasks' component={ComponentsDemoPage}/>
 					<Route component={Page404}/>
