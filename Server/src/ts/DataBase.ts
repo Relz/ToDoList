@@ -9,6 +9,15 @@ export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
+	public static deleteTask(userId: number, taskId: number, callback: (result: ResponseCode) => void): void {
+		DataBase._instance.run('DELETE FROM task WHERE id = ? AND userId = ?', taskId, userId, function(err: Error): void {
+			if (err) {
+				return callback(ResponseCode.INTERNAL_ERROR);
+			}
+			callback(this.changes > 0 ? ResponseCode.OK : ResponseCode.WRONG_ID);
+		});
+	}
+
 	public static insertTask(task: Task, callback: (result: ResponseCode) => void): void {
 		const query: string =
 			'INSERT INTO task (title, description, creationDate, deadline, isDone, userId) VALUES (?, ?, ?, ?, ?, ?)';
