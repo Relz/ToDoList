@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IRegisterProps } from '../Props/Form/IRegisterProps';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
-import { RegisterDto } from '../../DTO/RegisterDto';
+import { RegisterDto } from '../../Dto/RegisterDto';
 import { Form } from './Form';
 import { Translation } from '../../translation/ru';
 

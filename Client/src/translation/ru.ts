@@ -27,13 +27,13 @@ export class Translation {
 	public static SignInForm = class {
 		public static readonly title: string = 'Авторизация';
 		public static readonly button: string = 'Вход';
-		public static readonly emailPlaceholder = 'Эл. почта';
+		public static readonly emailPlaceholder = 'Логин';
 		public static readonly passwordPlaceholder = 'Пароль';
 	};
 	public static RegisterForm = class {
 		public static readonly title: string = 'Регистрация';
 		public static readonly button: string = 'Зарегестрироваться';
-		public static readonly emailPlaceholder: string = 'Эл.почта';
+		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly namePlaceholder: string = 'Имя';
 		public static readonly passwordPlaceholder: string = 'Пароль';
 		public static readonly passwordRepeatPlaceholder: string = 'Повторите пароль';
@@ -48,12 +48,20 @@ export class Translation {
 	public static Page = class {
 		public static Register = class {
 			public static FormMessage = class {
-				public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
 				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
 				public static readonly userAlreadyExists = 'Данный email уже зарегистрирован в системе';
 				public static readonly success = 'Вы успешно зарегистрированы в системе!';
-				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
 			};
 		};
+		public static SignIn = class {
+			public static FormMessage = class {
+				public static readonly invalidLogin = 'Чувак, такого логина не существует!';
+				public static readonly invalidPassword = 'Чувак, ты вводишь не правильный пароль!';
+			};
+		};
+	};
+	public static Shared = class {
+		public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
+		public static readonly badConnection = 'Не удаётся установить соединение с сервером';
 	};
 }

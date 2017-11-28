@@ -11,9 +11,9 @@ describe('User class', () => {
 			expect(user.name).to.be.undefined;
 		});
 		it('with parameters, sets all properties', () => {
-			const user: User = new User(1, 'login', 'password', 'name');
+			const user: User = new User(1, 'signIn', 'password', 'name');
 			expect(user.id).to.be.equal(1);
-			expect(user.login).to.be.equal('login');
+			expect(user.login).to.be.equal('signIn');
 			expect(user.password).to.be.equal('password');
 			expect(user.name).to.be.equal('name');
 		});
@@ -31,7 +31,7 @@ describe('User class', () => {
 		});
 	});
 
-	describe('has login property', () => {
+	describe('has signIn property', () => {
 		it('undefined by default', () => {
 			expect(user.login).to.be.undefined;
 		});

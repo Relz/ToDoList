@@ -19,7 +19,7 @@ export class Menu extends React.Component {
 		if (localStorage.getItem('token') === null) {
 			return [
 				<li className='item'>
-					<NavLink to={Constant.Path.login}>{Translation.Menu.login}</NavLink>
+					<NavLink to={Constant.Path.signIn}>{Translation.Menu.login}</NavLink>
 				</li>,
 				<li className='item'>
 					<NavLink to={Constant.Path.register}>{Translation.Menu.register}</NavLink>
@@ -28,7 +28,7 @@ export class Menu extends React.Component {
 		} else {
 			return [
 				<li className='item'>
-					<NavLink to={Constant.Path.login}>Привет, пользователь!</NavLink>
+					<NavLink to={Constant.Path.signIn}>Привет, пользователь!</NavLink>
 				</li>,
 				<li className='item'>
 					<Button

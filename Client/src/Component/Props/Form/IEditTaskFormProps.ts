@@ -1,5 +1,5 @@
 import { IFormProps } from './IFormProps';
-import { TaskDto } from '../../../DTO/TaskDto';
+import { TaskDto } from '../../../Dto/TaskDto';
 
 export interface IEditTaskFormProps extends IFormProps {
 	onSubmit: (task: TaskDto) => void;

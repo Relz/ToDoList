@@ -18,7 +18,7 @@ describe('UserInfo class', () => {
 
 	const userInfo: UserInfo = new UserInfo();
 
-	describe('has login property', () => {
+	describe('has signIn property', () => {
 		it('undefined by default', () => {
 			expect(userInfo.login).to.be.undefined;
 		});

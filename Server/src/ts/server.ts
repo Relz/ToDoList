@@ -8,7 +8,6 @@ import { Config } from './Config';
 import { Token } from './Token/Token';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
-import * as HttpStatusCode from 'http-status-codes';
 import { Task } from './Task';
 
 const app: express.Express = express();
@@ -33,21 +32,26 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 });
 
 app.post('/users/registration', (req: express.Request, res: express.Response) => {
-	if (!req.body || !req.body.login || !req.body.password) {
+	if (!req.body || !req.body.signIn || !req.body.password || !req.body.name) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.login;
+	const login: string = req.body.signIn;
 	const password: string = req.body.password;
+	const name: string = req.body.name;
 
 	const onTakeUserId: any = (result: ResponseCode, id: number) => {
-		if (result != ResponseCode.OK) {
-			return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).send();
-		}
-		const responseBody: object = { token: Token.createFromId(id) };
-		const response: JsonResponse = new JsonResponse(result, responseBody);
-		res.status(response.httpStatus).send(response.jsonString());
+		const user: User = new User(id, login, password, name);
+		DataBase.editUser(id, password, user, (result: ResponseCode) => {
+			let response: JsonResponse = new JsonResponse(result);
+			if (result === ResponseCode.OK) {
+				response.body = { token: Token.createFromId(id) };
+			} else {
+				response.code = ResponseCode.INTERNAL_ERROR;
+			}
+			res.status(response.httpStatus).send(response.jsonString());
+		});
 	};
 
 	DataBase.insertUser(login, password, (result: ResponseCode) => {
@@ -60,18 +64,20 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 });
 
 app.post('/users/authenticate', (req: express.Request, res: express.Response) => {
-	if (!req.body || !req.body.login || !req.body.password) {
+	if (!req.body || !req.body.signIn || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.login;
+	const login: string = req.body.signIn;
 	const password: string = req.body.password;
 
 	DataBase.getUserId(login, password, (result: ResponseCode, id: number) => {
-		const responseBody: object = { token: Token.createFromId(id) };
-		const response: JsonResponse = new JsonResponse(result, responseBody);
-		res.status(response.httpStatus).send(response);
+		const response: JsonResponse = new JsonResponse(result);
+		if (response.code === ResponseCode.OK) {
+			response.body = { token: Token.createFromId(id) };
+		}
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
@@ -85,12 +91,12 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 		return res.status(response.httpStatus).send(response);
 	}
 
-	if (!req.body || !req.body.login || !req.body.name || !req.body.password) {
+	if (!req.body || !req.body.signIn || !req.body.name || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response);
 	}
 
-	const login: string = req.body.login;
+	const login: string = req.body.signIn;
 	const password: string = req.body.password;
 	const newPassword: string = req.body.newPassword !== undefined ? req.body.newPassword : password;
 	const name: string = req.body.name;
@@ -127,11 +133,11 @@ app.get('/tasks/:token', (req: express.Request, res: express.Response) => {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response);
 	}
-  
-  DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
+
+	DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
 		const response: JsonResponse = new JsonResponse(result, userTasks);
 		return res.status(response.httpStatus).send(response);
-  });
+	});
 });
 
 app.post('/tasks/create/:token', (req: express.Request, res: express.Response) => {
