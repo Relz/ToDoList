@@ -47,6 +47,7 @@ export class FormDemo extends React.Component<{}, {}> {
 		);
 	}
 
+	/* tslint:disable:prefer-template */
 	private static onLogin(model: SignInDto): void {
 		alert(
 			`LOGIN DATA:\n` +
@@ -73,4 +74,5 @@ export class FormDemo extends React.Component<{}, {}> {
 			`deadline: "${model.deadLine}"`
 		);
 	}
+	/* tslint:enable:prefer-template */
 }

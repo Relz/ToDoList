@@ -20,7 +20,7 @@ export class Account extends React.Component {
 
 	public render(): JSX.Element {
 		if (localStorage.getItem(Constant.tokenKey) === null) {
-			return <Redirect to={'/'}/>
+			return <Redirect to={'/'}/>;
 		}
 		return (
 			<AccountForm
@@ -41,7 +41,7 @@ export class Account extends React.Component {
 		).then((response: any) => {
 			return response.json();
 		}).then((response: JsonResponse) => {
-			switch(response.code) {
+			switch (response.code) {
 				case ResponseCode.INTERNAL_ERROR:
 					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.internalServerError);
 					break;
@@ -74,7 +74,7 @@ export class Account extends React.Component {
 		).then((response: any) => {
 			return response.json();
 		}).then((response: JsonResponse) => {
-			const accountDto = new AccountDto();
+			const accountDto: AccountDto = new AccountDto();
 			accountDto.login = response.body.login;
 			accountDto.name = response.body.name;
 			this._accountForm.model = accountDto;

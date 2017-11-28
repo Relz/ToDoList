@@ -32,7 +32,7 @@ export class Translation {
 	};
 	public static RegisterForm = class {
 		public static readonly title: string = 'Регистрация';
-		public static readonly button: string = 'Зарегестрироваться';
+		public static readonly button: string = 'Зарегистрироваться';
 		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly namePlaceholder: string = 'Имя';
 		public static readonly passwordPlaceholder: string = 'Пароль';

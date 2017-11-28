@@ -25,22 +25,21 @@ export class Menu extends React.Component {
 					<NavLink to={Constant.Path.register}>{Translation.Menu.register}</NavLink>
 				</li>
 			];
-		} else {
-			return [
-				<li key='account' className='item'>
-					<NavLink to={Constant.Path.account}>Привет, пользователь!</NavLink>
-				</li>,
-				<li key='sign_out' className='item'>
-					<Button
-						type={ButtonType.Danger}
-						size={ButtonSize.Medium}
-						onClick={this.signOut}
-					>
-						{Translation.Menu.logout}
-					</Button>
-				</li>
-			];
 		}
+		return [
+			<li key='account' className='item'>
+				<NavLink to={Constant.Path.account}>Привет, пользователь!</NavLink>
+			</li>,
+			<li key='sign_out' className='item'>
+				<Button
+					type={ButtonType.Danger}
+					size={ButtonSize.Medium}
+					onClick={Menu.signOut}
+				>
+					{Translation.Menu.logout}
+				</Button>
+			</li>
+		];
 	}
 
 	private static signOut(): void {

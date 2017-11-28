@@ -55,7 +55,7 @@ export class AccountForm extends Form<IAccountFormProps, IAccountFormState> {
 	}
 
 	protected onSubmit(): void {
-		const accountDto = new AccountDto();
+		const accountDto: AccountDto = new AccountDto();
 		accountDto.login = this.state.login;
 		accountDto.name = this.state.name;
 		accountDto.password = this.state.password;
