@@ -32,12 +32,12 @@ app.get('/users/:token', (req: express.Request, res: express.Response) => {
 });
 
 app.post('/users/registration', (req: express.Request, res: express.Response) => {
-	if (!req.body || !req.body.login || !req.body.password || !req.body.name) {
+	if (!req.body || !req.body.signIn || !req.body.password || !req.body.name) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.login;
+	const login: string = req.body.signIn;
 	const password: string = req.body.password;
 	const name: string = req.body.name;
 
@@ -64,12 +64,12 @@ app.post('/users/registration', (req: express.Request, res: express.Response) =>
 });
 
 app.post('/users/authenticate', (req: express.Request, res: express.Response) => {
-	if (!req.body || !req.body.login || !req.body.password) {
+	if (!req.body || !req.body.signIn || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	const login: string = req.body.login;
+	const login: string = req.body.signIn;
 	const password: string = req.body.password;
 
 	DataBase.getUserId(login, password, (result: ResponseCode, id: number) => {
@@ -91,12 +91,12 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 		return res.status(response.httpStatus).send(response);
 	}
 
-	if (!req.body || !req.body.login || !req.body.name || !req.body.password) {
+	if (!req.body || !req.body.signIn || !req.body.name || !req.body.password) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
 		return res.status(response.httpStatus).send(response);
 	}
 
-	const login: string = req.body.login;
+	const login: string = req.body.signIn;
 	const password: string = req.body.password;
 	const newPassword: string = req.body.newPassword !== undefined ? req.body.newPassword : password;
 	const name: string = req.body.name;
