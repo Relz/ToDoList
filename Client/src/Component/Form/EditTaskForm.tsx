@@ -1,18 +1,32 @@
 import * as React from 'react';
+import * as moment from 'moment';
+import { Moment } from 'moment';
 import { IEditTaskFormProps } from '../Props/Form/IEditTaskFormProps';
-import { TaskDto } from '../../Dto/TaskDto';
 import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
 import { Form } from './Form';
 import { Translation } from '../../translation/ru';
+import { IEditTaskFormState } from '../State/Form/IEditTaskFormState';
+import { EditTaskDto } from '../../Dto/EditTaskDto';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
-export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
-	private _model: TaskDto;
-	private _calendar: Input;
-
+export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 	public constructor(props: IEditTaskFormProps) {
 		super(props);
-		this._model = props.task === undefined ? new TaskDto() : props.task;
+		const editTaskDto: EditTaskDto = props.task ? props.task : new EditTaskDto();
+		if (editTaskDto.deadline === undefined) {
+			editTaskDto.deadline = moment();
+		}
+
+		this.state = {
+			title: editTaskDto.title,
+			description: editTaskDto.description,
+			isDeadlineExist: editTaskDto.isDeadlineExist == true,
+			deadline: editTaskDto.deadline,
+			isDone: editTaskDto.isDone == true,
+			isImportant: editTaskDto.isImportant == true
+		};
 	}
 
 	protected getInner(): JSX.Element[] {
@@ -20,45 +34,69 @@ export class EditTaskForm extends Form<IEditTaskFormProps, {}> {
 			<Input
 				key='title'
 				type={InputType.Text}
-				value={this._model.title}
-				placeholder={Translation.EditTaskForm.namePlaceholder}
-				onChange={(value: string) => this._model.title = value}
+				value={this.state.title}
+				placeholder={Translation.TaskForm.namePlaceholder}
+				onChange={(value: string) => this.setState({ title: value }) }
 			/>,
 			<Input
 				key='description'
 				type={InputType.Text}
-				value={this._model.description}
-				placeholder={Translation.EditTaskForm.descriptionPlaceholder}
-				onChange={(value: string) => this._model.description = value}
+				value={this.state.description}
+				placeholder={Translation.TaskForm.descriptionPlaceholder}
+				onChange={(value: string) => this.setState({ description: value })}
 			/>,
 			<label key='deadline_checkbox'>
 				<input
 					type='checkbox'
-					value={this._model.deadLine}
-					onChange={(event: any) => this.updateCalendar(event)}
+					checked={this.state.isDeadlineExist}
+					onChange={(event: any) => this.setState({ isDeadlineExist: event.target.checked })}
 				/>
-				{Translation.EditTaskForm.checkBoxTitle}
+				{Translation.TaskForm.deadlineCheckBoxTitle}
 			</label>,
-			<Input
+			<DatePicker
 				key='deadline'
-				type={InputType.DateTimeLocal}
-				value={this._model.deadLine}
-				onChange={(value: string) => this._model.deadLine = value}
-				ref={(ref: Input) => {
-					this._calendar = ref;
-					this._calendar.disabled = true;
-				}}
-			/>
+				selected={this.state.deadline}
+				dateFormat='DD MMMM YYYY'
+				onChange={(value: Moment) => this.setState({ deadline: value })}
+			/>,
+			<label key='done_checkbox'>
+				<input
+					type='checkbox'
+					checked={this.state.isDone}
+					onChange={(event: any) => this.setState({ isDone: event.target.checked })}
+				/>
+				{Translation.TaskForm.doneCheckBoxTitle}
+			</label>,
+			<label key='important_checkbox'>
+				<input
+					type='checkbox'
+					checked={this.state.isImportant}
+					onChange={(event: any) => this.setState({ isImportant: event.target.checked })}
+				/>
+				{Translation.TaskForm.importantCheckBoxTitle}
+			</label>
 		]);
 	}
 
 	protected onSubmit(event: any): void {
-		this.props.onSubmit(this._model);
+		const model: EditTaskDto = new EditTaskDto();
+		model.title = this.state.title;
+		model.description = this.state.description;
+		model.isDeadlineExist = this.state.isDeadlineExist;
+		model.deadline = this.state.deadline;
+		model.isDone = this.state.isDone;
+		model.isImportant = this.state.isImportant;
+		this.props.onSubmit(model);
 	}
 
-	private updateCalendar(event: any): void {
-		const isDeadlineExist: boolean = event.target.checked;
-		this._calendar.disabled = !isDeadlineExist;
-		this._model.isDeadlineExist = isDeadlineExist;
+	public set model(value: EditTaskDto) {
+		this.setState({
+			title: value.title,
+			description: value.description,
+			isDeadlineExist: value.isDeadlineExist == true,
+			deadline: value.deadline,
+			isDone: value.isDone == true,
+			isImportant: value.isImportant == true
+		});
 	}
 }

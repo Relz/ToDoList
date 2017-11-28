@@ -9,6 +9,8 @@ import { Register } from './App/Register';
 import { SignIn } from './App/SignIn';
 import { Account } from './App/Account';
 import { Constant } from './Constant';
+import { Tasks } from './App/Tasks';
+import { EditTask } from './App/EditTask';
 
 ReactDOM.render(
 	<BrowserRouter>
@@ -19,7 +21,9 @@ ReactDOM.render(
 					<Route path={Constant.Path.signIn} component={SignIn}/>
 					<Route path={Constant.Path.register} component={Register}/>
 					<Route path={Constant.Path.account} component={Account}/>
-					<Route path={Constant.Path.tasks} component={ComponentsDemoPage}/>
+					<Route path={Constant.Path.tasks} component={Tasks}/>
+					<Route path={Constant.Path.editTask} component={EditTask}/>
+					<Route path={Constant.Path.demo} component={ComponentsDemoPage}/>
 					<Route component={Page404}/>
 				</Switch>
 			</App>

@@ -18,11 +18,11 @@ export class FormDemoDescription extends React.Component<{}, {}> {
 				</p>
 				<p>
 					Наследникам класса <strong>Form</strong> неопходимо имплементировать методы:
-					<ul>
-						<li><strong>getInner()</strong> - возвращает массив JSX.Element который вставляется в форму перед кнопкой</li>
-						<li><strong>onSubmit()</strong> - срабатывает при отправке формыы</li>
-					</ul>
 				</p>
+				<ul>
+					<li><strong>getInner()</strong> - возвращает массив JSX.Element который вставляется в форму перед кнопкой</li>
+					<li><strong>onSubmit()</strong> - срабатывает при отправке формыы</li>
+				</ul>
 			</div>
 		);
 	}

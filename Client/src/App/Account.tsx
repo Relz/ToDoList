@@ -7,19 +7,20 @@ import { Redirect } from 'react-router';
 import { AccountDto } from '../Dto/AccountDto';
 import { AccountForm } from '../Component/Form/AccountForm';
 import { ResponseCode } from './JsonResponse/ResponseCode';
+import { Memory } from '../Memory';
 
 export class Account extends React.Component {
 	private _accountForm: AccountForm;
 
 	public constructor(props: {}) {
 		super(props);
-		if (Constant.token !== undefined) {
+		if (Memory.token !== undefined) {
 			this.loadAccountData();
 		}
 	}
 
 	public render(): JSX.Element {
-		if (Constant.token === undefined) {
+		if (Memory.token === undefined) {
 			return <Redirect to={'/'}/>;
 		}
 		return (
@@ -32,7 +33,7 @@ export class Account extends React.Component {
 
 	private onSubmit(model: AccountDto): void {
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.EditUser.path}${Constant.token}`,
+			`${Constant.Server.url}${Constant.Server.Action.EditUser.path}${Memory.token}`,
 			{
 				method: Constant.Server.Action.EditUser.method,
 				headers: Constant.Server.headers,
@@ -42,15 +43,12 @@ export class Account extends React.Component {
 			return response.json();
 		}).then((response: JsonResponse) => {
 			if (response === undefined) {
-				this._accountForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
+				this._accountForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.internalServerError);
 				return;
 			}
 			switch (response.code) {
-				case ResponseCode.INTERNAL_ERROR:
-					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.internalServerError);
-					break;
 				case ResponseCode.BAD_BODY:
-					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.badBody);
+					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badBody);
 					break;
 				case ResponseCode.WRONG_LOGIN:
 					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.loginInUse);
@@ -66,14 +64,14 @@ export class Account extends React.Component {
 					break;
 			}
 		}, () => {
-			this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.badConnection);
+			this._accountForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badConnection);
 		});
 
 	}
 
 	private loadAccountData(): void {
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.GetUserInfo.path}${Constant.token}`,
+			`${Constant.Server.url}${Constant.Server.Action.GetUserInfo.path}${Memory.token}`,
 			{
 				method: Constant.Server.Action.GetUserInfo.method,
 				headers: Constant.Server.headers
@@ -89,7 +87,7 @@ export class Account extends React.Component {
 			accountDto.name = response.body.name;
 			this._accountForm.model = accountDto;
 		}, () => {
-			this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.badConnection);
+			this._accountForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badConnection);
 		});
 	}
 }

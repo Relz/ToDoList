@@ -14,6 +14,8 @@ export class SignInForm extends Form<ISignInFormProps, {}> {
 		super(props);
 		this.title = Translation.SignInForm.title;
 		this.buttonTitle = Translation.SignInForm.button;
+		this._model.login = '';
+		this._model.password = '';
 	}
 
 	protected getInner(): JSX.Element[] {

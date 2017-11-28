@@ -5,6 +5,7 @@ export class Task {
 	private _creationDate: number;
 	private _deadline: number;
 	private _isDone: boolean;
+	private _isImportant: boolean;
 	private _userId: number;
 
 	constructor(
@@ -14,6 +15,7 @@ export class Task {
 		creationDate?: number,
 		deadline?: number,
 		isDone?: boolean,
+		isImportant?: boolean,
 		userId?: number
 	) {
 		this._id = id;
@@ -22,6 +24,7 @@ export class Task {
 		this._creationDate = creationDate;
 		this._deadline = deadline;
 		this._isDone = isDone;
+		this._isImportant = isImportant;
 		this._userId = userId;
 	}
 
@@ -71,6 +74,14 @@ export class Task {
 
 	public set isDone(value: boolean) {
 		this._isDone = value;
+	}
+
+	public get isImportant(): boolean {
+		return this._isImportant;
+	}
+
+	public set isImportant(value: boolean) {
+		this._isImportant = value;
 	}
 
 	public get userId(): number {

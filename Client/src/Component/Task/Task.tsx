@@ -12,11 +12,14 @@ import { Button } from '../Button/Button';
 import { ButtonType } from '../Button/ButtonType';
 import { ButtonSize } from '../Button/ButtonSize';
 import { Translation } from '../../translation/ru';
+import { Constant } from '../../Constant';
+import { Memory } from '../../Memory';
+import { JsonResponse } from '../../App/JsonResponse/JsonResponse';
+import { ResponseCode } from '../../App/JsonResponse/ResponseCode';
 
 export class Task extends React.Component<ITaskProp, ITaskState> {
-	private _setDoneButton: Button;
-	private _setImportantButton: Button;
 	private _editButton: Button;
+	private _deleteButton: Button;
 
 	public constructor(props: ITaskProp) {
 		super(props);
@@ -49,36 +52,20 @@ export class Task extends React.Component<ITaskProp, ITaskState> {
 							alignSelfType={AlignSelfType.Stretch}
 						>
 							<Button
-								type={this.getDoneButtonType()}
-								size={ButtonSize.Medium}
-								onClick={this.onDoneButtonClick.bind(this)}
-								ref={(ref: Button) => this._setDoneButton = ref}
-							>
-								{
-									this.state.isDone
-										? Translation.Task.setNotDoneButtonText
-										: Translation.Task.setDoneButtonText
-								}
-							</Button>
-							<Button
-								type={this.getImportantButtonType()}
-								size={ButtonSize.Medium}
-								onClick={this.onImportantButtonClick.bind(this)}
-								ref={(ref: Button) => this._setImportantButton = ref}
-							>
-								{
-									this.state.isImportant
-										? Translation.Task.setNotImportantButtonText
-										: Translation.Task.setImportantButtonText
-								}
-							</Button>
-							<Button
 								type={ButtonType.Primary}
 								size={ButtonSize.Medium}
 								onClick={this.onEditButtonClick.bind(this)}
 								ref={(ref: Button) => this._editButton = ref}
 							>
 								{Translation.Task.editButtonText}
+							</Button>
+							<Button
+								type={ButtonType.Danger}
+								size={ButtonSize.Medium}
+								onClick={this.onDeleteButtonClick.bind(this)}
+								ref={(ref: Button) => this._deleteButton = ref}
+							>
+								{Translation.Task.deleteButtonText}
 							</Button>
 						</Container>
 					</div>
@@ -111,24 +98,37 @@ export class Task extends React.Component<ITaskProp, ITaskState> {
 		return this.state.isImportant ? ButtonType.Warning : ButtonType.Info;
 	}
 
-	private onDoneButtonClick(): void {
-		this._setDoneButton.disabled = true;
-		setTimeout(() => {
-			this._setDoneButton.disabled = false;
-			this.setDone(!this.isDone(), () => this._setDoneButton.type = this.getDoneButtonType());
-		}, 1000);
-	}
-
-	private onImportantButtonClick(): void {
-		this._setImportantButton.disabled = true;
-		setTimeout(() => {
-			this._setImportantButton.disabled = false;
-			this.setImportant(!this.isImportant(), () => this._setImportantButton.type = this.getImportantButtonType());
-		}, 1000);
-	}
-
 	private onEditButtonClick(): void {
-		this._editButton.disabled = true;
-		// Redirect to page with task editing form
+		window.location.href = Constant.Path.editTask +
+			`?id=${this.props.id}` +
+			`&title=${this.props.title}` +
+			`&description=${this.props.description}` +
+			`&deadline=${this.props.deadline}` +
+			`&isDone=${this.state.isDone}` +
+			`&isImportant=${this.state.isImportant}`;
+	}
+
+	private onDeleteButtonClick(): void {
+		this._deleteButton.disabled = true;
+		fetch(
+			`${Constant.Server.url}${Constant.Server.Action.deleteTask.path}${this.props.id}/${Memory.token}`,
+			{
+				method: Constant.Server.Action.deleteTask.method,
+				headers: Constant.Server.headers
+			}
+		).then((response: any) => response.json()
+		).then((response: JsonResponse) => {
+			if (response === undefined) {
+				return;
+			}
+			switch (response.code) {
+				case ResponseCode.BAD_BODY:
+					break;
+				case ResponseCode.OK:
+					this._deleteButton.disabled = false;
+					this.props.onRemove(this);
+					break;
+			}
+		});
 	}
 }
