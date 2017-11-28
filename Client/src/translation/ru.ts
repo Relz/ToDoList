@@ -27,13 +27,13 @@ export class Translation {
 	public static SignInForm = class {
 		public static readonly title: string = 'Авторизация';
 		public static readonly button: string = 'Вход';
-		public static readonly emailPlaceholder = 'Эл. почта';
+		public static readonly emailPlaceholder = 'Логин';
 		public static readonly passwordPlaceholder = 'Пароль';
 	};
 	public static RegisterForm = class {
 		public static readonly title: string = 'Регистрация';
 		public static readonly button: string = 'Зарегестрироваться';
-		public static readonly emailPlaceholder: string = 'Эл.почта';
+		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly namePlaceholder: string = 'Имя';
 		public static readonly passwordPlaceholder: string = 'Пароль';
 		public static readonly passwordRepeatPlaceholder: string = 'Повторите пароль';
