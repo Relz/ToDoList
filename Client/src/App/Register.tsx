@@ -7,7 +7,6 @@ import { ResponseCode } from './JsonResponse/ResponseCode';
 import { AlertType } from '../Component/Alert/AlertType';
 import { Translation } from '../translation/ru';
 import { Redirect } from 'react-router';
-import { AccountDto } from '../DTO/AccountDto';
 
 export class Register extends React.Component {
 	private _registerForm: RegisterForm;
@@ -36,7 +35,7 @@ export class Register extends React.Component {
 			return response.json();
 		}).then((response: JsonResponse) => {
 			if (response === undefined) {
-				this._registerForm.showAlert(AlertType.Danger, Translation.Shared.internalServerError);
+				this._registerForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
 				return;
 			}
 			switch (response.code) {
@@ -53,7 +52,7 @@ export class Register extends React.Component {
 					break;
 			}
 		}, () => {
-			this._registerForm.showAlert(AlertType.Danger, Translation.Shared.badConnection);
+			this._registerForm.showAlert(AlertType.Danger, Translation.Page.Shared.badConnection);
 		});
 	}
 }

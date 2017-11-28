@@ -1,9 +1,5 @@
 import { IFormProps } from './IFormProps';
-import { AccountDto } from '../../../DTO/AccountDto';
+import { AccountDto } from '../../../Dto/AccountDto';
 
 export interface IAccountFormProps extends IFormProps<AccountDto> {
-	login?: string;
-	name?: string;
-	password?: string;
-	newPassword?: string;
 }

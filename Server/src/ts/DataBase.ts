@@ -53,7 +53,7 @@ export class DataBase {
 			if (isLoginFound) {
 				return callback(ResponseCode.WRONG_LOGIN);
 			}
-			const query: string = 'INSERT INTO user (signIn, password) VALUES (?, ?)';
+			const query: string = 'INSERT INTO user (login, password) VALUES (?, ?)';
 			DataBase._instance.run(query, login, password, (err: Error): void => {
 				callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 			});
@@ -75,7 +75,7 @@ export class DataBase {
 	}
 
 	public static getUserId(login: string, password: string, callback: (result: ResponseCode, id: number) => void): void {
-		DataBase._instance.get('SELECT * FROM user WHERE signIn = ?', login, (err: Error, row: User) => {
+		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			if (err) {
 				callback(ResponseCode.INTERNAL_ERROR, 0);
 			} else if (!row) {
@@ -101,7 +101,7 @@ export class DataBase {
 	}
 
 	public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
-		DataBase._instance.get('SELECT 1 FROM user WHERE signIn = ?', login, (err: Error, row: User) => {
+		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			callback(row !== undefined);
 		});
 	}
@@ -136,7 +136,7 @@ export class DataBase {
 		DataBase._instance.run(
 			'CREATE TABLE IF NOT EXISTS user (' +
 			'id       INTEGER PRIMARY KEY,' +
-			'signIn    VARCHAR UNIQUE,' +
+			'login    VARCHAR UNIQUE,' +
 			'password VARCHAR,' +
 			'name     VARCHAR' +
 			');', () => {}
@@ -152,7 +152,7 @@ export class DataBase {
 	}
 
 	private static updateUser(id: number, newData: User, callback: (result: number) => void): void {
-		const query: string = 'UPDATE user SET signIn = ?, password = ?, name = ? WHERE id = ?';
+		const query: string = 'UPDATE user SET login = ?, password = ?, name = ? WHERE id = ?';
 		DataBase._instance.run(query, newData.login, newData.password, newData.name, id, (err: Error) => {
 			callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 		});

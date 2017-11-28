@@ -4,7 +4,7 @@ import { InputType } from '../Input/InputType';
 import { Input } from '../Input/Input';
 import { Form } from './Form';
 import { Translation } from '../../translation/ru';
-import { AccountDto } from '../../DTO/AccountDto';
+import { AccountDto } from '../../Dto/AccountDto';
 import { IAccountFormProps } from '../Props/Form/IAccountFormProps';
 import { IAccountFormState } from '../State/Form/IAccountFormState';
 
@@ -14,10 +14,10 @@ export class AccountForm extends Form<IAccountFormProps, IAccountFormState> {
 		this.title = Translation.AccountForm.title;
 		this.buttonTitle = Translation.AccountForm.button;
 		this.state = {
-			login: props.login === undefined ? '': props.login,
-			name: props.name === undefined ? '': props.name,
-			password: props.password === undefined ? '': props.password,
-			newPassword: props.newPassword === undefined ? '': props.newPassword
+			login: '',
+			name: '',
+			password: '',
+			newPassword: ''
 		};
 	}
 
@@ -45,7 +45,7 @@ export class AccountForm extends Form<IAccountFormProps, IAccountFormState> {
 				onChange={(value: string) => this.setState({ password: value })}
 			/>,
 			<Input
-				key='newPassword'
+				key='new_password'
 				type={InputType.Password}
 				value={this.state.newPassword}
 				placeholder={Translation.AccountForm.newPasswordPlaceholder}

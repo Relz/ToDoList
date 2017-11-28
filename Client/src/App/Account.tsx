@@ -4,7 +4,7 @@ import { JsonResponse } from './JsonResponse/JsonResponse';
 import { AlertType } from '../Component/Alert/AlertType';
 import { Translation } from '../translation/ru';
 import { Redirect } from 'react-router';
-import { AccountDto } from '../DTO/AccountDto';
+import { AccountDto } from '../Dto/AccountDto';
 import { AccountForm } from '../Component/Form/AccountForm';
 import { ResponseCode } from './JsonResponse/ResponseCode';
 
@@ -32,7 +32,7 @@ export class Account extends React.Component {
 
 	private onSubmit(model: AccountDto): void {
 		fetch(
-			`${Constant.Server.url}:${Constant.Server.port}${Constant.Server.Action.EditUser.path}${localStorage.getItem(Constant.tokenKey)}`,
+			`${Constant.Server.url}${Constant.Server.Action.EditUser.path}${localStorage.getItem(Constant.tokenKey)}`,
 			{
 				method: Constant.Server.Action.EditUser.method,
 				headers: Constant.Server.headers,
@@ -66,7 +66,7 @@ export class Account extends React.Component {
 
 	private loadAccountData(): void {
 		fetch(
-			`${Constant.Server.url}:${Constant.Server.port}${Constant.Server.Action.GetUserInfo.path}${localStorage.getItem(Constant.tokenKey)}`,
+			`${Constant.Server.url}${Constant.Server.Action.GetUserInfo.path}${localStorage.getItem(Constant.tokenKey)}`,
 			{
 				method: Constant.Server.Action.GetUserInfo.method,
 				headers: Constant.Server.headers

@@ -1,5 +1,5 @@
 import { IFormProps } from './IFormProps';
-import { AccountDto } from '../../../DTO/AccountDto';
+import { RegisterDto } from '../../../Dto/RegisterDto';
 
-export interface IRegisterProps extends IFormProps<AccountDto> {
+export interface IRegisterProps extends IFormProps<RegisterDto> {
 }

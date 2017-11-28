@@ -28,7 +28,7 @@ export class Menu extends React.Component {
 		} else {
 			return [
 				<li key='account' className='item'>
-					<NavLink to={Constant.Path.signIn}>Привет, пользователь!</NavLink>
+					<NavLink to={Constant.Path.account}>Привет, пользователь!</NavLink>
 				</li>,
 				<li key='signOut' className='item'>
 					<Button
