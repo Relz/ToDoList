@@ -67,6 +67,7 @@ export class Translation {
 				public static readonly internalServerError: string = 'Извините! Произошла внутренняя ошибка сервера';
 				public static readonly badBody: string = 'Чего-то в отправленной информации не нашлось...';
 				public static readonly loginInUse: string = 'Данный логин уже занят';
+				public static readonly wrongPassword: string = 'Неверный пароль';
 				public static readonly success: string = 'Изменения сохранены!';
 				public static readonly badConnection: string = 'Не удаётся установить соединение с сервером';
 				public static readonly noUserInfo: string = 'Не удалось получить информацию о вашей учётной записи';

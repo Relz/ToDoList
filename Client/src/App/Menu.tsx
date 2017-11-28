@@ -43,9 +43,7 @@ export class Menu extends React.Component {
 	}
 
 	private static signOut(): void {
-		if (Constant.token !== undefined) {
-			localStorage.removeItem(Constant.token);
-		}
+		localStorage.removeItem(Constant.tokenKey);
 		window.location.reload();
 	}
 }

@@ -41,6 +41,7 @@ export class Account extends React.Component {
 		).then((response: any) => {
 			return response.json();
 		}).then((response: JsonResponse) => {
+			console.log(response);
 			switch (response.code) {
 				case ResponseCode.INTERNAL_ERROR:
 					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.internalServerError);
@@ -50,6 +51,9 @@ export class Account extends React.Component {
 					break;
 				case ResponseCode.WRONG_LOGIN:
 					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.loginInUse);
+					break;
+				case ResponseCode.WRONG_PASSWORD:
+					this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.wrongPassword);
 					break;
 				case ResponseCode.OK:
 					this._accountForm.showAlert(AlertType.Success, Translation.Page.Account.FormMessage.success);
