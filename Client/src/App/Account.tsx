@@ -13,13 +13,13 @@ export class Account extends React.Component {
 
 	public constructor(props: {}) {
 		super(props);
-		if (localStorage.getItem(Constant.tokenKey) !== null) {
+		if (Constant.token !== undefined) {
 			this.loadAccountData();
 		}
 	}
 
 	public render(): JSX.Element {
-		if (localStorage.getItem(Constant.tokenKey) === null) {
+		if (Constant.token === undefined) {
 			return <Redirect to={'/'}/>;
 		}
 		return (
@@ -32,7 +32,7 @@ export class Account extends React.Component {
 
 	private onSubmit(model: AccountDto): void {
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.EditUser.path}${localStorage.getItem(Constant.tokenKey)}`,
+			`${Constant.Server.url}${Constant.Server.Action.EditUser.path}${Constant.token}`,
 			{
 				method: Constant.Server.Action.EditUser.method,
 				headers: Constant.Server.headers,
@@ -66,7 +66,7 @@ export class Account extends React.Component {
 
 	private loadAccountData(): void {
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.GetUserInfo.path}${localStorage.getItem(Constant.tokenKey)}`,
+			`${Constant.Server.url}${Constant.Server.Action.GetUserInfo.path}${Constant.token}`,
 			{
 				method: Constant.Server.Action.GetUserInfo.method,
 				headers: Constant.Server.headers
@@ -74,12 +74,15 @@ export class Account extends React.Component {
 		).then((response: any) => {
 			return response.json();
 		}).then((response: JsonResponse) => {
+			if (response === undefined || response.body === undefined) {
+				this._accountForm.showAlert(AlertType.Warning, Translation.Page.Account.FormMessage.noUserInfo);
+			}
 			const accountDto: AccountDto = new AccountDto();
 			accountDto.login = response.body.login;
 			accountDto.name = response.body.name;
 			this._accountForm.model = accountDto;
 		}, () => {
-			this._accountForm.showAlert(AlertType.Danger, Translation.Page.Register.FormMessage.badConnection);
+			this._accountForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.badConnection);
 		});
 	}
 }

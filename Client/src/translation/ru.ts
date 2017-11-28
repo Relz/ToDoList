@@ -27,8 +27,8 @@ export class Translation {
 	public static SignInForm = class {
 		public static readonly title: string = 'Авторизация';
 		public static readonly button: string = 'Вход';
-		public static readonly emailPlaceholder = 'Логин';
-		public static readonly passwordPlaceholder = 'Пароль';
+		public static readonly emailPlaceholder: string = 'Логин';
+		public static readonly passwordPlaceholder: string = 'Пароль';
 	};
 	public static RegisterForm = class {
 		public static readonly title: string = 'Регистрация';
@@ -56,30 +56,31 @@ export class Translation {
 	public static Page = class {
 		public static Register = class {
 			public static FormMessage = class {
-				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
-				public static readonly userAlreadyExists = 'Данный логин уже зарегистрирован в системе';
-				public static readonly success = 'Вы успешно зарегистрированы в системе!';
-				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+				public static readonly badBody: string = 'Чего-то в отправленной информации не нашлось...';
+				public static readonly userAlreadyExists: string = 'Данный логин уже зарегистрирован в системе';
+				public static readonly success: string = 'Вы успешно зарегистрированы в системе!';
+				public static readonly badConnection: string = 'Не удаётся установить соединение с сервером';
 			};
 		};
 		public static Account = class {
 			public static FormMessage = class {
-				public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
-				public static readonly badBody = 'Чего-то в отправленной информации не нашлось...';
-				public static readonly loginInUse = 'Данный логин уже занят';
-				public static readonly success = 'Изменения сохранены!';
-				public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+				public static readonly internalServerError: string = 'Извините! Произошла внутренняя ошибка сервера';
+				public static readonly badBody: string = 'Чего-то в отправленной информации не нашлось...';
+				public static readonly loginInUse: string = 'Данный логин уже занят';
+				public static readonly success: string = 'Изменения сохранены!';
+				public static readonly badConnection: string = 'Не удаётся установить соединение с сервером';
+				public static readonly noUserInfo: string = 'Не удалось получить информацию о вашей учётной записи';
 			};
 		};
 		public static SignIn = class {
 			public static FormMessage = class {
-				public static readonly invalidLogin = 'Чувак, такого логина не существует!';
-				public static readonly invalidPassword = 'Чувак, ты вводишь не правильный пароль!';
+				public static readonly invalidLogin: string = 'Чувак, такого логина не существует!';
+				public static readonly invalidPassword: string = 'Чувак, ты вводишь не правильный пароль!';
 			};
 		};
 		public static Shared = class {
-			public static readonly internalServerError = 'Извините! Произошла внутренняя ошибка сервера';
-			public static readonly badConnection = 'Не удаётся установить соединение с сервером';
+			public static readonly internalServerError: string = 'Извините! Произошла внутренняя ошибка сервера';
+			public static readonly badConnection: string = 'Не удаётся установить соединение с сервером';
 		};
 	};
 }

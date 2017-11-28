@@ -16,7 +16,7 @@ export class Menu extends React.Component {
 	}
 
 	private static getMenu(): JSX.Element[] {
-		if (localStorage.getItem('token') === null) {
+		if (Constant.token === undefined) {
 			return [
 				<li key='sign_in' className='item'>
 					<NavLink to={Constant.Path.signIn}>{Translation.Menu.login}</NavLink>
@@ -43,7 +43,9 @@ export class Menu extends React.Component {
 	}
 
 	private static signOut(): void {
-		localStorage.removeItem(Constant.tokenKey);
+		if (Constant.token !== undefined) {
+			localStorage.removeItem(Constant.token);
+		}
 		window.location.reload();
 	}
 }
