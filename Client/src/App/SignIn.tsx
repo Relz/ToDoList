@@ -12,15 +12,15 @@ export class SignIn extends React.Component {
 	private _signInForm: SignInForm;
 
 	public render(): JSX.Element {
-		if (Constant.token != undefined) {
-			return <Redirect to={'/'}/>
+		if (Constant.token !== undefined) {
+			return <Redirect to={'/'}/>;
 		}
 		return (
 			<SignInForm
 				ref={(ref: SignInForm) => this._signInForm = ref}
 				onSubmit={(model: SignInDto) => this.onSubmit(model)}
 			/>
-		)
+		);
 	}
 
 	private onSubmit(model: SignInDto): void {
@@ -38,7 +38,6 @@ export class SignIn extends React.Component {
 				this._signInForm.showAlert(AlertType.Danger, Translation.Shared.internalServerError);
 				return;
 			}
-			console.log(response);
 			switch (response.code) {
 				case (ResponseCode.OK):
 					localStorage.setItem(Constant.tokenKey, response.body.token);

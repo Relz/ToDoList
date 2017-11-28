@@ -13,7 +13,7 @@ export class Register extends React.Component {
 
 	public render(): JSX.Element {
 		if (localStorage.getItem(Constant.tokenKey) !== null) {
-			return <Redirect to={'/'}/>
+			return <Redirect to={'/'}/>;
 		}
 		return (
 			<RegisterForm

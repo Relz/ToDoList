@@ -20,8 +20,8 @@ export class Constant {
 	};
 	public static readonly tokenKey: string = 'token';
 	public static get token(): string | undefined {
-		const token : string | null = localStorage.getItem(Constant.tokenKey);
+		const token: string | null = localStorage.getItem(Constant.tokenKey);
 
-		return token == null ? undefined : token;
+		return token === null ? undefined : token;
 	}
 }
