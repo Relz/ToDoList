@@ -16,16 +16,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/users/:token', (req: express.Request, res: express.Response) => {
-	let id: number;
-
-	try {
-		id = Token.decodeId(req.params.token);
-	} catch (exception) {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	DataBase.getUserInfoById(id, (result: ResponseCode, info: UserInfo) => {
+	DataBase.getUserInfoById(userId, (result: ResponseCode, info: UserInfo) => {
 		const response: JsonResponse = new JsonResponse(result, info);
 		return res.status(response.httpStatus).send(response.jsonString());
 	});
@@ -82,11 +79,8 @@ app.post('/users/authenticate', (req: express.Request, res: express.Response) =>
 });
 
 app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
-	let userId: number;
-
-	try {
-		userId = Token.decodeId(req.params.token);
-	} catch (exception) {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
 		return res.status(response.httpStatus).send(response.jsonString());
 	}
@@ -109,45 +103,36 @@ app.put('/users/edit/:token', (req: express.Request, res: express.Response) => {
 });
 
 app.delete('/users/delete/:token', (req: express.Request, res: express.Response) => {
-	let id: number;
-
-	try {
-		id = Token.decodeId(req.params.token);
-	} catch (err) {
-		let response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	DataBase.deleteUserById(id, (result: ResponseCode) => {
+	DataBase.deleteUserById(userId, (result: ResponseCode) => {
 		let response: JsonResponse = new JsonResponse(result);
 		res.status(response.httpStatus).send(response);
 	});
 });
 
 app.get('/tasks/:token', (req: express.Request, res: express.Response) => {
-	let id: number;
-
-	try {
-		id = Token.decodeId(req.params.token);
-	} catch (exception) {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
-	DataBase.getUserTasks(id, (result: ResponseCode, userTasks: Task[]) => {
+	DataBase.getUserTasks(userId, (result: ResponseCode, userTasks: Task[]) => {
 		const response: JsonResponse = new JsonResponse(result, userTasks);
 		return res.status(response.httpStatus).send(response);
 	});
 });
 
 app.post('/tasks/create/:token', (req: express.Request, res: express.Response) => {
-	let userId: number;
-
-	try {
-		userId = Token.decodeId(req.params.token);
-	} catch (exception) {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	if (!req.body || !req.body.title || !req.body.description) {
@@ -165,13 +150,10 @@ app.post('/tasks/create/:token', (req: express.Request, res: express.Response) =
 });
 
 app.delete('/tasks/delete/:id/:token', (req: express.Request, res: express.Response) => {
-	let userId: number;
-
-	try {
-		userId = Token.decodeId(req.params.token);
-	} catch (exception) {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	DataBase.deleteTask(userId, req.params.id, (result: ResponseCode) => {
