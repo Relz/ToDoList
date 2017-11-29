@@ -9,6 +9,16 @@ export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
+	public static markTaskAsDone(userId: number, taskId: number, callback: (result: ResponseCode) => void): void {
+		const query: string = 'UPDATE task SET isDone = 1 WHERE id = ? AND userId = ?';
+		DataBase._instance.run(query, taskId, userId, function (err: Error): void {
+			if (err) {
+				return callback(ResponseCode.INTERNAL_ERROR);
+			}
+			callback(this.changes > 0 ? ResponseCode.OK : ResponseCode.WRONG_ID);
+		});
+	}
+
 	public static deleteTask(userId: number, taskId: number, callback: (result: ResponseCode) => void): void {
 		DataBase._instance.run('DELETE FROM task WHERE id = ? AND userId = ?', taskId, userId, function(err: Error): void {
 			if (err) {
@@ -39,6 +49,21 @@ export class DataBase {
 				callback(this.changes > 0 ? ResponseCode.OK : ResponseCode.WRONG_ID);
 			}
 		);
+	}
+
+	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {
+		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {
+			if (err) {
+				callback(ResponseCode.INTERNAL_ERROR, null);
+			} else if (!rows) {
+				callback(ResponseCode.WRONG_ID, null);
+			} else {
+				callback(ResponseCode.OK, rows.map((value: Task) => {
+					value.isDone = (value.isDone == true);
+					return value;
+				}));
+			}
+		});
 	}
 
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
@@ -125,18 +150,6 @@ export class DataBase {
 	public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
 		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			callback(row !== undefined);
-		});
-	}
-
-	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {
-		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {
-			if (err) {
-				callback(ResponseCode.INTERNAL_ERROR, null);
-			} else if (!rows) {
-				callback(ResponseCode.WRONG_ID, null);
-			} else {
-				callback(ResponseCode.OK, rows);
-			}
 		});
 	}
 

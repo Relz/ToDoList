@@ -183,5 +183,18 @@ app.put('/tasks/edit/:id/:token', (req: express.Request, res: express.Response) 
 	});
 });
 
+app.put('/tasks/finish/:id/:token', (req: express.Request, res: express.Response) => {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response.jsonString());
+	}
+
+	DataBase.markTaskAsDone(userId, req.params.id, (result: ResponseCode) => {
+		const response: JsonResponse = new JsonResponse(result);
+		res.status(response.httpStatus).send(response.jsonString());
+	});
+});
+
 app.listen(Config.port, () => {
 });
