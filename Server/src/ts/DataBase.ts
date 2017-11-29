@@ -28,6 +28,19 @@ export class DataBase {
 		);
 	}
 
+	public static editTask(task: Task, callback: (result: ResponseCode) => void): void {
+		const query: string =
+			'UPDATE task SET title = ?, description = ?, deadline = ? WHERE id = ? AND userId = ?';
+		DataBase._instance.run(
+			query, task.title, task.description, task.deadline, task.id, task.userId, function (err: Error): void {
+				if (err) {
+					return callback(ResponseCode.INTERNAL_ERROR);
+				}
+				callback(this.changes > 0 ? ResponseCode.OK : ResponseCode.WRONG_ID);
+			}
+		);
+	}
+
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
 			if (err) {

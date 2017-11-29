@@ -111,7 +111,7 @@ app.delete('/users/delete/:token', (req: express.Request, res: express.Response)
 
 	DataBase.deleteUserById(userId, (result: ResponseCode) => {
 		let response: JsonResponse = new JsonResponse(result);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
@@ -124,7 +124,7 @@ app.get('/tasks/:token', (req: express.Request, res: express.Response) => {
 
 	DataBase.getUserTasks(userId, (result: ResponseCode, userTasks: Task[]) => {
 		const response: JsonResponse = new JsonResponse(result, userTasks);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
@@ -137,7 +137,7 @@ app.post('/tasks/create/:token', (req: express.Request, res: express.Response) =
 
 	if (!req.body || !req.body.title || !req.body.description) {
 		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
-		return res.status(response.httpStatus).send(response);
+		return res.status(response.httpStatus).send(response.jsonString());
 	}
 
 	const task: Task = new Task(
@@ -145,7 +145,7 @@ app.post('/tasks/create/:token', (req: express.Request, res: express.Response) =
 
 	DataBase.insertTask(task, (result: ResponseCode) => {
 		const response: JsonResponse = new JsonResponse(result);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
@@ -158,7 +158,28 @@ app.delete('/tasks/delete/:id/:token', (req: express.Request, res: express.Respo
 
 	DataBase.deleteTask(userId, req.params.id, (result: ResponseCode) => {
 		const response: JsonResponse = new JsonResponse(result);
-		res.status(response.httpStatus).send(response);
+		res.status(response.httpStatus).send(response.jsonString());
+	});
+});
+
+app.put('/tasks/edit/:id/:token', (req: express.Request, res: express.Response) => {
+	const userId: number = Token.decodeId(req.params.token);
+	if (userId === undefined) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+		return res.status(response.httpStatus).send(response.jsonString());
+	}
+
+	if (!req.body || !req.body.title || !req.body.description) {
+		const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
+		return res.status(response.httpStatus).send(response.jsonString());
+	}
+
+	const task: Task = new Task(
+		req.params.id, req.body.title, req.body.description, undefined, req.body.deadline, undefined, userId);
+
+	DataBase.editTask(task, (result: ResponseCode) => {
+		const response: JsonResponse = new JsonResponse(result);
+		res.status(response.httpStatus).send(response.jsonString());
 	});
 });
 
