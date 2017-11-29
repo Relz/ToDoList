@@ -17,7 +17,6 @@ export class Button extends React.Component<IButtonProps, IButtonState> {
 	public render(): JSX.Element {
 		const classes: string = classNames({
 			button: true,
-			stretch: true,
 
 			enabled: !this.state.disabled,
 			disabled: this.state.disabled

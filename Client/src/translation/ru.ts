@@ -1,8 +1,8 @@
 /*tslint:disable:typedef*/
 export class Translation {
-	public static readonly pageHeader: string = 'To Do List';
+	public static readonly pageHeader: string = 'ToDoList';
 	public static Alt = class {
-		public static readonly logo: string = 'To Do List';
+		public static readonly logo: string = 'ToDoList';
 		public static readonly loadingSpinner: string = 'Загрузка...';
 	};
 	public static Menu = class {
@@ -33,14 +33,14 @@ export class Translation {
 		public static readonly editButton: string = 'Сохранить';
 	};
 	public static SignInForm = class {
-		public static readonly title: string = 'Авторизация';
-		public static readonly button: string = 'Вход';
+		public static readonly title: string = 'Вход';
+		public static readonly button: string = 'Далее';
 		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly passwordPlaceholder: string = 'Пароль';
 	};
 	public static RegisterForm = class {
 		public static readonly title: string = 'Регистрация';
-		public static readonly button: string = 'Зарегистрироваться';
+		public static readonly button: string = 'Далее';
 		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly namePlaceholder: string = 'Имя';
 		public static readonly passwordPlaceholder: string = 'Пароль';

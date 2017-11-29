@@ -8,6 +8,7 @@ import { Container } from '../Container/Container';
 import { JustifyType } from '../Container/JustifyType';
 import { AlertType } from '../Alert/AlertType';
 import { Alert } from '../Alert/Alert';
+import { AlignItemsType } from '../Container/AlignItemsType';
 
 export abstract class Form<T extends IFormProps<any>, U> extends React.Component <T, U> {
 	private readonly TITLE: string = 'Title';
@@ -16,6 +17,7 @@ export abstract class Form<T extends IFormProps<any>, U> extends React.Component
 	private _title: string;
 	private _buttonTitle: string;
 	private _alert: Alert;
+	private _className: string = '';
 
 	public constructor(props: T) {
 		super(props);
@@ -26,7 +28,7 @@ export abstract class Form<T extends IFormProps<any>, U> extends React.Component
 	public render(): JSX.Element {
 		return (
 			<form
-				className='form'
+				className={'form ' + this._className}
 				onSubmit={(event: any) => {
 					event.preventDefault();
 					this.onSubmit(event);
@@ -35,6 +37,7 @@ export abstract class Form<T extends IFormProps<any>, U> extends React.Component
 				<Container
 					directionType={DirectionType.Column}
 					justifyType={JustifyType.Center}
+					alignItemsType={AlignItemsType.Baseline}
 				>
 					<div className='form_title'>{this._title}</div>
 					<Alert
@@ -60,6 +63,10 @@ export abstract class Form<T extends IFormProps<any>, U> extends React.Component
 
 	protected set buttonTitle(value: string) {
 		this._buttonTitle = value;
+	}
+
+	protected set className(value: string) {
+		this._className = value;
 	}
 
 	protected getButton(): JSX.Element {

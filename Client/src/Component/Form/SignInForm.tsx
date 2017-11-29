@@ -14,6 +14,7 @@ export class SignInForm extends Form<ISignInFormProps, {}> {
 		super(props);
 		this.title = Translation.SignInForm.title;
 		this.buttonTitle = Translation.SignInForm.button;
+		this.className = 'sign_in_form';
 		this._model.login = '';
 		this._model.password = '';
 	}
