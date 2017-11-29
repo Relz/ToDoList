@@ -17,8 +17,10 @@ describe('Token class', () => {
 			expect(() => { decodedId = Token.decodeId(token); }).not.to.throw();
 			expect(decodedId).to.be.equal(id);
 		});
-		it('throws error on invalid token', () => {
-			expect(() => { Token.decodeId(invalidToken); }).to.throw();
+		it('returns undefined on invalid token', () => {
+			let decodedId: number = 0;
+			expect(() => { decodedId = Token.decodeId(invalidToken); }).not.to.throw();
+			expect(decodedId).to.be.undefined;
 		});
 	});
 });

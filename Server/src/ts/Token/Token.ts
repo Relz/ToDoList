@@ -8,6 +8,10 @@ export class Token {
 	}
 
 	static decodeId(token: string): number {
-		return (jsonWebToken.verify(token, Config.secret) as TokenPayload).id;
+		try {
+			return (jsonWebToken.verify(token, Config.secret) as TokenPayload).id;
+		} catch (err) {
+			return undefined;
+		}
 	}
 }
