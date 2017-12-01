@@ -9,7 +9,7 @@ export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
-	public static markTaskAsDone(userId: number, taskId: number, callback: (result: ResponseCode) => void): void {
+	public static setTaskDone(userId: number, taskId: number, callback: (result: ResponseCode) => void): void {
 		const query: string = 'UPDATE task SET isDone = 1 WHERE id = ? AND userId = ?';
 		DataBase._instance.run(query, taskId, userId, function (err: Error): void {
 			if (err) {
