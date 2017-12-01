@@ -58,10 +58,7 @@ export class DataBase {
 			} else if (!rows) {
 				callback(ResponseCode.WRONG_ID, null);
 			} else {
-				callback(ResponseCode.OK, rows.map((value: Task) => {
-					value.isDone = (value.isDone == true);
-					return value;
-				}));
+				callback(ResponseCode.OK, rows);
 			}
 		});
 	}
