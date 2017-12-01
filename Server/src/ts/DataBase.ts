@@ -9,9 +9,9 @@ export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
-	public static setTaskDone(userId: number, taskId: number, callback: (result: ResponseCode) => void): void {
-		const query: string = 'UPDATE task SET isDone = 1 WHERE id = ? AND userId = ?';
-		DataBase._instance.run(query, taskId, userId, function (err: Error): void {
+	public static setTaskDone(userId: number, taskId: number, isDone: boolean, callback: (result: ResponseCode) => void): void {
+		const query: string = 'UPDATE task SET isDone = ? WHERE id = ? AND userId = ?';
+		DataBase._instance.run(query, isDone ? 1 : 0, taskId, userId, function (err: Error): void {
 			if (err) {
 				return callback(ResponseCode.INTERNAL_ERROR);
 			}
