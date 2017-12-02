@@ -64,21 +64,20 @@ export class DataBase {
 	}
 
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
-		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, row: User) => {
+		DataBase._instance.get('SELECT * FROM user WHERE id = ?', id, (err: Error, user: User) => {
 			if (err) {
 				return callback(ResponseCode.INTERNAL_ERROR);
 			}
-			if (!row) {
+
+			if (!user) {
 				return callback(ResponseCode.WRONG_ID);
 			}
 
-			const currentData: User = new User(row.id, row.login, row.password, row.name);
-
-			if (password !== currentData.password) {
+			if (password !== user.password) {
 				return callback(ResponseCode.WRONG_PASSWORD);
 			}
 
-			if (newData.login !== currentData.login) {
+			if (newData.login !== user.login) {
 				DataBase.isLoginInUse(newData.login, (isInUse: boolean) => {
 					if (isInUse) {
 						callback(ResponseCode.WRONG_LOGIN);
@@ -147,6 +146,18 @@ export class DataBase {
 	public static isLoginInUse(login: string, callback: (isInUse: boolean) => void): void {
 		DataBase._instance.get('SELECT 1 FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			callback(row !== undefined);
+		});
+	}
+
+	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {
+		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {
+			if (err) {
+				callback(ResponseCode.INTERNAL_ERROR, null);
+			} else if (!rows) {
+				callback(ResponseCode.WRONG_ID, null);
+			} else {
+				callback(ResponseCode.OK, rows);
+			}
 		});
 	}
 

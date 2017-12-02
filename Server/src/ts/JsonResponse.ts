@@ -5,9 +5,9 @@ export class JsonResponse {
 	private _code: ResponseCode;
 	private _body: object;
 
-	constructor(responseCode?: ResponseCode, response?: object) {
-		this._code = responseCode;
-		this._body = response;
+	constructor(code?: ResponseCode, body?: object) {
+		this._code = code;
+		this._body = body;
 	}
 
 	public get httpStatus(): number {

@@ -38,4 +38,17 @@ export class User {
 	public set name(value: string) {
 		this._name = value;
 	}
+
+	public static createFromUser(user: User): User {
+		return new User(user._id, user._login, user._password, user._name);
+	}
+
+	public json(): object {
+		return {
+			id: this._id,
+			login: this._login,
+			password: this._password,
+			name: this._name
+		};
+	}
 }
