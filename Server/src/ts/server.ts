@@ -204,7 +204,7 @@ class Server {
 			});
 		});
 
-		app.put('/tasks/set_done/:id/:token', (req: express.Request, res: express.Response) => {
+		router.put('/tasks/set_done/:id/:token', (req: express.Request, res: express.Response) => {
 			const userId: number = Token.decodeId(req.params.token);
 			if (userId === undefined) {
 			const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);

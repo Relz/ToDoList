@@ -149,18 +149,6 @@ export class DataBase {
 		});
 	}
 
-	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {
-		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {
-			if (err) {
-				callback(ResponseCode.INTERNAL_ERROR, null);
-			} else if (!rows) {
-				callback(ResponseCode.WRONG_ID, null);
-			} else {
-				callback(ResponseCode.OK, rows);
-			}
-		});
-	}
-
 	private static createTaskTable(): void {
 		DataBase._instance.run(
 			'CREATE TABLE IF NOT EXISTS task (' +
