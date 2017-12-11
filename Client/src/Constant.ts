@@ -11,7 +11,7 @@ export class Constant {
 		public static readonly url: string = 'http://127.0.0.1:1507';
 		public static Action = class {
 			public static Register = class {
-				public static readonly path: string = '/users/registration';
+				public static readonly path: string = '/users/register';
 				public static readonly method: string = 'POST';
 			};
 			public static SignIn = class {
