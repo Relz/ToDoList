@@ -5,6 +5,7 @@ import { Translation } from '../translation/ru';
 import { Button } from '../Component/Button/Button';
 import { ButtonType } from '../Component/Button/ButtonType';
 import { ButtonSize } from '../Component/Button/ButtonSize';
+import { Memory } from '../Memory';
 
 export class Menu extends React.Component {
 	public render(): JSX.Element {
@@ -16,7 +17,7 @@ export class Menu extends React.Component {
 	}
 
 	private static getMenu(): JSX.Element[] {
-		if (Constant.token === undefined) {
+		if (Memory.token === undefined) {
 			return [
 				<li key='sign_in' className='item'>
 					<NavLink to={Constant.Path.signIn}>{Translation.Menu.login}</NavLink>
@@ -27,8 +28,11 @@ export class Menu extends React.Component {
 			];
 		}
 		return [
+			<li key='tasks' className='item'>
+				<NavLink to={Constant.Path.tasks}>{Translation.Menu.tasks}</NavLink>
+			</li>,
 			<li key='account' className='item'>
-				<NavLink to={Constant.Path.account}>Привет, пользователь!</NavLink>
+				<NavLink to={Constant.Path.account}>{Translation.Menu.account}</NavLink>
 			</li>,
 			<li key='sign_out' className='item'>
 				<Button
@@ -43,7 +47,7 @@ export class Menu extends React.Component {
 	}
 
 	private static signOut(): void {
-		localStorage.removeItem(Constant.tokenKey);
+		Memory.cleanup();
 		window.location.reload();
 	}
 }

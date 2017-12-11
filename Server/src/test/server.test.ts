@@ -6,8 +6,8 @@ import { ResponseCode } from '../ts/ResponseCode';
 import { User } from '../ts/User';
 import * as HttpStatusCode from 'http-status-codes';
 import { DataBase } from '../ts/DataBase';
-import chaiHttp = require('chai-http');
 import { Task } from '../ts/Task';
+import chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
 
@@ -25,8 +25,8 @@ const task: Task = new Task(
 	'test description',
 	undefined,
 	Date.now(),
-	undefined,
-	undefined
+	false,
+	false
 );
 const editedTask: Task = new Task(
 	undefined,
@@ -34,22 +34,22 @@ const editedTask: Task = new Task(
 	'edited test description',
 	undefined,
 	task.deadline + 1000,
-	undefined,
-	undefined
+	true,
+	true
 );
 
-before(function () {
+before(() => {
 	DataBase.insertUser(anotherUser.login, anotherUser.password, () => {
 		DataBase.getUserId(anotherUser.login, anotherUser.password, (code: number, id: number) => {
 			anotherUser.id = id;
-		})
-	})
+		});
+	});
 });
 
-after(function () {
+after(() => {
 	DataBase.deleteUserById(user.id, () => undefined);
 	DataBase.deleteUserById(anotherUser.id, () => undefined);
-	DataBase.deleteTask(user.id, task.id, () => undefined)
+	DataBase.deleteTask(user.id, task.id, () => undefined);
 });
 
 const checkBadRequest: (err: any, code: ResponseCode) => void = (err: any, code: ResponseCode) => {
@@ -61,13 +61,13 @@ const checkBadRequest: (err: any, code: ResponseCode) => void = (err: any, code:
 
 const createEditUserDto: (login: string, password: string, newPassword: string, name: string) => any
 	= (login: string, password: string, newPassword: string, name: string) => {
-		return {
-			login: login,
-			password: password,
-			newPassword: newPassword,
-			name: name
-		};
+	return {
+		login: login,
+		password: password,
+		newPassword: newPassword,
+		name: name
 	};
+};
 
 describe('POST /users/register', () => {
 	const testingRoute: string = '/users/register';
@@ -85,7 +85,7 @@ describe('POST /users/register', () => {
 				userToken = token;
 				DataBase.getUserId(user.login, user.password, (code: number, id: number) => {
 					user.id = id;
-				})
+				});
 			});
 	});
 
@@ -338,14 +338,14 @@ describe('POST /tasks/create/:token', () => {
 	});
 });
 
-describe('GET /tasks/:token', () => {
+describe('GET /tasks/not_done/:token', () => {
 	it('returns status code BAD_REQUEST, response code BAD_TOKEN if token is invalid', () => {
-		return request(server).get(`/tasks/${invalidToken}`)
+		return request(server).get(`/tasks/not_done/${invalidToken}`)
 			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 	});
 
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).get(`/tasks/${userToken}`)
+		return request(server).get(`/tasks/not_done/${userToken}`)
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
 				expect(res.body).not.to.be.undefined;
@@ -359,7 +359,8 @@ describe('GET /tasks/:token', () => {
 				expect(taskInfo.description).to.be.equals(task.description);
 				expect(taskInfo.creationDate).not.to.be.undefined;
 				expect(taskInfo.deadline).to.be.equals(task.deadline);
-				expect(taskInfo.isDone).not.to.be.false;
+				expect(!!taskInfo.isDone).to.be.equals(task.isDone);
+				expect(!!taskInfo.isImportant).to.be.equals(task.isImportant);
 				expect(taskInfo.userId).to.be.equals(user.id);
 				task.id = taskInfo.id;
 			});
@@ -415,6 +416,35 @@ describe('PUT /tasks/edit/:id/:token', () => {
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
 		});
+	});
+});
+
+describe('GET /tasks/done/:token', () => {
+	it('returns status code BAD_REQUEST, response code BAD_TOKEN if token is invalid', () => {
+		return request(server).get(`/tasks/done/${invalidToken}`)
+			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
+	});
+
+	it('returns status code OK, response code OK if token is valid', () => {
+		return request(server).get(`/tasks/done/${userToken}`)
+			.then((res: ChaiHttp.Response) => {
+				expect(res.status).to.be.equals(HttpStatusCode.OK);
+				expect(res.body).not.to.be.undefined;
+				expect(res.body.code).to.be.equals(ResponseCode.OK);
+				const tasksInfo: Task[] = res.body.body;
+				expect(tasksInfo.length).to.be.equals(1);
+				const taskInfo = tasksInfo[0];
+				expect(taskInfo).not.to.be.undefined;
+				expect(taskInfo.id).not.to.be.undefined;
+				expect(taskInfo.title).to.be.equals(editedTask.title);
+				expect(taskInfo.description).to.be.equals(editedTask.description);
+				expect(taskInfo.creationDate).not.to.be.undefined;
+				expect(taskInfo.deadline).to.be.equals(editedTask.deadline);
+				expect(!!taskInfo.isDone).to.be.equals(editedTask.isDone);
+				expect(!!taskInfo.isImportant).to.be.equals(editedTask.isImportant);
+				expect(taskInfo.userId).to.be.equals(user.id);
+				editedTask.id = taskInfo.id;
+			});
 	});
 });
 

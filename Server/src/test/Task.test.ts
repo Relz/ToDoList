@@ -11,16 +11,28 @@ describe('Task class', () => {
 			expect(task.creationDate).to.be.undefined;
 			expect(task.deadline).to.be.undefined;
 			expect(task.isDone).to.be.undefined;
+			expect(task.isImportant).to.be.undefined;
 			expect(task.userId).to.be.undefined;
 		});
 		it('with parameters, sets all properties', () => {
-			const task: Task = new Task(0, 'Title', 'Description', 0, 1, false, 0);
+			const task: Task =
+				new Task(
+					0,
+					'Title',
+					'Description',
+					0,
+					1,
+					false,
+					false,
+					0
+				);
 			expect(task.id).to.eq(0);
 			expect(task.title).to.eq('Title');
 			expect(task.description).to.eq('Description');
 			expect(task.creationDate).to.eq(0);
 			expect(task.deadline).to.eq(1);
 			expect(task.isDone).to.eq(false);
+			expect(task.isImportant).to.eq(false);
 			expect(task.userId).to.eq(0);
 		});
 	});
@@ -84,6 +96,16 @@ describe('Task class', () => {
 		it('with simple setter', () => {
 			task.isDone = true;
 			expect(task.isDone).to.be.equal(true);
+		});
+	});
+
+	describe('has isImportant property', () => {
+		it('undefined by default', () => {
+			expect(task.isImportant).to.be.undefined;
+		});
+		it('with simple setter', () => {
+			task.isImportant = true;
+			expect(task.isImportant).to.be.equal(true);
 		});
 	});
 

@@ -7,12 +7,13 @@ import { JsonResponse } from './JsonResponse/JsonResponse';
 import { ResponseCode } from './JsonResponse/ResponseCode';
 import { Translation } from '../translation/ru';
 import { AlertType } from '../Component/Alert/AlertType';
+import { Memory } from '../Memory';
 
 export class SignIn extends React.Component {
 	private _signInForm: SignInForm;
 
 	public render(): JSX.Element {
-		if (Constant.token !== undefined) {
+		if (Memory.token !== undefined) {
 			return <Redirect to={'/'}/>;
 		}
 		return (
@@ -31,20 +32,20 @@ export class SignIn extends React.Component {
 				headers: Constant.Server.headers,
 				body: JSON.stringify(model)
 			}
-		).then((response: any) => {
-			return response.json();
-		}).then((response: JsonResponse) => {
+		).then((response: any) => response.json()
+		).then((response: JsonResponse) => {
 			if (response === undefined) {
-				this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
+				this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.internalServerError);
 				return;
 			}
 			switch (response.code) {
 				case (ResponseCode.OK):
-					localStorage.setItem(Constant.tokenKey, response.body.token);
+					Memory.token = response.body.token;
+					Memory.userName = response.body.name;
 					window.location.reload();
 					break;
 				case (ResponseCode.BAD_BODY):
-					this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.internalServerError);
+					this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badBody);
 					break;
 				case (ResponseCode.WRONG_LOGIN):
 					this._signInForm.showAlert(AlertType.Danger, Translation.Page.SignIn.FormMessage.invalidLogin);
@@ -54,7 +55,7 @@ export class SignIn extends React.Component {
 					break;
 			}
 		}, () => {
-			this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.badConnection);
+			this._signInForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badConnection);
 		});
 	}
 }

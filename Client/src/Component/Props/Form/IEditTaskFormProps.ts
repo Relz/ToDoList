@@ -1,6 +1,6 @@
 import { IFormProps } from './IFormProps';
-import { TaskDto } from '../../../Dto/TaskDto';
+import { EditTaskDto } from '../../../Dto/EditTaskDto';
 
-export interface IEditTaskFormProps extends IFormProps<TaskDto> {
-	task?: TaskDto;
+export interface IEditTaskFormProps extends IFormProps<EditTaskDto> {
+	task?: EditTaskDto;
 }

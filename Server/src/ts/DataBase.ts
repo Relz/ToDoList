@@ -30,9 +30,19 @@ export class DataBase {
 
 	public static insertTask(task: Task, callback: (result: ResponseCode) => void): void {
 		const query: string =
-			'INSERT INTO task (title, description, creationDate, deadline, isDone, userId) VALUES (?, ?, ?, ?, ?, ?)';
+			'INSERT INTO task ' +
+				'(title, description, creationDate, deadline, isDone, isImportant, userId)' +
+				'VALUES (?, ?, ?, ?, ?, ?, ?)';
 		DataBase._instance.run(
-			query, task.title, task.description, task.creationDate, task.deadline, 0, task.userId, (err: Error) => {
+			query,
+			task.title === undefined ? '' : task.title,
+			task.description === undefined ? '' : task.description,
+			task.creationDate === undefined ? Date.now() : task.creationDate,
+			task.deadline === undefined ? null : task.deadline,
+			task.isDone === undefined ? false : task.isDone,
+			task.isImportant === undefined ? false : task.isImportant,
+			task.userId === undefined ? null : task.userId,
+			(err: Error) => {
 				callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 			}
 		);
@@ -40,27 +50,23 @@ export class DataBase {
 
 	public static editTask(task: Task, callback: (result: ResponseCode) => void): void {
 		const query: string =
-			'UPDATE task SET title = ?, description = ?, deadline = ? WHERE id = ? AND userId = ?';
+			'UPDATE task SET title = ?, description = ?, deadline = ?, isDone = ?, isImportant = ? WHERE id = ? AND userId = ?';
 		DataBase._instance.run(
-			query, task.title, task.description, task.deadline, task.id, task.userId, function (err: Error): void {
+			query,
+			task.title,
+			task.description,
+			task.deadline,
+			task.isDone,
+			task.isImportant,
+			task.id,
+			task.userId,
+			function (err: Error): void {
 				if (err) {
 					return callback(ResponseCode.INTERNAL_ERROR);
 				}
 				callback(this.changes > 0 ? ResponseCode.OK : ResponseCode.WRONG_ID);
 			}
 		);
-	}
-
-	public static getUserTasks(id: number, callback: (result: ResponseCode, userTasks: Task[]) => void): void {
-		DataBase._instance.all('SELECT * FROM task WHERE userId = ?', id, (err: Error, rows: Task[]) => {
-			if (err) {
-				callback(ResponseCode.INTERNAL_ERROR, null);
-			} else if (!rows) {
-				callback(ResponseCode.WRONG_ID, null);
-			} else {
-				callback(ResponseCode.OK, rows);
-			}
-		});
 	}
 
 	public static editUser(id: number, password: string, newData: User, callback: (result: ResponseCode) => void): void {
@@ -149,6 +155,23 @@ export class DataBase {
 		});
 	}
 
+	public static getUserTasks(
+		id: number, isDone: boolean, callback: (result: ResponseCode, userTasks: Task[]) => void
+	): void {
+		DataBase._instance.all(
+			'SELECT * FROM task WHERE userId = ? AND isDone = ?', id, isDone,
+			(err: Error, rows: Task[]) => {
+				if (err) {
+					callback(ResponseCode.INTERNAL_ERROR, undefined);
+				} else if (!rows) {
+					callback(ResponseCode.WRONG_ID, undefined);
+				} else {
+					callback(ResponseCode.OK, rows);
+				}
+			}
+		);
+	}
+
 	private static createTaskTable(): void {
 		DataBase._instance.run(
 			'CREATE TABLE IF NOT EXISTS task (' +
@@ -158,6 +181,7 @@ export class DataBase {
 			'creationDate INTEGER,' +
 			'deadline     INTEGER,' +
 			'isDone       INTEGER(1),' +
+			'isImportant  INTEGER(1),' +
 			'userId       INTEGER' +
 			');', () => {}
 		);

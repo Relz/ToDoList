@@ -3,16 +3,16 @@ import { SignInForm } from '../../Component/Form/SignInForm';
 import { RegisterForm } from '../../Component/Form/RegisterForm';
 import { SignInDto } from '../../Dto/SignInDto';
 import { RegisterDto } from '../../Dto/RegisterDto';
-import { TaskDto } from '../../Dto/TaskDto';
 import { EditTaskForm } from '../../Component/Form/EditTaskForm';
 import { Container } from '../../Component/Container/Container';
 import { JustifyType } from '../../Component/Container/JustifyType';
 import { AlignItemsType } from '../../Component/Container/AlignItemsType';
 import { DirectionType } from '../../Component/Container/DirectionType';
 import { Translation } from '../../translation/ru';
+import { EditTaskDto } from '../../Dto/EditTaskDto';
 
 export class FormDemo extends React.Component<{}, {}> {
-	private _task: TaskDto = new TaskDto();
+	private _task: EditTaskDto = new EditTaskDto();
 
 	constructor(props: any) {
 		super(props);
@@ -33,8 +33,8 @@ export class FormDemo extends React.Component<{}, {}> {
 					<RegisterForm onSubmit={FormDemo.onRegister}/>
 					<EditTaskForm
 						onSubmit={FormDemo.onEditTask}
-						title={Translation.EditTaskForm.createTitle}
-						buttonTitle={Translation.EditTaskForm.createButton}
+						title={Translation.CreateTaskForm.createTitle}
+						buttonTitle={Translation.CreateTaskForm.createButton}
 					/>
 					<EditTaskForm
 						onSubmit={FormDemo.onEditTask}
@@ -65,13 +65,13 @@ export class FormDemo extends React.Component<{}, {}> {
 		);
 	}
 
-	private static onEditTask(model: TaskDto): void {
+	private static onEditTask(model: EditTaskDto): void {
 		alert(
 			`TASK DATA:\n` +
 			`title: "${model.title}"\n` +
 			`description: "'${model.description}"\n` +
 			`isDeadlineExist: "${model.isDeadlineExist}"\n` +
-			`deadline: "${model.deadLine}"`
+			`deadline: "${model.deadline}"`
 		);
 	}
 	/* tslint:enable:prefer-template */

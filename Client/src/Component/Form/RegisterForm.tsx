@@ -13,6 +13,9 @@ export class RegisterForm extends Form<IRegisterProps, {}> {
 		super(props);
 		this.title = Translation.RegisterForm.title;
 		this.buttonTitle = Translation.RegisterForm.button;
+		this._model.login = '';
+		this._model.name = '';
+		this._model.password = '';
 	}
 
 	protected getInner(): JSX.Element[] {

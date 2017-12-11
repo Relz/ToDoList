@@ -5,6 +5,8 @@ export class Constant {
 		public static readonly register: string = '/register';
 		public static readonly account: string = '/account';
 		public static readonly tasks: string = '/tasks';
+		public static readonly editTask: string = '/edit_task';
+		public static readonly demo: string = '/demo';
 	};
 	public static Server = class {
 		public static readonly headers: Headers = new Headers({ 'Content-Type': 'application/json' });
@@ -26,12 +28,25 @@ export class Constant {
 				public static readonly path: string = '/users/edit/';
 				public static readonly method: string = 'PUT';
 			};
+			public static GetDoneTasks = class {
+				public static readonly path: string = '/tasks/done/';
+				public static readonly method: string = 'GET';
+			};
+			public static GetNotDoneTasks = class {
+				public static readonly path: string = '/tasks/not_done/';
+				public static readonly method: string = 'GET';
+			};
+			public static createTask = class {
+				public static readonly path: string = '/tasks/create/';
+				public static readonly method: string = 'POST';
+			};
+			public static deleteTask = class {
+				public static readonly path: string = '/tasks/delete/';
+				public static readonly method: string = 'DELETE';
+			};
 		};
 	};
-	public static readonly tokenKey: string = 'token';
-	public static get token(): string | undefined {
-		const token: string | null = localStorage.getItem(Constant.tokenKey);
-
-		return token === null ? undefined : token;
-	}
+	public static Client = class {
+		public static readonly defaultUserName = 'Username';
+	};
 }
