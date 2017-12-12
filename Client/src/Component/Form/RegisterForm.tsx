@@ -14,6 +14,7 @@ export class RegisterForm extends Form<IRegisterProps, {}> {
 		this.title = Translation.RegisterForm.title;
 		this.buttonTitle = Translation.RegisterForm.button;
 		this.className = 'register_form';
+
 		this._model.login = '';
 		this._model.name = '';
 		this._model.password = '';
@@ -43,9 +44,7 @@ export class RegisterForm extends Form<IRegisterProps, {}> {
 				key='repeat_password'
 				type={InputType.Password}
 				placeholder={Translation.RegisterForm.passwordRepeatPlaceholder}
-				onChange={(value: string) => {
-					// Check for equality
-				}}
+				onChange={(value: string) => this._model.repeatPassword = value}
 			/>
 		]);
 	}

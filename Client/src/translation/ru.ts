@@ -33,14 +33,14 @@ export class Translation {
 		public static readonly editButton: string = 'Сохранить';
 	};
 	public static SignInForm = class {
-		public static readonly title: string = 'Вход';
-		public static readonly button: string = 'Далее';
+		public static readonly title: string = 'Авторизация';
+		public static readonly button: string = 'Войти';
 		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly passwordPlaceholder: string = 'Пароль';
 	};
 	public static RegisterForm = class {
 		public static readonly title: string = 'Регистрация';
-		public static readonly button: string = 'Далее';
+		public static readonly button: string = 'Создать аккаунт';
 		public static readonly emailPlaceholder: string = 'Логин';
 		public static readonly namePlaceholder: string = 'Имя';
 		public static readonly passwordPlaceholder: string = 'Пароль';
@@ -55,16 +55,13 @@ export class Translation {
 		public static readonly newPasswordPlaceholder: string = 'Новый пароль';
 	};
 	public static Task = class {
-		public static readonly setDoneButtonText: string = 'Сделана';
-		public static readonly setNotDoneButtonText: string = 'Не сделана';
-		public static readonly setImportantButtonText: string = 'Важная';
-		public static readonly setNotImportantButtonText: string = 'Не важная';
 		public static readonly editButtonText: string = 'Редактировать';
 		public static readonly deleteButtonText: string = 'Удалить';
 	};
 	public static Page = class {
 		public static Register = class {
 			public static FormMessage = class {
+				public static readonly passwordsNotMatch: string = 'Пароли не совпадают';
 				public static readonly userAlreadyExists: string = 'Данный логин уже зарегистрирован в системе';
 				public static readonly success: string = 'Вы успешно зарегистрированы в системе!';
 			};
