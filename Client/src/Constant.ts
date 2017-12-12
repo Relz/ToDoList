@@ -36,11 +36,15 @@ export class Constant {
 				public static readonly path: string = '/tasks/not_done/';
 				public static readonly method: string = 'GET';
 			};
-			public static createTask = class {
+			public static CreateTask = class {
 				public static readonly path: string = '/tasks/create/';
 				public static readonly method: string = 'POST';
 			};
-			public static deleteTask = class {
+			public static EditTask = class {
+				public static readonly path: string = '/tasks/edit/';
+				public static readonly method: string = 'PUT';
+			};
+			public static DeleteTask = class {
 				public static readonly path: string = '/tasks/delete/';
 				public static readonly method: string = 'DELETE';
 			};

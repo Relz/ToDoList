@@ -176,9 +176,9 @@ export class Tasks extends React.Component {
 			isImportant: task.isImportant
 		};
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.createTask.path}${Memory.token}`,
+			`${Constant.Server.url}${Constant.Server.Action.CreateTask.path}${Memory.token}`,
 			{
-				method: Constant.Server.Action.createTask.method,
+				method: Constant.Server.Action.CreateTask.method,
 				headers: Constant.Server.headers,
 				body: JSON.stringify(data)
 			}

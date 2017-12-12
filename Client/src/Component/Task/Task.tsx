@@ -111,9 +111,9 @@ export class Task extends React.Component<ITaskProp, ITaskState> {
 	private onDeleteButtonClick(): void {
 		this._deleteButton.disabled = true;
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.deleteTask.path}${this.props.id}/${Memory.token}`,
+			`${Constant.Server.url}${Constant.Server.Action.DeleteTask.path}${this.props.id}/${Memory.token}`,
 			{
-				method: Constant.Server.Action.deleteTask.method,
+				method: Constant.Server.Action.DeleteTask.method,
 				headers: Constant.Server.headers
 			}
 		).then((response: any) => response.json()
