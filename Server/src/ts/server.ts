@@ -175,7 +175,7 @@ class Server {
 				!!req.body.isDone,
 				!!req.body.isImportant,
 				userId
-            );
+			);
 
 			DataBase.insertTask(task, (result: ResponseCode) => {
 				const response: JsonResponse = new JsonResponse(result);

@@ -352,7 +352,7 @@ describe('GET /tasks/not_done/:token', () => {
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo = tasksInfo[0];
+				const taskInfo: Task = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(task.title);
@@ -433,7 +433,7 @@ describe('GET /tasks/done/:token', () => {
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo = tasksInfo[0];
+				const taskInfo: Task = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(editedTask.title);

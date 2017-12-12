@@ -3,12 +3,14 @@ export class User {
 	private _login: string;
 	private _password: string;
 	private _name: string;
+	private _salt: string;
 
-	constructor(id?: number, login?: string, password?: string, name?: string) {
+	constructor(id?: number, login?: string, password?: string, name?: string, salt?: string) {
 		this._id = id;
 		this._login = login;
 		this._password = password;
 		this._name = name;
+		this._salt = salt;
 	}
 
 	public get id(): number {
@@ -39,8 +41,12 @@ export class User {
 		this._name = value;
 	}
 
-	public static createFromUser(user: User): User {
-		return new User(user._id, user._login, user._password, user._name);
+	public get salt(): string {
+		return this._salt;
+	}
+
+	public set salt(value: string) {
+		this._salt = value;
 	}
 
 	public json(): object {
@@ -48,7 +54,12 @@ export class User {
 			id: this._id,
 			login: this._login,
 			password: this._password,
-			name: this._name
+			name: this._name,
+			salt: this._salt
 		};
+	}
+
+	public static createFromUser(user: User): User {
+		return new User(user._id, user._login, user._password, user._name, user._salt);
 	}
 }
