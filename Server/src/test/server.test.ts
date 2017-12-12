@@ -1,4 +1,5 @@
 import * as chai from 'chai';
+import * as express from 'express';
 import { expect, request } from 'chai';
 import { UserInfo } from '../ts/UserInfo';
 import server from '../ts/server';
@@ -10,6 +11,8 @@ import { Task } from '../ts/Task';
 import chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
+
+const serverExpress: express.Application = server.express;
 
 const user: User = new User(0, 'test user for register', 'password', 'name');
 const editedUser: User = new User(0, 'test user for editing', 'edited password', 'edited name');
@@ -47,6 +50,7 @@ before(() => {
 });
 
 after(() => {
+	server.close();
 	DataBase.deleteUserById(user.id, () => undefined);
 	DataBase.deleteUserById(anotherUser.id, () => undefined);
 	DataBase.deleteTask(user.id, task.id, () => undefined);
@@ -73,7 +77,7 @@ describe('POST /users/register', () => {
 	const testingRoute: string = '/users/register';
 
 	it('returns status code OK, response code OK and token if user data is defined and login is not is use yet', () => {
-		return request(server).post(testingRoute)
+		return request(serverExpress).post(testingRoute)
 			.send(User.createFromUser(user).json())
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
@@ -91,14 +95,14 @@ describe('POST /users/register', () => {
 
 	describe('returns status code BAD_REQUEST', () => {
 		it('response code WRONG_LOGIN if login is already in use', () => {
-			return request(server).post(testingRoute)
+			return request(serverExpress).post(testingRoute)
 				.send(User.createFromUser(user).json())
 				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_LOGIN));
 		});
 
 		describe('response code BAD_BODY', () => {
 			it('if body is not defined', () => {
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(undefined)
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -107,7 +111,7 @@ describe('POST /users/register', () => {
 				const userData: User = User.createFromUser(user);
 				userData.login = undefined;
 
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -116,7 +120,7 @@ describe('POST /users/register', () => {
 				const userData: User = User.createFromUser(user);
 				userData.password = undefined;
 
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -125,7 +129,7 @@ describe('POST /users/register', () => {
 				const userData: User = User.createFromUser(user);
 				userData.name = undefined;
 
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -135,12 +139,12 @@ describe('POST /users/register', () => {
 
 describe('GET /users/:token', () => {
 	it('returns status code BAD_REQUEST and response code BAD_TOKEN if token is invalid', () => {
-		return request(server).get(`/users/${invalidToken}`)
+		return request(serverExpress).get(`/users/${invalidToken}`)
 			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 	});
 
 	it('returns status code OK, response code OK and user info if token is valid', () => {
-		return request(server).get(`/users/${userToken}`)
+		return request(serverExpress).get(`/users/${userToken}`)
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
 				expect(res).to.be.json;
@@ -158,7 +162,7 @@ describe('POST /users/authenticate', () => {
 	const testingRoute: string = '/users/authenticate';
 
 	it('returns status code OK, response code OK and token if user data is defined, login is exists and password is right', () => {
-		return request(server).post(testingRoute)
+		return request(serverExpress).post(testingRoute)
 			.send(User.createFromUser(user).json())
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
@@ -171,20 +175,20 @@ describe('POST /users/authenticate', () => {
 
 	describe('returns status code BAD_REQUEST', () => {
 		it('response code WRONG_LOGIN if login does not exists', () => {
-			return request(server).post(testingRoute)
+			return request(serverExpress).post(testingRoute)
 				.send(User.createFromUser(notExistingUser).json())
 				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_LOGIN));
 		});
 
 		it('response code WRONG_PASSWORD if password is wrong', () => {
-			return request(server).post(testingRoute)
+			return request(serverExpress).post(testingRoute)
 				.send(User.createFromUser(notExistingUser).json())
 				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_LOGIN));
 		});
 
 		describe('response code BAD_BODY', () => {
 			it('if body is not defined', () => {
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(undefined)
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -193,7 +197,7 @@ describe('POST /users/authenticate', () => {
 				const userData: User = User.createFromUser(user);
 				userData.login = undefined;
 
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -202,7 +206,7 @@ describe('POST /users/authenticate', () => {
 				const userData: User = User.createFromUser(user);
 				userData.password = undefined;
 
-				return request(server).post(testingRoute)
+				return request(serverExpress).post(testingRoute)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -212,7 +216,7 @@ describe('POST /users/authenticate', () => {
 
 describe('PUT /users/edit/:token', () => {
 	it('returns status code OK, response code OK if data is defined, login is not in use and password is right', () => {
-		return request(server).put(`/users/edit/${userToken}`)
+		return request(serverExpress).put(`/users/edit/${userToken}`)
 			.send(createEditUserDto(editedUser.login, user.password, editedUser.password, editedUser.name))
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
@@ -224,25 +228,25 @@ describe('PUT /users/edit/:token', () => {
 
 	describe('returns status code BAD_REQUEST', () => {
 		it('response code BAD_TOKEN if token is invalid', () => {
-			return request(server).put(`/users/edit/${invalidToken}`)
+			return request(serverExpress).put(`/users/edit/${invalidToken}`)
 				.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 		});
 
 		it('response code WRONG_LOGIN if login is already in use', () => {
-			return request(server).put(`/users/edit/${userToken}`)
+			return request(serverExpress).put(`/users/edit/${userToken}`)
 				.send(createEditUserDto(anotherUser.login, editedUser.password, editedUser.password, editedUser.name))
 				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_LOGIN));
 		});
 
 		it('response code WRONG_PASSWORD if password is wrong', () => {
-			return request(server).put(`/users/edit/${userToken}`)
+			return request(serverExpress).put(`/users/edit/${userToken}`)
 				.send(createEditUserDto(user.login, `${user.password}q`, 'edited password', 'edited name'))
 				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_PASSWORD));
 		});
 
 		describe('response code BAD_BODY', () => {
 			it('if body is not defined', () => {
-				return request(server).put(`/users/edit/${userToken}`)
+				return request(serverExpress).put(`/users/edit/${userToken}`)
 					.send(undefined)
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -251,7 +255,7 @@ describe('PUT /users/edit/:token', () => {
 				const userData: User = User.createFromUser(user);
 				userData.login = undefined;
 
-				return request(server).put(`/users/edit/${userToken}`)
+				return request(serverExpress).put(`/users/edit/${userToken}`)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -260,7 +264,7 @@ describe('PUT /users/edit/:token', () => {
 				const userData: User = User.createFromUser(user);
 				userData.password = undefined;
 
-				return request(server).put(`/users/edit/${userToken}`)
+				return request(serverExpress).put(`/users/edit/${userToken}`)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -269,7 +273,7 @@ describe('PUT /users/edit/:token', () => {
 				const userData: User = User.createFromUser(user);
 				userData.name = undefined;
 
-				return request(server).put(`/users/edit/${userToken}`)
+				return request(serverExpress).put(`/users/edit/${userToken}`)
 					.send(userData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -279,12 +283,12 @@ describe('PUT /users/edit/:token', () => {
 
 describe('DELETE /users/delete/:token', () => {
 	it('returns status code BAD_REQUEST and response code BAD_TOKEN if token is invalid', () => {
-		return request(server).del(`/users/delete/${invalidToken}`)
+		return request(serverExpress).del(`/users/delete/${invalidToken}`)
 			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 	});
 
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).del(`/users/delete/${userToken}`)
+		return request(serverExpress).del(`/users/delete/${userToken}`)
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
 				expect(res.body).not.to.be.undefined;
@@ -295,7 +299,7 @@ describe('DELETE /users/delete/:token', () => {
 
 describe('POST /tasks/create/:token', () => {
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).post(`/tasks/create/${userToken}`)
+		return request(serverExpress).post(`/tasks/create/${userToken}`)
 			.send(Task.createFromTask(task).json())
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
@@ -306,13 +310,13 @@ describe('POST /tasks/create/:token', () => {
 
 	describe('returns status code BAD_REQUEST', () => {
 		it('response code BAD_TOKEN if token is invalid', () => {
-			return request(server).post(`/tasks/create/${invalidToken}`)
+			return request(serverExpress).post(`/tasks/create/${invalidToken}`)
 				.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 		});
 
 		describe('response code BAD_BODY', () => {
 			it('if body is not defined', () => {
-				return request(server).post(`/tasks/create/${userToken}`)
+				return request(serverExpress).post(`/tasks/create/${userToken}`)
 					.send(undefined)
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -321,7 +325,7 @@ describe('POST /tasks/create/:token', () => {
 				const taskData: Task = Task.createFromTask(task);
 				taskData.title = undefined;
 
-				return request(server).post(`/tasks/create/${userToken}`)
+				return request(serverExpress).post(`/tasks/create/${userToken}`)
 					.send(taskData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -330,7 +334,7 @@ describe('POST /tasks/create/:token', () => {
 				const taskData: Task = Task.createFromTask(task);
 				taskData.description = undefined;
 
-				return request(server).post(`/tasks/create/${userToken}`)
+				return request(serverExpress).post(`/tasks/create/${userToken}`)
 					.send(taskData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -340,19 +344,19 @@ describe('POST /tasks/create/:token', () => {
 
 describe('GET /tasks/not_done/:token', () => {
 	it('returns status code BAD_REQUEST, response code BAD_TOKEN if token is invalid', () => {
-		return request(server).get(`/tasks/not_done/${invalidToken}`)
+		return request(serverExpress).get(`/tasks/not_done/${invalidToken}`)
 			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 	});
 
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).get(`/tasks/not_done/${userToken}`)
+		return request(serverExpress).get(`/tasks/not_done/${userToken}`)
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
 				expect(res.body).not.to.be.undefined;
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo: Task = tasksInfo[0];
+				const taskInfo = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(task.title);
@@ -369,7 +373,7 @@ describe('GET /tasks/not_done/:token', () => {
 
 describe('PUT /tasks/edit/:id/:token', () => {
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).put(`/tasks/edit/${task.id}/${userToken}`)
+		return request(serverExpress).put(`/tasks/edit/${task.id}/${userToken}`)
 			.send(Task.createFromTask(editedTask).json())
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
@@ -381,19 +385,19 @@ describe('PUT /tasks/edit/:id/:token', () => {
 
 	describe('returns status code BAD_REQUEST', () => {
 		it('response code BAD_TOKEN if token is invalid', () => {
-			return request(server).put(`/tasks/edit/${task.id}/${invalidToken}`)
+			return request(serverExpress).put(`/tasks/edit/${task.id}/${invalidToken}`)
 				.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 		});
 
 		it('response code WRONG_ID if task id is wrong', () => {
-			return request(server).put(`/tasks/edit/${task.id + 1}/${userToken}`)
+			return request(serverExpress).put(`/tasks/edit/${task.id + 1}/${userToken}`)
 				.send(Task.createFromTask(editedTask).json())
 				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_ID));
 		});
 
 		describe('response code BAD_BODY', () => {
 			it('if body is not defined', () => {
-				return request(server).put(`/tasks/edit/${task.id}/${userToken}`)
+				return request(serverExpress).put(`/tasks/edit/${task.id}/${userToken}`)
 					.send(undefined)
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -402,7 +406,7 @@ describe('PUT /tasks/edit/:id/:token', () => {
 				const taskData: Task = Task.createFromTask(task);
 				taskData.title = undefined;
 
-				return request(server).put(`/tasks/edit/${task.id}/${userToken}`)
+				return request(serverExpress).put(`/tasks/edit/${task.id}/${userToken}`)
 					.send(taskData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -411,7 +415,7 @@ describe('PUT /tasks/edit/:id/:token', () => {
 				const taskData: Task = Task.createFromTask(task);
 				taskData.description = undefined;
 
-				return request(server).put(`/tasks/edit/${task.id}/${userToken}`)
+				return request(serverExpress).put(`/tasks/edit/${task.id}/${userToken}`)
 					.send(taskData.json())
 					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
 			});
@@ -421,19 +425,19 @@ describe('PUT /tasks/edit/:id/:token', () => {
 
 describe('GET /tasks/done/:token', () => {
 	it('returns status code BAD_REQUEST, response code BAD_TOKEN if token is invalid', () => {
-		return request(server).get(`/tasks/done/${invalidToken}`)
+		return request(serverExpress).get(`/tasks/done/${invalidToken}`)
 			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 	});
 
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).get(`/tasks/done/${userToken}`)
+		return request(serverExpress).get(`/tasks/done/${userToken}`)
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
 				expect(res.body).not.to.be.undefined;
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo: Task = tasksInfo[0];
+				const taskInfo = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(editedTask.title);
@@ -450,12 +454,12 @@ describe('GET /tasks/done/:token', () => {
 
 describe('DELETE /tasks/delete/:id/:token', () => {
 	it('returns status code BAD_REQUEST and response code BAD_TOKEN if token is invalid', () => {
-		return request(server).del(`/tasks/delete/${editedTask.id}/${invalidToken}`)
+		return request(serverExpress).del(`/tasks/delete/${editedTask.id}/${invalidToken}`)
 			.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
 	});
 
 	it('returns status code OK, response code OK if token is valid', () => {
-		return request(server).del(`/tasks/delete/${task.id}/${userToken}`)
+		return request(serverExpress).del(`/tasks/delete/${task.id}/${userToken}`)
 			.then((res: ChaiHttp.Response) => {
 				expect(res.status).to.be.equals(HttpStatusCode.OK);
 				expect(res.body).not.to.be.undefined;

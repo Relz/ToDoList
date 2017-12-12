@@ -41,9 +41,9 @@ module.exports = function(grunt) {
 			cspell: cspellPath + ' ' + 'src/**/*',
 			test: {
 				command: function() {
-					var file = process.env.npm_config_file;
-					var filePattern;
-					if (file !== undefined) {
+                    const file = process.env.npm_config_file;
+                    let filePattern;
+                    if (file !== undefined) {
 						filePattern = 'build/test/' + file + '.test.js';
 						if (!grunt.file.exists(filePattern)) {
 							grunt.fail.fatal('File "' + filePattern + '" doesn\'t exists');
@@ -57,9 +57,9 @@ module.exports = function(grunt) {
 			},
 			test_coverage: {
 				command: function() {
-					var file = process.env.npm_config_file;
-					var filePattern;
-					if (file !== undefined) {
+                    const file = process.env.npm_config_file;
+                    let filePattern;
+                    if (file !== undefined) {
 						filePattern = 'build/test/' + file + '.test.js';
 						if (!grunt.file.exists(filePattern)) {
 							grunt.fail.fatal('File "' + filePattern + '" doesn\'t exists');
@@ -68,14 +68,14 @@ module.exports = function(grunt) {
 						filePattern = 'build/test/*.test.js';
 					}
 
-					var viewCoverageInWebBrowser = '';
-					var webBrowser = process.env.npm_config_web_browser;
-					if (webBrowser !== undefined) {
+                    let viewCoverageInWebBrowser = '';
+                    const webBrowser = process.env.npm_config_web_browser;
+                    if (webBrowser !== undefined) {
 						viewCoverageInWebBrowser = '&&' + ' \"' + webBrowser + '\" coverage/index.html';
 					}
 
-					return 'istanbul cover --report html' + ' '
-						+ 'node_modules/mocha/bin/_mocha ' + filePattern + ' '
+					return 'istanbul cover --report html ' + ' '
+						+ 'node_modules/mocha/bin/_mocha ' + filePattern + ' --exit '
 						+ '&&' + ' ' + 'remap-istanbul -i coverage/coverage.json -t html -o coverage' + ' '
 						+ viewCoverageInWebBrowser;
 				}
