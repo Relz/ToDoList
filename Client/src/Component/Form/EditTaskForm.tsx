@@ -36,7 +36,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 				type={InputType.Text}
 				value={this.state.title}
 				placeholder={Translation.TaskForm.namePlaceholder}
-				onChange={(value: string) => this.setState({ title: value }) }
+				onChange={(value: string) => this.setState({ title: value })}
 			/>,
 			<Input
 				key='description'

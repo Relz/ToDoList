@@ -94,7 +94,14 @@ export class Task {
 
 	public static createFromTask(task: Task): Task {
 		return new Task(
-			task._id, task._title, task._description, task._creationDate, task._deadline, task._isDone, task._userId
+			task._id,
+			task._title,
+			task._description,
+			task._creationDate,
+			task._deadline,
+			task._isDone,
+			task._isImportant,
+			task._userId
 		);
 	}
 
@@ -106,6 +113,7 @@ export class Task {
 			creationDate: this._creationDate,
 			deadline: this._deadline,
 			isDone: this._isDone,
+			isImportant: this._isImportant,
 			userId: this._userId
 		};
 	}

@@ -104,7 +104,7 @@ describe('Task class', () => {
 			expect(task.isImportant).to.be.undefined;
 		});
 		it('with simple setter', () => {
-			task.isDone = true;
+			task.isImportant = true;
 			expect(task.isImportant).to.be.equal(true);
 		});
 	});

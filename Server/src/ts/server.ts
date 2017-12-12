@@ -125,20 +125,6 @@ class Server {
 			});
 		});
 
-		router.get('/tasks/:token', (req: express.Request, res: express.Response) => {
-			res.setHeader('Content-Type', 'application/json');
-			const userId: number = Token.decodeId(req.params.token);
-			if (userId === undefined) {
-				const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-				return res.status(response.httpStatus).send(response.jsonString());
-			}
-
-			DataBase.getUserTasks(userId, (result: ResponseCode, userTasks: Task[]) => {
-				const response: JsonResponse = new JsonResponse(result, userTasks);
-				return res.status(response.httpStatus).send(response.jsonString());
-			});
-		});
-
 		router.get('/tasks/done/:token', (req: express.Request, res: express.Response) => {
 			res.setHeader('Content-Type', 'application/json');
 			const userId: number = Token.decodeId(req.params.token);
@@ -161,7 +147,7 @@ class Server {
 				return res.status(response.httpStatus).send(response.jsonString());
 			}
 
-			DataBase.getUserTasks(id, false, (result: ResponseCode, userTasks: Task[]) => {
+			DataBase.getUserTasks(userId, false, (result: ResponseCode, userTasks: Task[]) => {
 				const response: JsonResponse = new JsonResponse(result, userTasks);
 				return res.status(response.httpStatus).send(response.jsonString());
 			});
@@ -216,7 +202,8 @@ class Server {
 				req.body.description,
 				undefined,
 				req.body.deadline,
-				undefined,
+				req.body.isDone,
+				req.body.isImportant,
 				userId
 			);
 
