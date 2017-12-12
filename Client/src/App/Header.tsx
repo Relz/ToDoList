@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { Translation } from '../translation/ru';
 import { IHeaderProps } from './Props/IHeaderProps';
 
-const logo: string = require('../img/logo.svg');
+const logo: string = require('../img/logo.png');
 
 export class Header extends React.Component<IHeaderProps, {}> {
 	public render(): JSX.Element {

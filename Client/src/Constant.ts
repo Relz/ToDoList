@@ -1,6 +1,7 @@
 /*tslint:disable:typedef*/
 export class Constant {
 	public static Path = class {
+		public static readonly index: string = '/';
 		public static readonly signIn: string = '/sign_in';
 		public static readonly register: string = '/register';
 		public static readonly account: string = '/account';

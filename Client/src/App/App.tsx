@@ -10,7 +10,6 @@ export class App extends React.Component {
 			<div className='app'>
 				<Header menu={Menu}/>
 				<div className='content' id='content'>
-					<div>{Memory.token}</div>
 					{this.props.children}
 				</div>
 			</div>

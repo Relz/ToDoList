@@ -16,8 +16,9 @@
 
 		.image
 			+rotationEffect(app-logo-image-spin)
-			animation: app-logo-image-spin infinite 20s linear
+			animation: app-logo-image-spin infinite 1s linear
 			height: 45px
+			margin: 10px
 			display: inline-block
 
 		.text
@@ -38,7 +39,7 @@
 				outline: none
 				font-weight: bold
 				color: $normalDarkColor
-				transition: color 0.25s ease
+				+transition(color, .15s, ease-in-out, 0s)
 
 				&:hover
 					color: $secondaryColor
