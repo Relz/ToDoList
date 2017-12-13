@@ -17,10 +17,12 @@ export class SignIn extends React.Component {
 			return <Redirect to={'/'}/>;
 		}
 		return (
-			<SignInForm
-				ref={(ref: SignInForm) => this._signInForm = ref}
-				onSubmit={(model: SignInDto) => this.onSubmit(model)}
-			/>
+			<div className='sign_in_form_block'>
+				<SignInForm
+					ref={(ref: SignInForm) => this._signInForm = ref}
+					onSubmit={(model: SignInDto) => this.onSubmit(model)}
+				/>
+			</div>
 		);
 	}
 

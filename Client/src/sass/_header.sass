@@ -1,30 +1,32 @@
 @import mixin
 
 .header
-	background-color: #222
-	padding: 10px
+	background-color: $mainColor
+	box-shadow: $normalShadow
+	padding: 15px
 	display: flex
-	justify-content: flex-start
 	flex-direction: row
-	align-items: baseline
+	align-items: center
 
 	.logo
-		display: inline-block
-		outline: none
+		display: flex
+		flex-direction: row
+		align-items: center
+		text-decoration: none
 
 		.image
 			+rotationEffect(app-logo-image-spin)
-			animation: app-logo-image-spin infinite 20s linear
-			height: 80px
+			animation: app-logo-image-spin infinite 1s linear
+			height: 45px
+			margin: 10px
 			display: inline-block
 
 		.text
 			display: inline-block
-			color: white
+			color: $normalDarkColor
+			margin: 0
 
 	.menu
-		display: inline-block
-		border-bottom: 1px solid #222
 		margin: 0 0 0 auto
 
 		.item
@@ -33,9 +35,11 @@
 			padding: 10px
 
 			a
-				color: #EEE
 				text-decoration: none
 				outline: none
+				font-weight: bold
+				color: $normalDarkColor
+				+transition(color, .15s, ease-in-out, 0s)
 
 				&:hover
-					color: #61DAFB
+					color: $secondaryColor

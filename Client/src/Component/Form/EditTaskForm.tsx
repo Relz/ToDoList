@@ -45,7 +45,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 				placeholder={Translation.TaskForm.descriptionPlaceholder}
 				onChange={(value: string) => this.setState({ description: value })}
 			/>,
-			<label key='deadline_checkbox'>
+			<label key='deadline_checkbox' className='form_picker'>
 				<input
 					type='checkbox'
 					checked={this.state.isDeadlineExist}
@@ -59,7 +59,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 				dateFormat='DD MMMM YYYY'
 				onChange={(value: Moment) => this.setState({ deadline: value })}
 			/>,
-			<label key='done_checkbox'>
+			<label key='done_checkbox' className='form_picker'>
 				<input
 					type='checkbox'
 					checked={this.state.isDone}
@@ -67,7 +67,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 				/>
 				{Translation.TaskForm.doneCheckBoxTitle}
 			</label>,
-			<label key='important_checkbox'>
+			<label key='important_checkbox' className='form_picker'>
 				<input
 					type='checkbox'
 					checked={this.state.isImportant}

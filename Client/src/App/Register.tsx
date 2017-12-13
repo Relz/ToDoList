@@ -25,6 +25,10 @@ export class Register extends React.Component {
 	}
 
 	private onSubmit(model: RegisterDto): void {
+		if (model.password !== model.repeatPassword) {
+			this._registerForm.showAlert(AlertType.Danger, Translation.Page.Register.FormMessage.passwordsNotMatch);
+			return;
+		}
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.Register.path}`,
 			{

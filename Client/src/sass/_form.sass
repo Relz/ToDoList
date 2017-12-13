@@ -1,2 +1,40 @@
+@import mixin
+
+.form
+	margin: 0 auto
+	padding: 40px 30px
+	max-width: 480px
+	background-color: $secondaryColor
+	box-shadow: $diagonalNormalShadow
+	+border-radius(2px)
+
+	.form_title
+		margin-bottom: 40px
+		font-size: 20px
+		font-weight: 500
+		color: $normalDarkColor
+
+	.form_control
+		-webkit-box-shadow: none
+		-moz-box-shadow: none
+		box-shadow: none
+		padding: 0
+		border-bottom: 1px solid $lightDarkColor
+		margin-bottom: 20px
+		font-size: 16px
+
+	.button
+		margin-top: 30px
+		padding-left: 30px
+		padding-right: 30px
+		align-self: flex-end
+		font-size: 16px
+		+border-radius(4px)
+		+transition(background-color, .25s, ease, 0s)
+
+	.form_control:focus
+		outline: none
+
 .form_title
-	text-align: center
+	text-align: left
+	color: $normalDarkColor
