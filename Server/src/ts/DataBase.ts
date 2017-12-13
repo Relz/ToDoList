@@ -4,6 +4,7 @@ import { UserInfo } from './UserInfo';
 import { User } from './User';
 import { ResponseCode } from './ResponseCode';
 import { Task } from './Task';
+import { PasswordEncoder, PasswordInfo } from './PasswordEncoding';
 
 export class DataBase {
 	private static _instance: Database =
@@ -79,7 +80,12 @@ export class DataBase {
 				return callback(ResponseCode.WRONG_ID);
 			}
 
-			if (password !== user.password) {
+			const passCorrect: boolean = PasswordEncoder.isCorrect(password, new PasswordInfo(user.password, user.salt));
+			if (passCorrect === undefined) {
+				return callback(ResponseCode.INTERNAL_ERROR);
+			}
+
+			if (!passCorrect) {
 				return callback(ResponseCode.WRONG_PASSWORD);
 			}
 
@@ -102,8 +108,14 @@ export class DataBase {
 			if (isLoginFound) {
 				return callback(ResponseCode.WRONG_LOGIN);
 			}
-			const query: string = 'INSERT INTO user (login, password) VALUES (?, ?)';
-			DataBase._instance.run(query, login, password, (err: Error): void => {
+
+			const passwordInfo: PasswordInfo = PasswordEncoder.encode(password);
+			if (passwordInfo === undefined) {
+				return callback(ResponseCode.INTERNAL_ERROR);
+			}
+
+			const query: string = 'INSERT INTO user (login, password, salt) VALUES (?, ?, ?)';
+			DataBase._instance.run(query, login, passwordInfo.hash, passwordInfo.salt, (err: Error): void => {
 				callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 			});
 		});
@@ -126,14 +138,22 @@ export class DataBase {
 	public static getUserId(login: string, password: string, callback: (result: ResponseCode, id: number) => void): void {
 		DataBase._instance.get('SELECT * FROM user WHERE login = ?', login, (err: Error, row: User) => {
 			if (err) {
-				callback(ResponseCode.INTERNAL_ERROR, 0);
-			} else if (!row) {
-				callback(ResponseCode.WRONG_LOGIN, 0);
-			} else if (password !== row.password) {
-				callback(ResponseCode.WRONG_PASSWORD, 0);
-			} else {
-				callback(ResponseCode.OK, row.id);
+				return callback(ResponseCode.INTERNAL_ERROR, 0);
 			}
+			if (!row) {
+				return callback(ResponseCode.WRONG_LOGIN, 0);
+			}
+
+			const passCorrect: boolean = PasswordEncoder.isCorrect(password, new PasswordInfo(row.password, row.salt));
+			if (passCorrect === undefined) {
+				return callback(ResponseCode.INTERNAL_ERROR, 0);
+			}
+
+			if (!passCorrect) {
+				return callback(ResponseCode.WRONG_PASSWORD, 0);
+			}
+
+			callback(ResponseCode.OK, row.id);
 		});
 	}
 
@@ -193,7 +213,8 @@ export class DataBase {
 			'id       INTEGER PRIMARY KEY,' +
 			'login    VARCHAR UNIQUE,' +
 			'password VARCHAR,' +
-			'name     VARCHAR' +
+			'name     VARCHAR,' +
+			'salt     VARCHAR' +
 			');', () => {}
 		);
 	}
@@ -207,8 +228,13 @@ export class DataBase {
 	}
 
 	private static updateUser(id: number, newData: User, callback: (result: number) => void): void {
-		const query: string = 'UPDATE user SET login = ?, password = ?, name = ? WHERE id = ?';
-		DataBase._instance.run(query, newData.login, newData.password, newData.name, id, (err: Error) => {
+		const passwordInfo: PasswordInfo = PasswordEncoder.encode(newData.password);
+		if (passwordInfo === undefined) {
+			return callback(ResponseCode.INTERNAL_ERROR);
+		}
+
+		const query: string = 'UPDATE user SET login = ?, password = ?, name = ?, salt = ? WHERE id = ?';
+		DataBase._instance.run(query, newData.login, passwordInfo.hash, newData.name, passwordInfo.salt, id, (err: Error) => {
 			callback(err ? ResponseCode.INTERNAL_ERROR : ResponseCode.OK);
 		});
 	}

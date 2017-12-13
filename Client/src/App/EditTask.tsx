@@ -43,12 +43,20 @@ export class EditTask extends React.Component {
 	}
 
 	private onSubmit(model: EditTaskDto): void {
+		const data: any = {
+			title: model.title,
+			description: model.description,
+			isDeadlineExist: model.isDeadlineExist,
+			deadline: model.deadline.valueOf() / 1000,
+			isDone: model.isDone,
+			isImportant: model.isImportant
+		};
 		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.EditUser.path}${Memory.token}`,
+			`${Constant.Server.url}${Constant.Server.Action.EditTask.path}${this._data.id}/${Memory.token}`,
 			{
-				method: Constant.Server.Action.EditUser.method,
+				method: Constant.Server.Action.EditTask.method,
 				headers: Constant.Server.headers,
-				body: JSON.stringify(model)
+				body: JSON.stringify(data)
 			}
 		).then((response: any) => response.json()
 		).then((response: JsonResponse) => {
@@ -60,14 +68,11 @@ export class EditTask extends React.Component {
 				case ResponseCode.BAD_BODY:
 					this._editTaskForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badBody);
 					break;
-				case ResponseCode.WRONG_LOGIN:
-					this._editTaskForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.loginInUse);
-					break;
-				case ResponseCode.WRONG_PASSWORD:
-					this._editTaskForm.showAlert(AlertType.Danger, Translation.Page.Account.FormMessage.wrongPassword);
+				case ResponseCode.WRONG_ID:
+					this._editTaskForm.showAlert(AlertType.Danger, Translation.Page.EditTask.FormMessage.wrongId);
 					break;
 				case ResponseCode.OK:
-					this._editTaskForm.showAlert(AlertType.Success, Translation.Page.Account.FormMessage.success);
+					this._editTaskForm.showAlert(AlertType.Success, Translation.Page.EditTask.FormMessage.success);
 					break;
 			}
 		}, () => {

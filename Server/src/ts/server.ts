@@ -9,9 +9,11 @@ import { Token } from './Token/Token';
 import { UserInfo } from './UserInfo';
 import { User } from './User';
 import { Task } from './Task';
+import * as http from 'http';
 
 class Server {
 	public express: express.Application;
+	private httpServer: http.Server;
 
 	constructor() {
 		this.express = express();
@@ -19,7 +21,11 @@ class Server {
 		this.express.use(bodyParser.urlencoded({ extended: true }));
 		this.express.use(bodyParser.json());
 		this.routes();
-		this.express.listen(Config.port, () => undefined);
+		this.httpServer = this.express.listen(Config.port, () => undefined);
+	}
+
+	public close(): void {
+		this.httpServer.close();
 	}
 
 	private routes(): void {
@@ -175,7 +181,7 @@ class Server {
 				!!req.body.isDone,
 				!!req.body.isImportant,
 				userId
-            );
+			);
 
 			DataBase.insertTask(task, (result: ResponseCode) => {
 				const response: JsonResponse = new JsonResponse(result);
@@ -227,26 +233,8 @@ class Server {
 			});
 		});
 
-		router.put('/tasks/set_done/:id/:token', (req: express.Request, res: express.Response) => {
-			const userId: number = Token.decodeId(req.params.token);
-			if (userId === undefined) {
-			const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
-				return res.status(response.httpStatus).send(response.jsonString());
-			}
-
-			if (!req.body || !req.body.isDone) {
-				const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
-				return res.status(response.httpStatus).send(response.jsonString());
-			}
-
-			DataBase.setTaskDone(userId, req.params.id, req.body.isDone, (result: ResponseCode) => {
-				const response: JsonResponse = new JsonResponse(result);
-				res.status(response.httpStatus).send(response.jsonString());
-			});
-		});
-
 		this.express.use('/', router);
 	}
 }
 
-export default new Server().express;
+export default new Server();

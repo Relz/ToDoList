@@ -88,6 +88,12 @@ export class Translation {
 				public static readonly success: string = 'Задача добавлена';
 			};
 		};
+		public static EditTask = class {
+			public static FormMessage = class {
+				public static readonly wrongId: string = 'Неверный идентификатор задания';
+				public static readonly success: string = 'Задание изменено!';
+			}
+		};
 		public static Shared = class {
 			public static FormMessage = class {
 				public static readonly internalServerError: string = 'Извините! Произошла внутренняя ошибка сервера';

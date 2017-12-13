@@ -92,19 +92,6 @@ export class Task {
 		this._userId = value;
 	}
 
-	public static createFromTask(task: Task): Task {
-		return new Task(
-			task._id,
-			task._title,
-			task._description,
-			task._creationDate,
-			task._deadline,
-			task._isDone,
-			task._isImportant,
-			task._userId
-		);
-	}
-
 	public json(): object {
 		return {
 			id: this._id,
@@ -116,5 +103,18 @@ export class Task {
 			isImportant: this._isImportant,
 			userId: this._userId
 		};
+	}
+
+	public static createFromTask(task: Task): Task {
+		return new Task(
+			task._id,
+			task._title,
+			task._description,
+			task._creationDate,
+			task._deadline,
+			task._isDone,
+			task._isImportant,
+			task._userId
+		);
 	}
 }
