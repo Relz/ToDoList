@@ -73,6 +73,7 @@ export class EditTask extends React.Component {
 					break;
 				case ResponseCode.OK:
 					this._editTaskForm.showAlert(AlertType.Success, Translation.Page.EditTask.FormMessage.success);
+					location.href = '/';
 					break;
 			}
 		}, () => {
