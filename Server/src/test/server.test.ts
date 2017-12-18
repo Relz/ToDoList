@@ -423,6 +423,94 @@ describe('PUT /tasks/edit/:id/:token', () => {
 	});
 });
 
+describe('PUT /tasks/set_done/:id/:token', () => {
+	it('returns status code OK, response code OK if token is valid', () => {
+		return request(serverExpress).put(`/tasks/set_done/${task.id}/${userToken}`)
+			.send({
+				isDone: true
+			})
+			.then((res: ChaiHttp.Response) => {
+				expect(res.status).to.be.equals(HttpStatusCode.OK);
+				expect(res.body).not.to.be.undefined;
+				expect(res.body.code).to.be.equals(ResponseCode.OK);
+				expect(res.body.body).to.be.undefined;
+			});
+	});
+
+	describe('returns status code BAD_REQUEST', () => {
+		it('response code BAD_TOKEN if token is invalid', () => {
+			return request(serverExpress).put(`/tasks/set_done/${task.id}/${invalidToken}`)
+				.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
+		});
+
+		it('response code WRONG_ID if task id is wrong', () => {
+			return request(serverExpress).put(`/tasks/set_done/${task.id + 1}/${userToken}`)
+				.send({
+					isDone: true
+				})
+				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_ID));
+		});
+
+		describe('response code BAD_BODY', () => {
+			it('if body is not defined', () => {
+				return request(serverExpress).put(`/tasks/set_done/${task.id}/${userToken}`)
+					.send(undefined)
+					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
+			});
+
+			it('if isDone is not defined', () => {
+				return request(serverExpress).put(`/tasks/set_done/${task.id}/${userToken}`)
+					.send({})
+					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
+			});
+		});
+	});
+});
+
+describe('PUT /tasks/set_important/:id/:token', () => {
+	it('returns status code OK, response code OK if token is valid', () => {
+		return request(serverExpress).put(`/tasks/set_important/${task.id}/${userToken}`)
+			.send({
+				isImportant: true
+			})
+			.then((res: ChaiHttp.Response) => {
+				expect(res.status).to.be.equals(HttpStatusCode.OK);
+				expect(res.body).not.to.be.undefined;
+				expect(res.body.code).to.be.equals(ResponseCode.OK);
+				expect(res.body.body).to.be.undefined;
+			});
+	});
+
+	describe('returns status code BAD_REQUEST', () => {
+		it('response code BAD_TOKEN if token is invalid', () => {
+			return request(serverExpress).put(`/tasks/set_important/${task.id}/${invalidToken}`)
+				.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_TOKEN));
+		});
+
+		it('response code WRONG_ID if task id is wrong', () => {
+			return request(serverExpress).put(`/tasks/set_important/${task.id + 1}/${userToken}`)
+				.send({
+					isImportant: true
+				})
+				.catch((err: any) => checkBadRequest(err, ResponseCode.WRONG_ID));
+		});
+
+		describe('response code BAD_BODY', () => {
+			it('if body is not defined', () => {
+				return request(serverExpress).put(`/tasks/set_important/${task.id}/${userToken}`)
+					.send(undefined)
+					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
+			});
+
+			it('if isImportant is not defined', () => {
+				return request(serverExpress).put(`/tasks/set_important/${task.id}/${userToken}`)
+					.send({})
+					.catch((err: any) => checkBadRequest(err, ResponseCode.BAD_BODY));
+			});
+		});
+	});
+});
+
 describe('GET /tasks/done/:token', () => {
 	it('returns status code BAD_REQUEST, response code BAD_TOKEN if token is invalid', () => {
 		return request(serverExpress).get(`/tasks/done/${invalidToken}`)
