@@ -14,6 +14,7 @@ export class TaskDemo extends React.Component<{}, {}> {
 					isImportant={false}
 					isDone={false}
 					onRemove={() => undefined}
+					onDoneChanged={() => undefined}
 				/>
 				<Task
 					id={2}
@@ -24,6 +25,7 @@ export class TaskDemo extends React.Component<{}, {}> {
 					isImportant={true}
 					isDone={false}
 					onRemove={() => undefined}
+					onDoneChanged={() => undefined}
 				/>
 				<Task
 					id={3}
@@ -34,6 +36,7 @@ export class TaskDemo extends React.Component<{}, {}> {
 					isImportant={false}
 					isDone={true}
 					onRemove={() => undefined}
+					onDoneChanged={() => undefined}
 				/>
 				<Task
 					id={4}
@@ -44,6 +47,7 @@ export class TaskDemo extends React.Component<{}, {}> {
 					isImportant={true}
 					isDone={true}
 					onRemove={() => undefined}
+					onDoneChanged={() => undefined}
 				/>
 			</div>
 		);

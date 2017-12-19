@@ -1,10 +1,6 @@
 /*tslint:disable:typedef*/
 export class Translation {
 	public static readonly pageHeader: string = 'ToDoList';
-	public static Alt = class {
-		public static readonly logo: string = 'ToDoList';
-		public static readonly loadingSpinner: string = 'Загрузка...';
-	};
 	public static Menu = class {
 		public static readonly login: string = 'Войти';
 		public static readonly register: string = 'Зарегистрироваться';
@@ -55,6 +51,10 @@ export class Translation {
 		public static readonly newPasswordPlaceholder: string = 'Новый пароль';
 	};
 	public static Task = class {
+		public static readonly importantButtonText: string = 'Важная';
+		public static readonly notImportantButtonText: string = 'Не важная';
+		public static readonly doneButtonText: string = 'Сделана';
+		public static readonly notDoneButtonText: string = 'Не сделана';
 		public static readonly editButtonText: string = 'Редактировать';
 		public static readonly deleteButtonText: string = 'Удалить';
 	};
@@ -100,6 +100,19 @@ export class Translation {
 				public static readonly badConnection: string = 'Не удаётся установить соединение с сервером';
 				public static readonly badBody: string = 'Чего-то в отправленной информации не нашлось...';
 			};
+		};
+
+	};
+	public static Alt = class {
+		public static readonly logo: string = 'ToDoList';
+		public static readonly loadingSpinner: string = 'Загрузка...';
+		public static Icon = class {
+			public static readonly important: string = Translation.Task.importantButtonText;
+			public static readonly notImportant: string = Translation.Task.notImportantButtonText;
+			public static readonly done: string = Translation.Task.doneButtonText;
+			public static readonly notDone: string = Translation.Task.notDoneButtonText;
+			public static readonly edit: string = Translation.Task.editButtonText;
+			public static readonly delete: string = Translation.Task.deleteButtonText;
 		};
 	};
 }

@@ -9,4 +9,5 @@ export interface ITaskProp {
 	isImportant: boolean;
 	isDone: boolean;
 	onRemove: (task: Task) => void;
+	onDoneChanged: (isDone: boolean) => void;
 }

@@ -23,9 +23,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 			title: editTaskDto.title,
 			description: editTaskDto.description,
 			isDeadlineExist: editTaskDto.isDeadlineExist == true,
-			deadline: editTaskDto.deadline,
-			isDone: editTaskDto.isDone == true,
-			isImportant: editTaskDto.isImportant == true
+			deadline: editTaskDto.deadline
 		};
 	}
 
@@ -58,23 +56,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 				selected={this.state.deadline}
 				dateFormat='DD MMMM YYYY'
 				onChange={(value: Moment) => this.setState({ deadline: value })}
-			/>,
-			<label key='done_checkbox' className='form_picker'>
-				<input
-					type='checkbox'
-					checked={this.state.isDone}
-					onChange={(event: any) => this.setState({ isDone: event.target.checked })}
-				/>
-				{Translation.TaskForm.doneCheckBoxTitle}
-			</label>,
-			<label key='important_checkbox' className='form_picker'>
-				<input
-					type='checkbox'
-					checked={this.state.isImportant}
-					onChange={(event: any) => this.setState({ isImportant: event.target.checked })}
-				/>
-				{Translation.TaskForm.importantCheckBoxTitle}
-			</label>
+			/>
 		]);
 	}
 
@@ -84,8 +66,6 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 		model.description = this.state.description;
 		model.isDeadlineExist = this.state.isDeadlineExist;
 		model.deadline = this.state.deadline;
-		model.isDone = this.state.isDone;
-		model.isImportant = this.state.isImportant;
 		this.props.onSubmit(model);
 	}
 
@@ -94,9 +74,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 			title: value.title,
 			description: value.description,
 			isDeadlineExist: value.isDeadlineExist == true,
-			deadline: value.deadline,
-			isDone: value.isDone == true,
-			isImportant: value.isImportant == true
+			deadline: value.deadline
 		});
 	}
 }

@@ -4,7 +4,7 @@ import { ILoadingSpinnerProps } from '../Props/ILoadingSpinnerProps';
 import { ILoadingSpinnerState } from '../State/ILoadingSpinnerState';
 import { Translation } from '../../translation/ru';
 
-const logo: string = require('../../img/logo.svg');
+const logo: string = require('../../img/logo.png');
 
 export class LoadingSpinner extends React.Component<ILoadingSpinnerProps, ILoadingSpinnerState> {
 	public constructor(props: ILoadingSpinnerProps) {

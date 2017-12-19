@@ -23,8 +23,6 @@ export class EditTask extends React.Component {
 		this._data.description = queryData.description;
 		this._data.isDeadlineExist = queryData.deadline !== 'null';
 		this._data.deadline = moment.unix(queryData.deadline);
-		this._data.isDone = queryData.isDone;
-		this._data.isImportant = queryData.isImportant;
 	}
 
 	public render(): JSX.Element {
@@ -47,9 +45,7 @@ export class EditTask extends React.Component {
 			title: model.title,
 			description: model.description,
 			isDeadlineExist: model.isDeadlineExist,
-			deadline: model.deadline.valueOf() / 1000,
-			isDone: model.isDone,
-			isImportant: model.isImportant
+			deadline: model.deadline.valueOf() / 1000
 		};
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.EditTask.path}${this._data.id}/${Memory.token}`,

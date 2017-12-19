@@ -137,7 +137,7 @@ export class Tasks extends React.Component {
 	private parseTasks(tasksArray: any[]): JSX.Element {
 		const result: JSX.Element[] = [];
 		if (tasksArray.length === 0) {
-			result.push(<Alert message={Translation.Page.Tasks.emptyList}/>);
+			result.push(<Alert key={'alert_empty_list'} message={Translation.Page.Tasks.emptyList}/>);
 		}
 		tasksArray.forEach((task: TaskDto, index: number) => {
 			result.push(
@@ -150,13 +150,8 @@ export class Tasks extends React.Component {
 					deadline={task.deadline}
 					isDone={task.isDone}
 					isImportant={task.isImportant}
-					onRemove={(removedTask: Task) => {
-						if (removedTask.isDone()) {
-							this.insertCloseTasks(this._closeTasksInserter);
-						} else {
-							this.insertOpenTasks(this._openTasksInserter);
-						}
-					}}
+					onRemove={(removedTask: Task) => this.onTaskChanged(removedTask.isDone())}
+					onDoneChanged={(isDone: boolean) => this.onTaskChanged(isDone)}
 				/>
 			);
 		});
@@ -165,15 +160,21 @@ export class Tasks extends React.Component {
 		);
 	}
 
+	private onTaskChanged(isDone: boolean): void {
+		if (isDone) {
+			this.insertCloseTasks(this._closeTasksInserter);
+		} else {
+			this.insertOpenTasks(this._openTasksInserter);
+		}
+	}
+
 	private createTask(task: EditTaskDto): void {
 		const data: any = {
 			id: task.id,
 			title: task.title,
 			description: task.description,
 			isDeadlineExist: task.isDeadlineExist,
-			deadline: task.deadline.valueOf() / 1000,
-			isDone: task.isDone,
-			isImportant: task.isImportant
+			deadline: task.deadline.valueOf() / 1000
 		};
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.CreateTask.path}${Memory.token}`,
@@ -194,10 +195,8 @@ export class Tasks extends React.Component {
 					break;
 				case ResponseCode.OK:
 					this._createTaskForm.showAlert(AlertType.Success, Translation.Page.Tasks.FormMessage.success);
-					if (!task.isDone && this._openTasksInserter) {
+					if (this._openTasksInserter) {
 						this.insertOpenTasks(this._openTasksInserter);
-					} else if (task.isDone && this._closeTasksInserter) {
-						this.insertCloseTasks(this._closeTasksInserter);
 					}
 					this._createTaskForm.model = new EditTaskDto();
 					break;
