@@ -7,6 +7,7 @@ export class Translation {
 		public static readonly logout: string = 'Выйти';
 		public static readonly tasks: string = 'Список дел';
 		public static readonly account: string = 'Аккаунт';
+		public static readonly createTask: string = 'Создать задачку';
 	};
 	public static Page404 = class {
 		public static readonly errorCode: string = '404';
@@ -92,6 +93,11 @@ export class Translation {
 			public static FormMessage = class {
 				public static readonly wrongId: string = 'Неверный идентификатор задания';
 				public static readonly success: string = 'Задание изменено!';
+			}
+		};
+		public static CreateTask = class {
+			public static FormMessage = class {
+				public static readonly success: string = 'Задание создано!';
 			}
 		};
 		public static Shared = class {

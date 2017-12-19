@@ -12,6 +12,7 @@ import { Constant } from './Constant';
 import { Tasks } from './App/Tasks';
 import { EditTask } from './App/EditTask';
 import { Memory } from './Memory';
+import { CreateTask } from './App/CreateTask';
 
 const getComponent:() => React.ComponentType = () => {
 	return (Memory.token === undefined) ? SignIn : Tasks;
@@ -28,6 +29,7 @@ ReactDOM.render(
 					<Route path={Constant.Path.account} component={Account}/>
 					<Route path={Constant.Path.tasks} component={Tasks}/>
 					<Route path={Constant.Path.editTask} component={EditTask}/>
+					<Route path={Constant.Path.createTask} component={CreateTask}/>
 					<Route path={Constant.Path.demo} component={ComponentsDemoPage}/>
 					<Route path={Constant.Path.index} component={getComponent()}/>
 					<Route component={Page404}/>

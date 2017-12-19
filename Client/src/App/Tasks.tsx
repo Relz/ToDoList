@@ -10,13 +10,9 @@ import { Alert } from '../Component/Alert/Alert';
 import { AlertType } from '../Component/Alert/AlertType';
 import { JsonResponse } from './JsonResponse/JsonResponse';
 import { ResponseCode } from './JsonResponse/ResponseCode';
-import { EditTaskForm } from '../Component/Form/EditTaskForm';
-import { EditTaskDto } from '../Dto/EditTaskDto';
 import { TaskDto } from '../Dto/TaskDto';
-import { Moment } from 'moment';
 
 export class Tasks extends React.Component {
-	private _createTaskForm: EditTaskForm;
 	private _openTasksInserter: (content: JSX.Element) => void;
 	private _closeTasksInserter: (content: JSX.Element) => void;
 
@@ -27,31 +23,27 @@ export class Tasks extends React.Component {
 
 		return (
 			<div>
-				<EditTaskForm
-					title={Translation.CreateTaskForm.createTitle}
-					buttonTitle={Translation.CreateTaskForm.createButton}
-					ref={(ref: EditTaskForm) => this._createTaskForm = ref}
-					onSubmit={(model: EditTaskDto) => this.createTask(model)}
+				<Tab
+					tabItems={[
+						new TabItem(
+							'open_tasks',
+							Translation.Page.Tasks.openTasks,
+							(inserter: (content: JSX.Element) => void) => {
+								this.insertOpenTasks(inserter);
+								this._openTasksInserter = inserter;
+							}
+						),
+						new TabItem(
+							'close_tasks',
+							Translation.Page.Tasks.closeTasks,
+							(inserter: (content: JSX.Element) => void) => {
+								this.insertCloseTasks(inserter);
+								this._closeTasksInserter = inserter;
+							}
+						)
+					]}
+					activeItemIndex={'open_tasks'}
 				/>
-				<br/>
-				<Tab tabItems={[
-					new TabItem(
-						'open_tasks',
-						Translation.Page.Tasks.openTasks,
-						(inserter: (content: JSX.Element) => void) => {
-							this.insertOpenTasks(inserter);
-							this._openTasksInserter = inserter;
-						}
-					),
-					new TabItem(
-						'close_tasks',
-						Translation.Page.Tasks.closeTasks,
-						(inserter: (content: JSX.Element) => void) => {
-							this.insertCloseTasks(inserter);
-							this._closeTasksInserter = inserter;
-						}
-					)
-				]}/>
 			</div>
 		);
 	}
@@ -158,49 +150,5 @@ export class Tasks extends React.Component {
 		return (
 			<div className={'tasks'}>{result}</div>
 		);
-	}
-
-	private onTaskChanged(isDone: boolean): void {
-		if (isDone) {
-			this.insertCloseTasks(this._closeTasksInserter);
-		} else {
-			this.insertOpenTasks(this._openTasksInserter);
-		}
-	}
-
-	private createTask(task: EditTaskDto): void {
-		const data: any = {
-			id: task.id,
-			title: task.title,
-			description: task.description,
-			isDeadlineExist: task.isDeadlineExist,
-			deadline: task.deadline.valueOf() / 1000
-		};
-		fetch(
-			`${Constant.Server.url}${Constant.Server.Action.CreateTask.path}${Memory.token}`,
-			{
-				method: Constant.Server.Action.CreateTask.method,
-				headers: Constant.Server.headers,
-				body: JSON.stringify(data)
-			}
-		).then((response: any) => response.json()
-		).then((response: JsonResponse) => {
-			if (response === undefined) {
-				this._createTaskForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.internalServerError);
-				return;
-			}
-			switch (response.code) {
-				case ResponseCode.BAD_BODY:
-					this._createTaskForm.showAlert(AlertType.Danger, Translation.Page.Shared.FormMessage.badBody);
-					break;
-				case ResponseCode.OK:
-					this._createTaskForm.showAlert(AlertType.Success, Translation.Page.Tasks.FormMessage.success);
-					if (this._openTasksInserter) {
-						this.insertOpenTasks(this._openTasksInserter);
-					}
-					this._createTaskForm.model = new EditTaskDto();
-					break;
-			}
-		});
 	}
 }

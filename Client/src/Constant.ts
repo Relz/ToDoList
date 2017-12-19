@@ -7,6 +7,7 @@ export class Constant {
 		public static readonly account: string = '/account';
 		public static readonly tasks: string = '/tasks';
 		public static readonly editTask: string = '/edit_task';
+		public static readonly createTask: string = '/create_task';
 		public static readonly demo: string = '/demo';
 	};
 	public static Server = class {

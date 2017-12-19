@@ -1,6 +1,6 @@
 import * as chai from 'chai';
-import * as express from 'express';
 import { expect, request } from 'chai';
+import * as express from 'express';
 import { UserInfo } from '../ts/UserInfo';
 import server from '../ts/server';
 import { ResponseCode } from '../ts/ResponseCode';
@@ -8,6 +8,7 @@ import { User } from '../ts/User';
 import * as HttpStatusCode from 'http-status-codes';
 import { DataBase } from '../ts/DataBase';
 import { Task } from '../ts/Task';
+import { Token } from '../ts/Token/Token';
 import chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
@@ -54,6 +55,7 @@ after(() => {
 	DataBase.deleteUserById(user.id, () => undefined);
 	DataBase.deleteUserById(anotherUser.id, () => undefined);
 	DataBase.deleteTask(user.id, task.id, () => undefined);
+	process.exit(0);
 });
 
 const checkBadRequest: (err: any, code: ResponseCode) => void = (err: any, code: ResponseCode) => {

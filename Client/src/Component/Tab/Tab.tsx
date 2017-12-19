@@ -16,6 +16,12 @@ export class Tab extends React.Component<ITabProps, {}> {
 	private _idsToTabContents: Map<string, TabContent> = new Map();
 	private _loadingSpinner: LoadingSpinner;
 
+	componentDidMount(): void {
+		if (this.props.activeItemIndex !== undefined) {
+			this.onTabItemLabelClick(this.props.activeItemIndex);
+		}
+	}
+
 	public render(): JSX.Element {
 		const classes: any = classNames({
 			tab_header: true
@@ -26,24 +32,17 @@ export class Tab extends React.Component<ITabProps, {}> {
 		return (
 			<div className={'tab'}>
 				<div className={classes}>
-					<Container
-						alignItemsType={AlignItemsType.Stretch}
-						alignSelfType={AlignSelfType.Stretch}
-						directionType={DirectionType.Row}
-						justifyType={JustifyType.SpaceBetween}
-					>
-						{
-							tabItems.map((tabItem: TabItem, index: number) =>
-								<TabTitle
-									key={tabItem.id}
-									onClick={this.onTabItemLabelClick.bind(this, tabItem.id)}
-									ref={(ref: TabTitle) => { this.onTabTitleRef(ref, tabItem.id); }}
-								>
-									{tabItem.label}
-								</TabTitle>
-							)
-						}
-					</Container>
+					<Container directionType={DirectionType.Row}>{
+						tabItems.map((tabItem: TabItem, index: number) =>
+							<TabTitle
+								key={tabItem.id}
+								onClick={this.onTabItemLabelClick.bind(this, tabItem.id)}
+								ref={(ref: TabTitle) => { this.onTabTitleRef(ref, tabItem.id); }}
+							>
+								{tabItem.label}
+							</TabTitle>
+						)
+					}</Container>
 				</div>
 				{
 					tabItems.map((tabItem: TabItem, index: number) =>
