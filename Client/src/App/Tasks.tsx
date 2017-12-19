@@ -134,7 +134,7 @@ export class Tasks extends React.Component {
 		tasksArray.forEach((task: TaskDto, index: number) => {
 			result.push(
 				<Task
-					key={index}
+					key={task.id}
 					id={task.id}
 					token={Memory.token || ''}
 					title={task.title}
@@ -142,13 +142,22 @@ export class Tasks extends React.Component {
 					deadline={task.deadline}
 					isDone={task.isDone}
 					isImportant={task.isImportant}
-					onRemove={(removedTask: Task) => this.onTaskChanged(removedTask.isDone())}
-					onDoneChanged={(isDone: boolean) => this.onTaskChanged(isDone)}
+					onRemove={(removedTask: Task) => this.onTaskChanged()}
+					onDoneChanged={(isDone: boolean) => this.onTaskChanged()}
 				/>
 			);
 		});
 		return (
 			<div className={'tasks'}>{result}</div>
 		);
+	}
+
+	private onTaskChanged(): void {
+		if (this._closeTasksInserter) {
+			this.insertCloseTasks(this._closeTasksInserter);
+		}
+		if (this._openTasksInserter) {
+			this.insertOpenTasks(this._openTasksInserter);
+		}
 	}
 }

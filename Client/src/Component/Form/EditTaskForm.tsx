@@ -22,7 +22,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 		this.state = {
 			title: editTaskDto.title,
 			description: editTaskDto.description,
-			isDeadlineExist: editTaskDto.isDeadlineExist == true,
+			isDeadlineExist: editTaskDto.isDeadlineExist === true,
 			deadline: editTaskDto.deadline
 		};
 	}
@@ -73,7 +73,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 		this.setState({
 			title: value.title,
 			description: value.description,
-			isDeadlineExist: value.isDeadlineExist == true,
+			isDeadlineExist: value.isDeadlineExist === true,
 			deadline: value.deadline
 		});
 	}

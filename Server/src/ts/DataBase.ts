@@ -10,7 +10,9 @@ export class DataBase {
 	private static _instance: Database =
 		new Database(Config.dbName, OPEN_READWRITE | OPEN_CREATE, (err: Error) => DataBase.initialize(err));
 
-	public static setTaskDone(userId: number, taskId: number, isDone: boolean, callback: (result: ResponseCode) => void): void {
+	public static setTaskDone(
+		userId: number, taskId: number, isDone: boolean, callback: (result: ResponseCode) => void
+	): void {
 		const query: string = 'UPDATE task SET isDone = ? WHERE id = ? AND userId = ?';
 		DataBase._instance.run(query, isDone, taskId, userId, function (err: Error): void {
 			if (err) {
@@ -20,7 +22,9 @@ export class DataBase {
 		});
 	}
 
-	public static setTaskImportant(userId: number, taskId: number, isImportant: boolean, callback: (result: ResponseCode) => void): void {
+	public static setTaskImportant(
+		userId: number, taskId: number, isImportant: boolean, callback: (result: ResponseCode) => void
+	): void {
 		const query: string = 'UPDATE task SET isImportant = ? WHERE id = ? AND userId = ?';
 		DataBase._instance.run(query, isImportant, taskId, userId, function (err: Error): void {
 			if (err) {

@@ -8,7 +8,6 @@ import { User } from '../ts/User';
 import * as HttpStatusCode from 'http-status-codes';
 import { DataBase } from '../ts/DataBase';
 import { Task } from '../ts/Task';
-import { Token } from '../ts/Token/Token';
 import chaiHttp = require('chai-http');
 
 chai.use(chaiHttp);
@@ -359,7 +358,7 @@ describe('GET /tasks/not_done/:token', () => {
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo = tasksInfo[0];
+				const taskInfo: Task = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(task.title);
@@ -528,7 +527,7 @@ describe('GET /tasks/done/:token', () => {
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo = tasksInfo[0];
+				const taskInfo: Task = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(editedTask.title);

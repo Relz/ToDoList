@@ -8,12 +8,10 @@ import { ResponseCode } from './JsonResponse/ResponseCode';
 import { Memory } from '../Memory';
 import { EditTaskForm } from '../Component/Form/EditTaskForm';
 import { EditTaskDto } from '../Dto/EditTaskDto';
-import * as queryString from 'query-string';
 import moment = require('moment');
 
 export class CreateTask extends React.Component {
 	private _createTaskForm: EditTaskForm;
-	private _data: EditTaskDto = new EditTaskDto();
 
 	public render(): JSX.Element {
 		if (Memory.token === undefined) {
@@ -35,9 +33,7 @@ export class CreateTask extends React.Component {
 			title: task.title,
 			description: task.description,
 			isDeadlineExist: task.isDeadlineExist,
-			deadline: task.deadline.valueOf() / 1000,
-			isDone: task.isDone,
-			isImportant: task.isImportant
+			deadline: task.deadline.valueOf() / 1000
 		};
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.CreateTask.path}${Memory.token}`,

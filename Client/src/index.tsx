@@ -14,9 +14,9 @@ import { EditTask } from './App/EditTask';
 import { Memory } from './Memory';
 import { CreateTask } from './App/CreateTask';
 
-const getComponent:() => React.ComponentType = () => {
+const getComponent: () => React.ComponentType = () => {
 	return (Memory.token === undefined) ? SignIn : Tasks;
-}
+};
 
 ReactDOM.render(
 	<BrowserRouter>

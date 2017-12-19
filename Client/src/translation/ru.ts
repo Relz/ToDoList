@@ -93,12 +93,12 @@ export class Translation {
 			public static FormMessage = class {
 				public static readonly wrongId: string = 'Неверный идентификатор задания';
 				public static readonly success: string = 'Задание изменено!';
-			}
+			};
 		};
 		public static CreateTask = class {
 			public static FormMessage = class {
 				public static readonly success: string = 'Задание создано!';
-			}
+			};
 		};
 		public static Shared = class {
 			public static FormMessage = class {
