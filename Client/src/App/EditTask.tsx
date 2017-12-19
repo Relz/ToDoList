@@ -22,12 +22,14 @@ export class EditTask extends React.Component {
 		this._data.title = queryData.title;
 		this._data.description = queryData.description;
 		this._data.isDeadlineExist = queryData.deadline !== 'null';
+		this._data.isDone = queryData.isDone;
+		this._data.isImportant = queryData.isImportant;
 		this._data.deadline = moment.unix(queryData.deadline);
 	}
 
 	public render(): JSX.Element {
 		if (Memory.token === undefined) {
-			return <Redirect to={'/'}/>;
+			return <Redirect to={Constant.Path.signIn}/>;
 		}
 		return (
 			<EditTaskForm
@@ -45,7 +47,9 @@ export class EditTask extends React.Component {
 			title: model.title,
 			description: model.description,
 			isDeadlineExist: model.isDeadlineExist,
-			deadline: model.deadline.valueOf() / 1000
+			deadline: model.deadline.valueOf() / 1000,
+			isDone: model.isDone,
+			isImportant: model.isImportant
 		};
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.EditTask.path}${this._data.id}/${Memory.token}`,
@@ -69,7 +73,7 @@ export class EditTask extends React.Component {
 					break;
 				case ResponseCode.OK:
 					this._editTaskForm.showAlert(AlertType.Success, Translation.Page.EditTask.FormMessage.success);
-					location.href = '/';
+					location.href = Constant.Path.tasks;
 					break;
 			}
 		}, () => {

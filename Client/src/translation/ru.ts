@@ -7,6 +7,7 @@ export class Translation {
 		public static readonly logout: string = 'Выйти';
 		public static readonly tasks: string = 'Список дел';
 		public static readonly account: string = 'Аккаунт';
+		public static readonly createTask: string = 'Создать задачку';
 	};
 	public static Page404 = class {
 		public static readonly errorCode: string = '404';
@@ -17,8 +18,6 @@ export class Translation {
 		public static readonly namePlaceholder: string = 'Название';
 		public static readonly descriptionPlaceholder: string = 'Описание';
 		public static readonly deadlineCheckBoxTitle: string = 'Дедлайн';
-		public static readonly doneCheckBoxTitle: string = 'Сделано';
-		public static readonly importantCheckBoxTitle: string = 'Важно';
 	};
 	public static CreateTaskForm = class {
 		public static readonly createTitle: string = 'Создание задачи';
@@ -84,15 +83,18 @@ export class Translation {
 			public static readonly openTasks: string = 'Сделать';
 			public static readonly closeTasks: string = 'Сделанные';
 			public static readonly emptyList: string = 'Список пуст';
-			public static FormMessage = class {
-				public static readonly success: string = 'Задача добавлена';
-			};
+			public static readonly deleteTaskConfirm: string = 'Удалить задачу?';
 		};
 		public static EditTask = class {
 			public static FormMessage = class {
 				public static readonly wrongId: string = 'Неверный идентификатор задания';
 				public static readonly success: string = 'Задание изменено!';
-			}
+			};
+		};
+		public static CreateTask = class {
+			public static FormMessage = class {
+				public static readonly success: string = 'Задание создано!';
+			};
 		};
 		public static Shared = class {
 			public static FormMessage = class {

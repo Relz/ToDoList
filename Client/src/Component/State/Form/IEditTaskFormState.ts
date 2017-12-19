@@ -5,4 +5,6 @@ export interface IEditTaskFormState {
 	description: string;
 	isDeadlineExist: boolean;
 	deadline: Moment;
+	isDone: boolean;
+	isImportant: boolean;
 }

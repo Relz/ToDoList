@@ -1,6 +1,6 @@
 import * as chai from 'chai';
-import * as express from 'express';
 import { expect, request } from 'chai';
+import * as express from 'express';
 import { UserInfo } from '../ts/UserInfo';
 import server from '../ts/server';
 import { ResponseCode } from '../ts/ResponseCode';
@@ -54,6 +54,7 @@ after(() => {
 	DataBase.deleteUserById(user.id, () => undefined);
 	DataBase.deleteUserById(anotherUser.id, () => undefined);
 	DataBase.deleteTask(user.id, task.id, () => undefined);
+	process.exit(0);
 });
 
 const checkBadRequest: (err: any, code: ResponseCode) => void = (err: any, code: ResponseCode) => {
@@ -357,7 +358,7 @@ describe('GET /tasks/not_done/:token', () => {
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo = tasksInfo[0];
+				const taskInfo: Task = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(task.title);
@@ -526,7 +527,7 @@ describe('GET /tasks/done/:token', () => {
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				const tasksInfo: Task[] = res.body.body;
 				expect(tasksInfo.length).to.be.equals(1);
-				const taskInfo = tasksInfo[0];
+				const taskInfo: Task = tasksInfo[0];
 				expect(taskInfo).not.to.be.undefined;
 				expect(taskInfo.id).not.to.be.undefined;
 				expect(taskInfo.title).to.be.equals(editedTask.title);

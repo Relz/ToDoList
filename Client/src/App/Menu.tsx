@@ -28,20 +28,23 @@ export class Menu extends React.Component {
 			];
 		}
 		return [
+			<li key='newTaskBtn' className='item'>
+				<Button
+					type={ButtonType.Success}
+					size={ButtonSize.Medium}
+					onClick={() => window.location.href = Constant.Path.createTask}
+				>
+					{Translation.Menu.createTask}
+				</Button>
+			</li>,
 			<li key='tasks' className='item'>
-				<NavLink to={Constant.Path.tasks}>{Translation.Menu.tasks}</NavLink>
+				<NavLink to={Constant.Path.tasks} activeClassName="active">{Translation.Menu.tasks}</NavLink>
 			</li>,
 			<li key='account' className='item'>
-				<NavLink to={Constant.Path.account}>{Translation.Menu.account}</NavLink>
+				<NavLink to={Constant.Path.account} activeClassName="active">{Translation.Menu.account}</NavLink>
 			</li>,
 			<li key='sign_out' className='item'>
-				<Button
-					type={ButtonType.Danger}
-					size={ButtonSize.Medium}
-					onClick={Menu.signOut}
-				>
-					{Translation.Menu.logout}
-				</Button>
+				<NavLink to={Constant.Path.signIn} onClick={Menu.signOut}>{Translation.Menu.logout}</NavLink>
 			</li>
 		];
 	}

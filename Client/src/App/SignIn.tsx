@@ -14,7 +14,7 @@ export class SignIn extends React.Component {
 
 	public render(): JSX.Element {
 		if (Memory.token !== undefined) {
-			return <Redirect to={'/'}/>;
+			return <Redirect to={Constant.Path.tasks}/>;
 		}
 		return (
 			<div className='sign_in_form_block'>

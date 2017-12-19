@@ -29,7 +29,7 @@ export class Input extends React.Component<IInputProps, IInputState> {
 	public render(): JSX.Element {
 		const disabled: boolean = (this.state.disabled === undefined) ? false : this.state.disabled;
 		const classes: any = classNames({
-			'form_control': true,
+			form_control: true,
 			enabled: !disabled,
 			disabled: disabled
 		});

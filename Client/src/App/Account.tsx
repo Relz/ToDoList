@@ -21,7 +21,7 @@ export class Account extends React.Component {
 
 	public render(): JSX.Element {
 		if (Memory.token === undefined) {
-			return <Redirect to={'/'}/>;
+			return <Redirect to={Constant.Path.signIn}/>;
 		}
 		return (
 			<AccountForm

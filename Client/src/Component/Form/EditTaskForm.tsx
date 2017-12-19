@@ -22,8 +22,10 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 		this.state = {
 			title: editTaskDto.title,
 			description: editTaskDto.description,
-			isDeadlineExist: editTaskDto.isDeadlineExist == true,
-			deadline: editTaskDto.deadline
+			isDeadlineExist: editTaskDto.isDeadlineExist === true,
+			deadline: editTaskDto.deadline,
+			isDone: editTaskDto.isDone,
+			isImportant: editTaskDto.isImportant
 		};
 	}
 
@@ -66,6 +68,8 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 		model.description = this.state.description;
 		model.isDeadlineExist = this.state.isDeadlineExist;
 		model.deadline = this.state.deadline;
+		model.isDone = this.state.isDone;
+		model.isImportant = this.state.isImportant;
 		this.props.onSubmit(model);
 	}
 
@@ -73,7 +77,7 @@ export class EditTaskForm extends Form<IEditTaskFormProps, IEditTaskFormState> {
 		this.setState({
 			title: value.title,
 			description: value.description,
-			isDeadlineExist: value.isDeadlineExist == true,
+			isDeadlineExist: value.isDeadlineExist === true,
 			deadline: value.deadline
 		});
 	}

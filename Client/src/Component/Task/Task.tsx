@@ -164,11 +164,15 @@ export class Task extends React.Component<ITaskProp, ITaskState> {
 
 	private onDoneButtonClick(): void {
 		this._doneButton.disabled = true;
+		const data: any = {
+			value: !this.state.isDone
+		};
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.SetTaskDone.path}${this.props.id}/${Memory.token}`,
 			{
 				method: Constant.Server.Action.SetTaskDone.method,
-				headers: Constant.Server.headers
+				headers: Constant.Server.headers,
+				body: JSON.stringify(data)
 			}
 		).then((response: any) => response.json()
 		).then((response: JsonResponse) => {
@@ -198,6 +202,9 @@ export class Task extends React.Component<ITaskProp, ITaskState> {
 	}
 
 	private onDeleteButtonClick(): void {
+		if (!confirm(Translation.Page.Tasks.deleteTaskConfirm)) {
+			return;
+		}
 		this._deleteButton.disabled = true;
 		fetch(
 			`${Constant.Server.url}${Constant.Server.Action.DeleteTask.path}${this.props.id}/${Memory.token}`,

@@ -5,5 +5,7 @@ export class EditTaskDto {
 	public title: string;
 	public description: string;
 	public isDeadlineExist: boolean = false;
+	public isDone: boolean;
+	public isImportant: boolean;
 	public deadline: Moment;
 }
