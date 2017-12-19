@@ -1,4 +1,4 @@
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 	var path = require('path');
 	var cspellPath = path.resolve('node_modules/.bin/cspell');
 
@@ -40,10 +40,10 @@ module.exports = function(grunt) {
 			},
 			cspell: cspellPath + ' ' + 'src/**/*',
 			test: {
-				command: function() {
-                    const file = process.env.npm_config_file;
-                    let filePattern;
-                    if (file !== undefined) {
+				command: function () {
+					const file = process.env.npm_config_file;
+					let filePattern;
+					if (file !== undefined) {
 						filePattern = 'build/test/' + file + '.test.js';
 						if (!grunt.file.exists(filePattern)) {
 							grunt.fail.fatal('File "' + filePattern + '" doesn\'t exists');
@@ -52,14 +52,14 @@ module.exports = function(grunt) {
 						filePattern = 'build/test/*.test.js';
 					}
 
-					return 'mocha ' + filePattern;
+					return 'mocha --timeout 15000 ' + filePattern;
 				}
 			},
 			test_coverage: {
-				command: function() {
-                    const file = process.env.npm_config_file;
-                    let filePattern;
-                    if (file !== undefined) {
+				command: function () {
+					const file = process.env.npm_config_file;
+					let filePattern;
+					if (file !== undefined) {
 						filePattern = 'build/test/' + file + '.test.js';
 						if (!grunt.file.exists(filePattern)) {
 							grunt.fail.fatal('File "' + filePattern + '" doesn\'t exists');
@@ -68,14 +68,14 @@ module.exports = function(grunt) {
 						filePattern = 'build/test/*.test.js';
 					}
 
-                    let viewCoverageInWebBrowser = '';
-                    const webBrowser = process.env.npm_config_web_browser;
-                    if (webBrowser !== undefined) {
+					let viewCoverageInWebBrowser = '';
+					const webBrowser = process.env.npm_config_web_browser;
+					if (webBrowser !== undefined) {
 						viewCoverageInWebBrowser = '&&' + ' \"' + webBrowser + '\" coverage/index.html';
 					}
 
 					return 'istanbul cover --report html ' + ' '
-						+ 'node_modules/mocha/bin/_mocha ' + filePattern + ' --exit '
+						+ 'node_modules/mocha/bin/_mocha --timeout 15000 ' + filePattern + ' --exit '
 						+ '&&' + ' ' + 'remap-istanbul -i coverage/coverage.json -t html -o coverage' + ' '
 						+ viewCoverageInWebBrowser;
 				}

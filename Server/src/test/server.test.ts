@@ -169,7 +169,8 @@ describe('POST /users/authenticate', () => {
 				expect(res.body).not.to.be.undefined;
 				expect(res.body.code).to.be.equals(ResponseCode.OK);
 				expect(res.body.body).not.to.be.undefined;
-				expect(res.body.body.token).to.be.equals(userToken);
+				userToken = res.body.body.token;
+				expect(userToken).not.to.be.undefined;
 			});
 	});
 
