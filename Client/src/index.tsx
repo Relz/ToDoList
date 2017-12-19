@@ -11,10 +11,9 @@ import { Account } from './App/Account';
 import { Constant } from './Constant';
 import { Tasks } from './App/Tasks';
 import { EditTask } from './App/EditTask';
-import ComponentType = React.ComponentType;
 import { Memory } from './Memory';
 
-const getComponent:() => ComponentType = () => {
+const getComponent:() => React.ComponentType = () => {
 	return (Memory.token === undefined) ? SignIn : Tasks;
 }
 

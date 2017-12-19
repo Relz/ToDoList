@@ -109,7 +109,7 @@ export class Tasks extends React.Component {
 					<Alert
 						visible={true}
 						message={Translation.Page.Shared.FormMessage.internalServerError}
-						type={AlertType.Info}
+						type={AlertType.Danger}
 					/>
 				);
 			} else if (response.code !== ResponseCode.OK) {
@@ -117,7 +117,7 @@ export class Tasks extends React.Component {
 					<Alert
 						visible={true}
 						message={Translation.Page.Shared.FormMessage.internalServerError}
-						type={AlertType.Info}
+						type={AlertType.Danger}
 					/>
 				);
 			} else {
