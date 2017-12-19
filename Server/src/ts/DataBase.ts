@@ -12,7 +12,17 @@ export class DataBase {
 
 	public static setTaskDone(userId: number, taskId: number, isDone: boolean, callback: (result: ResponseCode) => void): void {
 		const query: string = 'UPDATE task SET isDone = ? WHERE id = ? AND userId = ?';
-		DataBase._instance.run(query, isDone ? 1 : 0, taskId, userId, function (err: Error): void {
+		DataBase._instance.run(query, isDone, taskId, userId, function (err: Error): void {
+			if (err) {
+				return callback(ResponseCode.INTERNAL_ERROR);
+			}
+			callback(this.changes > 0 ? ResponseCode.OK : ResponseCode.WRONG_ID);
+		});
+	}
+
+	public static setTaskImportant(userId: number, taskId: number, isImportant: boolean, callback: (result: ResponseCode) => void): void {
+		const query: string = 'UPDATE task SET isImportant = ? WHERE id = ? AND userId = ?';
+		DataBase._instance.run(query, isImportant, taskId, userId, function (err: Error): void {
 			if (err) {
 				return callback(ResponseCode.INTERNAL_ERROR);
 			}

@@ -219,6 +219,48 @@ class Server {
 			});
 		});
 
+		router.put('/tasks/set_done/:id/:token', (req: express.Request, res: express.Response) => {
+			res.setHeader('Content-Type', 'application/json');
+			const userId: number = Token.decodeId(req.params.token);
+			if (userId === undefined) {
+				const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+				return res.status(response.httpStatus).send(response.jsonString());
+			}
+
+			if (!req.body || !req.body.isDone) {
+				const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
+				return res.status(response.httpStatus).send(response.jsonString());
+			}
+
+			const isDone: boolean = (req.body.isDone == '1' || req.body.isDone == 'true');
+
+			DataBase.setTaskDone(userId, req.params.id, isDone, (result: ResponseCode) => {
+				const response: JsonResponse = new JsonResponse(result);
+				res.status(response.httpStatus).send(response.jsonString());
+			});
+		});
+
+		router.put('/tasks/set_important/:id/:token', (req: express.Request, res: express.Response) => {
+			res.setHeader('Content-Type', 'application/json');
+			const userId: number = Token.decodeId(req.params.token);
+			if (userId === undefined) {
+				const response: JsonResponse = new JsonResponse(ResponseCode.BAD_TOKEN);
+				return res.status(response.httpStatus).send(response.jsonString());
+			}
+
+			if (!req.body || !req.body.isImportant) {
+				const response: JsonResponse = new JsonResponse(ResponseCode.BAD_BODY);
+				return res.status(response.httpStatus).send(response.jsonString());
+			}
+
+			const isImportant: boolean = (req.body.isImportant == '1' || req.body.isImportant == 'true');
+
+			DataBase.setTaskImportant(userId, req.params.id, isImportant, (result: ResponseCode) => {
+				const response: JsonResponse = new JsonResponse(result);
+				res.status(response.httpStatus).send(response.jsonString());
+			});
+		});
+
 		router.delete('/tasks/delete/:id/:token', (req: express.Request, res: express.Response) => {
 			res.setHeader('Content-Type', 'application/json');
 			const userId: number = Token.decodeId(req.params.token);
